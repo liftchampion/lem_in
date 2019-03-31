@@ -1,4 +1,5 @@
 lem-in
+.norm_script.sh
 *.o
 *.d
 objs
