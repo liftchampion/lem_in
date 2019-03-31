@@ -1,0 +1,11 @@
+lem-in
+*.o
+*.d
+objs
+dpds
+.idea
+*.dSYM
+*.test 
+cmake-build-debug
+*.a
+.DS_Store
