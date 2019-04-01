@@ -26,7 +26,7 @@ for i in range(len(s)):
             continue
     if '-' in s[i] and rooms:
         rooms = False
-        room_tree = {i: [i[0] if '_____' in i else i[0] + '_____'] for i in list_room + [x + '_____' for x in list_room]}
+        room_tree = {i: [i[:i.find('_____')] if '_____' in i else i + '_____'] for i in list_room + [x + '_____' for x in list_room]}
     if rooms:
         list_room.append(s[i][:s[i].find(' ')])
     elif '-' in s[i]:
