@@ -36,5 +36,7 @@ for i in range(len(s)):
         #       print room_tree
         #       print ''
 
-print kolichestvo_muraviev
-print room_tree
+#print room_tree
+print "ant count: " + str(kolichestvo_muraviev)
+print "start is: " + start + " routes - " + str(len(room_tree[start]) - 1)
+print "end is : " + end + " routes - " + str(len(room_tree[end]) - 1)
