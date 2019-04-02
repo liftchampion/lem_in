@@ -10,3 +10,4 @@ dpds
 cmake-build-debug
 *.a
 .DS_Store
+venv
