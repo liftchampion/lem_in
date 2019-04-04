@@ -36,7 +36,7 @@ for i in range(len(s)):
         # print room_tree
         # print ''
 
-print room_tree
+#print room_tree
 print "ant count: " + str(kolichestvo_muraviev)
 print "start is: " + start + " routes - " + str(len(room_tree[start]) - 1)
 print "end is : " + end + " routes - " + str(len(room_tree[end]) - 1)
@@ -89,8 +89,10 @@ def bell_ford(graph):
     for j in range(len(graph)):
         res.append(inf)
     res[ns] = 0
+    print res
     was_change = 1
     for j in range(len(graph)):
+        print res
         if not was_change:
             break
         was_change = 0
@@ -100,8 +102,22 @@ def bell_ford(graph):
                 if res[graph[n][d]] > res[n] + 1:
                     res[graph[n][d]] = res[n] + 1
                     was_change = 1
+    print res
     print graph
     return res
+
+
+def count_links(graph):
+    res = 0
+    for node in graph:
+        res += len(node)
+    return res
+
+
+links_count = count_links(grph)
+print "Links count: " + str(links_count / 2)
+print "Nodes count: " + str(len(grph) / 2)
+print "Average links from node: " + str((links_count / 2.) / (len(grph) / 2.))
 
 
 def print_res(res):
@@ -109,12 +125,12 @@ def print_res(res):
         print idx_to_name[j] + " -> " + str(res[j])
 
 
-import time
-ts = time.time()
-rs = bell_ford(grph)
-te = time.time()
-print_res(rs)
-print "\ntime to 1 B-F search is " + str(te - ts)
+# import time
+# ts = time.time()
+# rs = bell_ford(grph)
+# te = time.time()
+# print_res(rs)
+# print "\ntime to 1 B-F search is " + str(te - ts)
 
 
 
