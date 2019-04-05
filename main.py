@@ -79,6 +79,10 @@ predecessors = []
 for i in range(len(room_tree)):
     predecessors.append([])
 
+def print_res(res):
+    for j in range(len(res)):
+        print(idx_to_name[j] + " -> " + str(res[j]))
+
 
 def fill_links(graph):
     res = []
@@ -88,9 +92,21 @@ def fill_links(graph):
         for value in graph[key]:
             idx = get_idx(value)
             res[j].append([idx, 1])
-            predecessors[idx].append(j)
         j += 1
     return res
+
+
+def fill_predecessors(graph):
+    for j in range(len(graph)):
+        for nd in graph[j]:
+            predecessors[nd[0]].append(j)
+
+
+def print_predecessors(preds):
+    for j in range(len(grph)):
+        print(idx_to_name[j], "->")
+        for nd in preds[j]:
+            print(idx_to_name[nd])
 
 
 fill_links(room_tree)
@@ -99,15 +115,13 @@ ns = get_idx(start)
 ne = get_idx(end)
 print("NEW start is: " + str(ns))
 print("NEW end is: " + str(ne))
-#print(grph)
+# print(grph)
+fill_predecessors(grph)
 print(predecessors)
+print_predecessors(predecessors)
 
 inf = 10**10
 
-
-def print_res(res):
-    for j in range(len(res)):
-        print(idx_to_name[j] + " -> " + str(res[j]))
 
 
 def bell_ford(graph):
