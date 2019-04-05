@@ -117,7 +117,7 @@ print("NEW start is: " + str(ns))
 print("NEW end is: " + str(ne))
 # print(grph)
 fill_predecessors(grph)
-print(predecessors)
+# print(predecessors)
 print_predecessors(predecessors)
 
 inf = 10**10
