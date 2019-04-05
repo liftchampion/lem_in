@@ -13,6 +13,7 @@ from matplotlib import pyplot
 from collections import namedtuple
 import cProfile, pstats, io
 from pstats import SortKey
+import heapq
 
 s = sys.stdin.read().split('\n')
 
@@ -48,7 +49,7 @@ for i in range(len(s)):
         # print room_tree
         # print ''
 
-# print room_tree
+#print(room_tree)
 print("ant count: " + str(kolichestvo_muraviev))
 print("start is: " + start + " routes - " + str(len(room_tree[start]) - 1))
 print("end is : " + end + " routes - " + str(len(room_tree[end]) - 1))
@@ -96,6 +97,11 @@ print("NEW end is: " + str(ne))
 inf = 10**10
 
 
+def print_res(res):
+    for j in range(len(res)):
+        print(idx_to_name[j] + " -> " + str(res[j]))
+
+
 def bell_ford(graph):
     res = []
     for j in range(len(graph)):
@@ -134,7 +140,7 @@ print("Average links from node: " + str((links_count / 2.) / (len(grph) / 2.)))
 G = nx.MultiDiGraph()
 for i in range(len(grph)):
     for k in grph[i]:
-        G.add_edge(i, k[0], capacity=1)
+        G.add_edge(i, k[0])
 
 # nx.draw(G)
 # matplotlib.pyplot.show()
@@ -169,10 +175,9 @@ def eject_min(hp, not_visited):
     return mn[1]
 
 
-def heap_upd(hp, n, new, not_visited):
-    hp[0][n][0] = new
+def heap_upd(hp, n, not_visited):
     father = (n - 1) // 2
-    while hp[0][n][0] < hp[0][father][0]:
+    while father >= 0 and hp[0][n][0] < hp[0][father][0]:
         not_visited[hp[0][n][1]] = father
         not_visited[hp[0][father][1]] = n
         hp[0][n], hp[0][father] = hp[0][father], hp[0][n]
@@ -185,23 +190,24 @@ def my_dijkstra(graph, st, en):
     distances[st] = 0  # dst from start to start is 0
     heap = [[[0, st]], len(graph)]  # heap with pairs of actual distance and name. will be used for fast taking closest node \
                                     # [0] - array; [1] - len
-    not_visited = [-1] * len(graph)  # array with match of node-name and place in heap-array (for fast update heap)
-    not_visited[ns] = 0
-    t = 1
+    not_visited = [0] * len(graph)  # array with match of node-name and place in heap-array (for fast update heap)
+    idx = 1
     for j in range(len(graph)):
         if j != st:
             heap[0].append([distances[j], j])
-            not_visited[j] = t
-            t += 1
+            not_visited[j] = idx
+            idx += 1
     # end of preparation
     while heap[1]:
         curr = eject_min(heap, not_visited)
         # if curr == en:
         #    break
         for child in graph[curr]:
-            if not_visited[child[0]] > 0:
+            if not_visited[child[0]] >= 0:
                 distances[child[0]] = distances[curr] + child[1]
-                heap_upd(heap, not_visited[child[0]], distances[child[0]], not_visited)
+                heap[0][not_visited[child[0]]][0] = distances[child[0]]
+                heap_upd(heap, not_visited[child[0]], not_visited)
+
     return distances
 
 
@@ -259,13 +265,6 @@ for t in range(len(grph)):
 
 print(resd == res_ref)
 
-
-
-
-
-def print_res(res):
-    for j in range(len(res)):
-        print(idx_to_name[j] + " -> " + str(res[j]))
 
 
 # import time
