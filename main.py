@@ -11,6 +11,8 @@ import matplotlib
 import heapq
 from matplotlib import pyplot
 from collections import namedtuple
+import cProfile, pstats, io
+from pstats import SortKey
 
 s = sys.stdin.read().split('\n')
 
@@ -89,7 +91,7 @@ ns = get_idx(start)
 ne = get_idx(end)
 print("NEW start is: " + str(ns))
 print("NEW end is: " + str(ne))
-print(grph)
+#print(grph)
 
 inf = 10**10
 
@@ -99,21 +101,21 @@ def bell_ford(graph):
     for j in range(len(graph)):
         res.append(inf)
     res[ns] = 0
-    print(res)
+    # print(res)
     was_change = 1
     for j in range(len(graph)):
-        print(res)
+        # print(res)
         if not was_change:
             break
         was_change = 0
         for n in range(len(graph)):
             for d in range(len(graph[n])):
                 # use link-weight instead of 1
-                if res[graph[n][d]] > res[n] + 1:
-                    res[graph[n][d]] = res[n] + 1
+                if res[graph[n][d][0]] > res[n] + graph[n][d][1]:
+                    res[graph[n][d][0]] = res[n] + graph[n][d][1]
                     was_change = 1
-    print(res)
-    print(graph)
+    # print(res)
+    # print(graph)
     return res
 
 
@@ -144,16 +146,15 @@ def sift_down(hp, n, not_visited):
     while down < zs:
         left = down
         right = down + 1
-        tmp = left
         if right < zs and hp[0][right][0] < hp[0][left][0]:
             tmp = right
+        else:
+            tmp = left
         if hp[0][n][0] <= hp[0][tmp][0]:
             break
         not_visited[hp[0][n][1]] = tmp
         not_visited[hp[0][tmp][1]] = n
-        tmp_swap = hp[0][n]
-        hp[0][n] = hp[0][tmp]
-        hp[0][tmp] = tmp_swap
+        hp[0][n], hp[0][tmp] = hp[0][tmp], hp[0][n]
         n = tmp
         down = 2 * n + 1
 
@@ -174,19 +175,15 @@ def heap_upd(hp, n, new, not_visited):
     while hp[0][n][0] < hp[0][father][0]:
         not_visited[hp[0][n][1]] = father
         not_visited[hp[0][father][1]] = n
-        tmp_swap = hp[0][n]
-        hp[0][n] = hp[0][father]
-        hp[0][father] = tmp_swap
+        hp[0][n], hp[0][father] = hp[0][father], hp[0][n]
         n = father
         father = (n - 1) // 2
 
 
 def my_dijkstra(graph, st, en):
-    distances = []  # array of final distances to all nodes
-    for j in range(len(graph)):
-        distances.append(10000000000)  # fill by inf
+    distances = [10000000000] * len(graph)  # array of final distances to all nodes
     distances[st] = 0  # dst from start to start is 0
-    heap = [[[0, st]], len(graph)]  # heap with pairs of actual distance and name. will be used for fast taking closest node
+    heap = [[[0, st]], len(graph)]  # heap with pairs of actual distance and name. will be used for fast taking closest node \
                                     # [0] - array; [1] - len
     not_visited = [-1] * len(graph)  # array with match of node-name and place in heap-array (for fast update heap)
     not_visited[ns] = 0
@@ -196,64 +193,74 @@ def my_dijkstra(graph, st, en):
             heap[0].append([distances[j], j])
             not_visited[j] = t
             t += 1
-    # print(heap)
-    # print(not_visited)
-    # eject_min(heap, not_visited)
-    # print(heap)
-    # print(not_visited)
     # end of preparation
     while heap[1]:
         curr = eject_min(heap, not_visited)
+        # if curr == en:
+        #    break
         for child in graph[curr]:
-            distances[child[0]] += 0
-            distances[curr] += 0
             if not_visited[child[0]] > 0:
                 distances[child[0]] = distances[curr] + child[1]
                 heap_upd(heap, not_visited[child[0]], distances[child[0]], not_visited)
-
-    print(distances)
-
-
-    return "END"
+    return distances
 
 
-print('\n')
 
+pr = cProfile.Profile()
+pr.enable()
+
+print("\n")
 ts = time.time()
-print(my_dijkstra(grph, ns, ne))
+my_dijkstra(grph, ns, ne)
 te = time.time()
 print("time to 1 MyDijkstra search is " + str(te - ts))
-print('\n')
+
+
+pr.disable()
+s = io.StringIO()
+sortby = SortKey.CUMULATIVE
+ps = pstats.Stats(pr, stream=s).sort_stats(sortby)
+ps.print_stats()
+print(s.getvalue())
+
+
+pr = cProfile.Profile()
+pr.enable()
 
 ts = time.time()
-print(nx.multi_source_dijkstra(G, {ns}, ne))
-te = time.time()
-print("time to 1 multi source Dijkstra search is " + str(te - ts))
-print('\n')
-
-ts = time.time()
-print(nx.single_source_dijkstra(G, ns, ne))
-te = time.time()
-print("time to 1 single source Dijkstra search is " + str(te - ts))
-print('\n')
-
-ts = time.time()
-print(nx.dijkstra_path(G, ns, ne))
+nx.dijkstra_predecessor_and_distance(G, ns)
 te = time.time()
 print("time to 1 Dijkstra search is " + str(te - ts))
-print('\n')
 
-ts = time.time()
-print(nx.bidirectional_dijkstra(G, ns, ne))
-te = time.time()
-print("time to 1 Bi-Dir_Dijkstra search is " + str(te - ts))
-print('\n')
+pr.disable()
+s = io.StringIO()
+sortby = SortKey.CUMULATIVE
+ps = pstats.Stats(pr, stream=s).sort_stats(sortby)
+ps.print_stats()
+print(s.getvalue())
 
-ts = time.time()
-print(nx.bellman_ford_path(G, ns, ne))
-te = time.time()
-print("time to 1 B-F search is " + str(te - ts))
-print('\n')
+
+
+
+
+resd = my_dijkstra(grph, ns, ne)
+their_d = nx.dijkstra_predecessor_and_distance(G, ns)
+
+res_ref = [-1] * len(grph)
+for key in their_d[1]:
+    res_ref[key] = their_d[1][key]
+#print(resd)
+#print(res_ref)
+
+for t in range(len(grph)):
+    if resd[t] != res_ref[t]:
+        print("AAAAA")
+        print(str(resd[t]), " vs ", str(res_ref[t]), "  -  ", t)
+
+print(resd == res_ref)
+
+
+
 
 
 def print_res(res):
