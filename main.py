@@ -75,13 +75,20 @@ def get_idx(val):
         j += 1
 
 
+predecessors = []
+for i in range(len(room_tree)):
+    predecessors.append([])
+
+
 def fill_links(graph):
     res = []
     j = 0
     for key in graph:
         res.append([])
         for value in graph[key]:
-            res[j].append([get_idx(value), 1])
+            idx = get_idx(value)
+            res[j].append([idx, 1])
+            predecessors[idx].append(j)
         j += 1
     return res
 
@@ -93,6 +100,7 @@ ne = get_idx(end)
 print("NEW start is: " + str(ns))
 print("NEW end is: " + str(ne))
 #print(grph)
+print(predecessors)
 
 inf = 10**10
 
@@ -190,7 +198,7 @@ def my_dijkstra(graph, st, en):
     distances[st] = 0  # dst from start to start is 0
     heap = [[[0, st]], len(graph)]  # heap with pairs of actual distance and name. will be used for fast taking closest node \
                                     # [0] - array; [1] - len
-    not_visited = [0] * len(graph)  # array with match of node-name and place in heap-array (for fast update heap)
+    not_visited = [0] * len(graph)  # array with match between node-name and place in heap-array (for fast update heap)
     idx = 1
     for j in range(len(graph)):
         if j != st:
@@ -207,9 +215,7 @@ def my_dijkstra(graph, st, en):
                 distances[child[0]] = distances[curr] + child[1]
                 heap[0][not_visited[child[0]]][0] = distances[child[0]]
                 heap_upd(heap, not_visited[child[0]], not_visited)
-
     return distances
-
 
 
 pr = cProfile.Profile()
@@ -245,18 +251,15 @@ ps = pstats.Stats(pr, stream=s).sort_stats(sortby)
 ps.print_stats()
 print(s.getvalue())
 
-
-
-
-
 resd = my_dijkstra(grph, ns, ne)
 their_d = nx.dijkstra_predecessor_and_distance(G, ns)
 
 res_ref = [-1] * len(grph)
 for key in their_d[1]:
     res_ref[key] = their_d[1][key]
-#print(resd)
-#print(res_ref)
+
+# print(resd)
+# print(res_ref)
 
 for t in range(len(grph)):
     if resd[t] != res_ref[t]:
