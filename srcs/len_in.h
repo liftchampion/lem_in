@@ -6,7 +6,7 @@
 /*   By: ggerardy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 19:59:45 by ggerardy          #+#    #+#             */
-/*   Updated: 2019/04/08 19:59:47 by ggerardy         ###   ########.fr       */
+/*   Updated: 2019/04/08 20:00:15 by ggerardy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,8 @@ t_vector	*ft_parser(void);
 **	ft_utils.c
 */
 int 		ft_free_data(t_data *dt, int ret);
+
+
+void		ft_print_parsed(t_data *dt);
 
 #endif

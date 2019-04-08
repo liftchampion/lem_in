@@ -6,14 +6,14 @@
 /*   By: ggerardy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 09:33:27 by ggerardy          #+#    #+#             */
-/*   Updated: 2019/03/31 09:33:27 by ggerardy         ###   ########.fr       */
+/*   Updated: 2019/04/08 19:52:13 by ggerardy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in_structs.h"
+#include "len_in.h"
 
 int		main(void)
 {
-	ft_printf("HElloworld!");
+	ft_parser();
 	return (0);
 }
