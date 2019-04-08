@@ -7,4 +7,4 @@ add_compile_options(-Wall -Wextra)
 include_directories(./libft/includes)
 FILE(GLOB LIBFT_SRCS ./libft/*.c ./libft/*/*.c)
 
-add_executable(lem_in ${LIBFT_SRCS} srcs/main.c srcs/lem_in_structs.h)
+add_executable(lem_in ${LIBFT_SRCS} srcs/main.c srcs/lem_in_structs.h srcs/dijkstra.c)
