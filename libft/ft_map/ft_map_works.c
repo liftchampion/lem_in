@@ -70,7 +70,7 @@ t_map			*ft_make_custom_value_map(t_type key_type,
 
 void			ft_free_map(t_map **map)
 {
-	if (!map)
+	if (!map || !*map)
 		return ;
 	rb_tree_free(&((*map)->root), *map);
 	free((*map)->nil);

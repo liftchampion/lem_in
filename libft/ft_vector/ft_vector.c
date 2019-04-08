@@ -43,6 +43,16 @@ void			ft_free_vector(t_vector **v)
 	*v = 0;
 }
 
+int				ft_free_ret_vector(t_vector **v, int ret)
+{
+	if (!v || !*v)
+		return (ret);
+	free((*v)->data);
+	free(*v);
+	*v = 0;
+	return (ret);
+}
+
 t_int8			ft_vector_push_back(t_vector **v_ptr, void *c)
 {
 	t_vector *v;

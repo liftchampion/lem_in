@@ -6,7 +6,7 @@
 /*   By: ggerardy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/26 17:25:22 by ggerardy          #+#    #+#             */
-/*   Updated: 2019/03/15 00:55:37 by ggerardy         ###   ########.fr       */
+/*   Updated: 2019/04/08 21:21:13 by ggerardy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@
 # include "ft_printf.h"
 
 # define FT_ABS(x) (((x) >= 0) ? (x) : -(x))
+
+char				*ft_strsub_char_m(char **s, char c, int init_size);
+
+int					free_ret(void *to_free, int ret);
 
 void				ft_swap(void *a, void *b, size_t s);
 
