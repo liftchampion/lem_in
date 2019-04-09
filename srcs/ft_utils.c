@@ -45,9 +45,10 @@ void		ft_print_parsed(t_data *dt)
 	ft_printf("Ant-count: %d\n", dt->ant_count);
 	for (size_t i = 0; i < dt->nodes->len; ++i)
 	{
-		ft_printf("%s %d %d\n", ((t_node*)dt->nodes->data[i])->name,
+		ft_printf("%s %d %d idx=%d\n", ((t_node*)dt->nodes->data[i])->name,
 								((t_node*)dt->nodes->data[i])->x,
-								((t_node*)dt->nodes->data[i])->y);
+								((t_node*)dt->nodes->data[i])->y,
+				(int)*(void**)ft_map_get(dt->name_to_idx, ((t_node*)dt->nodes->data[i])->name));
 	}
 }
 

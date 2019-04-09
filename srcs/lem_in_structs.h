@@ -6,7 +6,7 @@
 /*   By: ggerardy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/31 09:33:52 by ggerardy          #+#    #+#             */
-/*   Updated: 2019/04/08 21:36:42 by ggerardy         ###   ########.fr       */
+/*   Updated: 2019/04/09 18:10:12 by ggerardy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 # include "libft.h"
 
 # define READ_BUFF 1000000
+# define NODE_POSTFIX "______"
+# define TO_EDGE(i, w) ((void*)((((size_t)(i)) << 32u) | (unsigned)(w)))
+# define GET_I(iw) ((int)((size_t)(iw) >> 32u))
+# define GET_W(iw) ((int)(iw))
 
 # define NODE struct s_node
 # define EDGE struct s_edge
