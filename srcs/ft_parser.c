@@ -26,6 +26,22 @@ int			ft_parse_ants_count(void)
 	return (free_ret(ln, count));
 }
 
+t_node		*ft_make_node(void)
+{
+	t_node *node;
+
+	if (!(node = ft_memalloc(sizeof(t_node))))
+		return (0);
+	if (!(node->children = ft_make_vector(4)))
+		return ((void*)(size_t)free_ret(node, 0));
+	if (!(node->parents = ft_make_vector(4)))
+	{
+		ft_free_vector(&node->children);
+		return ((void*)(size_t)free_ret(node, 0));
+	}
+	return (node);
+}
+
 int		ft_split_room(t_data *dt)
 {
 	t_node	*node;
@@ -35,7 +51,7 @@ int		ft_split_room(t_data *dt)
 
 	node_idx = dt->nodes->len;
 	old_node = dt->nodes->data[node_idx - 1];
-	if (!(node = ft_memalloc(sizeof(t_node))))
+	if (!(node = ft_make_node()))
 		return (0);
 	if (!(node->name = ft_strjoin(old_node->name, NODE_POSTFIX)))
 		return (0);
@@ -45,22 +61,19 @@ int		ft_split_room(t_data *dt)
 	(*map_value) = (void*)(size_t)node_idx;
 	node->x = old_node->x;
 	node->y = old_node->y;
-	if (!(ft_vector_push_back(&dt->nodes, node)))
+	if (!ft_vector_push_back(&dt->nodes, node) ||
+		!ft_vector_push_back(&node->children, TO_EDGE(node_idx - 1, 1)) ||
+		!ft_vector_push_back(&node->parents, TO_EDGE(node_idx - 1, 1)) ||
+		!ft_vector_push_back(&old_node->children, TO_EDGE(node_idx, 1)) ||
+		!ft_vector_push_back(&old_node->parents, TO_EDGE(node_idx, 1)))
 		return (0);
-	int weight = -1;
-	int idx = node_idx - 1;
-	void *tmp = TO_EDGE(idx, weight);
-	int idx2 = GET_I(tmp);
-	int w2 = GET_W(tmp);
-	ft_printf("%#B %#B\n%#lB\n%#B %#B\n\n", node_idx - 1, weight, (size_t)tmp, idx2, w2);
-	//if (!(ft_vector_push_back(&node->children, node_idx - 1)))
 	return (1);
 }
 
-int		ft_parse_hash(t_data *dt, char *ln)
+int		ft_parse_hash(t_data *dt, char *ln, t_parse_mode pm)
 {
-	dt = 0;
-	ln = 0;
+	if (ln[1] != '#' || pm == LINKS)
+		return (1);
 	return (1);
 }
 
@@ -70,8 +83,8 @@ int		ft_parse_room(char *ln, t_data *dt)
 	void **map_value;
 
 	if (*ln == '#')
-		return (ft_parse_hash(dt, ln));
-	if (!(node = ft_memalloc(sizeof(t_node))))
+		return (ft_parse_hash(dt, ln, NODES));
+	if (!(node = ft_make_node()))
 		return (0);
 	if (!(node->name = ft_strsub_char_m(&ln, ' ', 16)))
 		return (0);
@@ -116,6 +129,8 @@ t_vector	*ft_parser(void)
 	if (!(dt->nodes = ft_make_vector(128)) ||
 		!(dt->name_to_idx = ft_make_std_map(STRING, INT32_T)))
 		return ((void*)(size_t)ft_free_data(dt, 0));
+	dt->start = -1;
+	dt->end = -1;
 	if ((dt->ant_count = ft_parse_ants_count()) <= 0)
 		return ((void*)(size_t)ft_free_data(dt, 0));
 	if (!ft_parse_rooms(dt))

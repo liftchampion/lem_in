@@ -45,10 +45,18 @@ void		ft_print_parsed(t_data *dt)
 	ft_printf("Ant-count: %d\n", dt->ant_count);
 	for (size_t i = 0; i < dt->nodes->len; ++i)
 	{
-		ft_printf("%s %d %d idx=%d\n", ((t_node*)dt->nodes->data[i])->name,
-								((t_node*)dt->nodes->data[i])->x,
-								((t_node*)dt->nodes->data[i])->y,
-				(int)*(void**)ft_map_get(dt->name_to_idx, ((t_node*)dt->nodes->data[i])->name));
+		t_node *nd = dt->nodes->data[i];
+		ft_printf("{\\202}%-10s{eof} %d %d idx={Green}%d{eof}\n", nd->name, nd->x, nd->y,
+				(int)*(void**)ft_map_get(dt->name_to_idx, nd->name));
+		ft_printf("\t\tc:<  ");
+		for (size_t j = 0; j < nd->children->len; ++j)
+			ft_printf("{Red}%d{eof}(%d)  ",
+					GET_I(nd->children->data[j]), GET_W(nd->children->data[j]));
+		ft_printf(">\n\t\tp:[  ");
+		for (size_t j = 0; j < nd->parents->len; ++j)
+			ft_printf("{Blue}%d{eof}(%d)  ",
+					GET_I(nd->parents->data[j]), GET_W(nd->parents->data[j]));
+		ft_printf("]\n");
 	}
 }
 

@@ -25,11 +25,19 @@
 # define EDGE struct s_edge
 # define HEAP struct s_heap
 # define DATA struct s_data
+# define PMOD enum e_parse_mode
 
 typedef NODE	t_node;
 typedef EDGE	t_edge;
 typedef HEAP	t_heap;
 typedef DATA	t_data;
+typedef PMOD	t_parse_mode;
+
+enum e_parse_mode
+{
+	NODES,
+	LINKS,
+};
 
 struct s_data
 {
