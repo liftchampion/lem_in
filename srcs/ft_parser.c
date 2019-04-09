@@ -38,10 +38,10 @@ int		ft_split_room(t_data *dt)
 	if (!(node = ft_make_node()))
 		return (0);
 	if (!(node->name = ft_strjoin(old_node->name, NODE_POSTFIX)))
-		return (0);
+		return (ft_free_node(node, 0));
 	if (!(map_value = ft_map_get(dt->name_to_idx, node->name)) ||
 		(*map_value) != dt->name_to_idx->nil)
-		return (0);
+		return (ft_free_node(node, 0));
 	(*map_value) = (void*)(size_t)node_idx;
 	node->x = old_node->x;
 	node->y = old_node->y;
@@ -82,22 +82,22 @@ int		ft_parse_room(char *ln, t_data *dt)
 		return (ft_parse_hash(dt, ln, NODES));
 	if (!(node = ft_make_node()))
 		return (0);
-	if (!(node->name = ft_strsub_char_m(&ln, ' ', 16)))
-		return (0);
+	if (!(node->name = ft_strsub_char_m(&ln, ' ', INIT_NAME_LEN)))
+		return (ft_free_node(node, 0));
 	if (!(map_value = ft_map_get(dt->name_to_idx, node->name)) ||
 		(*map_value) != dt->name_to_idx->nil)
-		return (0);
+		return (ft_free_node(node, 0));
 	(*map_value) = (void*)dt->nodes->len;
 	if (*(ln++) != ' ')
-		return (0);
+		return (ft_free_node(node, dt->start == dt->end && dt->end != -1));
 	node->x = ft_atoi_m(&ln);
 	if (*(ln++) != ' ')
-		return (0);
+		return (ft_free_node(node, 0));
 	node->y = ft_atoi_m(&ln);
 	if (*ln)
-		return (0);
+		return (ft_free_node(node, 0));
 	if (!(ft_vector_push_back(&dt->nodes, node)))
-		return (0);
+		return (ft_free_node(node, 0));
 	return (ft_split_room(dt));
 }
 
@@ -116,6 +116,14 @@ int		ft_parse_rooms(t_data *dt)
 	return (1);
 }
 
+int 	ft_check_start_end(t_data *dt)
+{
+	if (dt->start == -1 || dt->end == -1 ||
+		dt->start >= (int)dt->nodes->len || dt->end >= (int)dt->nodes->len)
+		return (0);
+	return (1);
+}
+
 t_data	*ft_parser(void)
 {
 	t_data		*dt;
@@ -124,7 +132,7 @@ t_data	*ft_parser(void)
 		return (0);
 	if ((dt->ant_count = ft_parse_ants_count()) <= 0)
 		return ((void*)(size_t)ft_free_data(dt, 0));
-	if (!ft_parse_rooms(dt))
+	if (!ft_parse_rooms(dt) || !ft_check_start_end(dt))
 		return ((void*)(size_t)ft_free_data(dt, 0));
 	return (dt);
 }
