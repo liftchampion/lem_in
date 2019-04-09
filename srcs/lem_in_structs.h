@@ -16,6 +16,7 @@
 # include "libft.h"
 
 # define READ_BUFF 1000000
+# define INIT_NODES_COUNT 128
 # define NODE_POSTFIX "______"
 # define TO_EDGE(i, w) ((void*)((((size_t)(i)) << 32u) | (unsigned)(w)))
 # define GET_I(iw) ((int)((size_t)(iw) >> 32u))

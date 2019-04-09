@@ -15,7 +15,7 @@
 
 t_del_func		ft_get_del_func(t_type type)
 {
-	if (type >= INT8_T && type <= CHAR)
+	if ((type >= INT8_T && type <= CHAR) || type == NON_FREE_STR)
 		return (0);
 	else if (type >= STRING && type <= ARRAY)
 		return (free);

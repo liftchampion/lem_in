@@ -26,22 +26,6 @@ int			ft_parse_ants_count(void)
 	return (free_ret(ln, count));
 }
 
-t_node		*ft_make_node(void)
-{
-	t_node *node;
-
-	if (!(node = ft_memalloc(sizeof(t_node))))
-		return (0);
-	if (!(node->children = ft_make_vector(4)))
-		return ((void*)(size_t)free_ret(node, 0));
-	if (!(node->parents = ft_make_vector(4)))
-	{
-		ft_free_vector(&node->children);
-		return ((void*)(size_t)free_ret(node, 0));
-	}
-	return (node);
-}
-
 int		ft_split_room(t_data *dt)
 {
 	t_node	*node;
@@ -74,6 +58,18 @@ int		ft_parse_hash(t_data *dt, char *ln, t_parse_mode pm)
 {
 	if (ln[1] != '#' || pm == LINKS)
 		return (1);
+	if (!ft_strcmp("start", ln + 2))
+	{
+		if (dt->start != -1)
+			return (0);
+		dt->start = dt->nodes->len;
+	}
+	if (!ft_strcmp("end", ln + 2))
+	{
+		if (dt->end != -1)
+			return (0);
+		dt->end = dt->nodes->len;
+	}
 	return (1);
 }
 
@@ -124,18 +120,12 @@ t_vector	*ft_parser(void)
 {
 	t_data		*dt;
 
-	if (!(dt = ft_memalloc(sizeof(t_data))))
+	if (!(dt = ft_make_data()))
 		return (0);
-	if (!(dt->nodes = ft_make_vector(128)) ||
-		!(dt->name_to_idx = ft_make_std_map(STRING, INT32_T)))
-		return ((void*)(size_t)ft_free_data(dt, 0));
-	dt->start = -1;
-	dt->end = -1;
 	if ((dt->ant_count = ft_parse_ants_count()) <= 0)
 		return ((void*)(size_t)ft_free_data(dt, 0));
 	if (!ft_parse_rooms(dt))
 		return ((void*)(size_t)ft_free_data(dt, 0));
-
 	ft_print_parsed(dt);
 	return (0);
 }

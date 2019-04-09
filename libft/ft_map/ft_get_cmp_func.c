@@ -41,7 +41,7 @@ t_cmp_func		ft_get_char_cmp_func(t_type type)
 {
 	if (type == CHAR)
 		return (ft_cmp_char);
-	else if (type == STRING)
+	else if (type == STRING || type == NON_FREE_STR)
 		return (ft_cmp_str);
 	return (0);
 }

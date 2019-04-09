@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggerardy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/08 19:59:45 by ggerardy          #+#    #+#             */
-/*   Updated: 2019/04/08 20:00:15 by ggerardy         ###   ########.fr       */
+/*   Created: 2019/04/09 20:46:13 by ggerardy          #+#    #+#             */
+/*   Updated: 2019/04/09 20:46:13 by ggerardy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,18 @@
 **	ft_parser.c
 */
 int			ft_parse_ants_count(void);
+t_node		*ft_make_node(void);
+t_data		*ft_make_data(void);
+int			ft_split_room(t_data *dt);
+int			ft_parse_hash(t_data *dt, char *ln, t_parse_mode pm);
+int			ft_parse_room(char *ln, t_data *dt);
 int			ft_parse_rooms(t_data *dt);
 t_vector	*ft_parser(void);
 /*
 **	ft_utils.c
 */
+int 		ft_free_node(t_node *nd, int ret);
 int 		ft_free_data(t_data *dt, int ret);
-
-
 void		ft_print_parsed(t_data *dt);
 
 #endif
