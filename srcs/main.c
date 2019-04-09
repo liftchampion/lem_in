@@ -14,6 +14,10 @@
 
 int		main(void)
 {
-	ft_parser();
-	return (0);
+	t_data *dt;
+
+	if (!(dt = ft_parser()))
+		return (ft_printf("Error\n") * 0);
+	ft_print_parsed(dt);
+	return (ft_free_data(dt, 0));
 }

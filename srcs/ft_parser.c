@@ -116,7 +116,7 @@ int		ft_parse_rooms(t_data *dt)
 	return (1);
 }
 
-t_vector	*ft_parser(void)
+t_data	*ft_parser(void)
 {
 	t_data		*dt;
 
@@ -126,8 +126,7 @@ t_vector	*ft_parser(void)
 		return ((void*)(size_t)ft_free_data(dt, 0));
 	if (!ft_parse_rooms(dt))
 		return ((void*)(size_t)ft_free_data(dt, 0));
-	ft_print_parsed(dt);
-	return (0);
+	return (dt);
 }
 
 
