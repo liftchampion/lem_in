@@ -78,24 +78,24 @@ int		ft_parse_room(char *ln, t_data *dt)
 	t_node *node;
 	void **map_value;
 
-	if (*ln == '#')
-		return (ft_parse_hash(dt, ln, NODES));
+	if (*ln == '#' || *ln == 'L')
+		return (*ln == '#' ? ft_parse_hash(dt, ln, NODES) : -1);
 	if (!(node = ft_make_node()))
 		return (0);
 	if (!(node->name = ft_strsub_char_m(&ln, ' ', INIT_NAME_LEN)))
 		return (ft_free_node(node, 0));
+	if (*(ln++) != ' ')
+		return (ft_free_node(node, -1 * (dt->start == dt->end)));
+	node->x = ft_atoi_m(&ln);
+	if (*(ln++) != ' ')
+		return (ft_free_node(node, -1 * (dt->start == dt->end)));
+	node->y = ft_atoi_m(&ln);
+	if (*ln)
+		return (ft_free_node(node, -1 * (dt->start == dt->end)));
 	if (!(map_value = ft_map_get(dt->name_to_idx, node->name)) ||
 		(*map_value) != dt->name_to_idx->nil)
 		return (ft_free_node(node, 0));
 	(*map_value) = (void*)dt->nodes->len;
-	if (*(ln++) != ' ')
-		return (ft_free_node(node, dt->start == dt->end && dt->end != -1));
-	node->x = ft_atoi_m(&ln);
-	if (*(ln++) != ' ')
-		return (ft_free_node(node, 0));
-	node->y = ft_atoi_m(&ln);
-	if (*ln)
-		return (ft_free_node(node, 0));
 	if (!(ft_vector_push_back(&dt->nodes, node)))
 		return (ft_free_node(node, 0));
 	return (ft_split_room(dt));
@@ -104,13 +104,14 @@ int		ft_parse_room(char *ln, t_data *dt)
 int		ft_parse_rooms(t_data *dt)
 {
 	char *ln;
+	int parse_res;
 
 	while ((ln = (char*)1lu) && ft_get_next_line(0, &ln, READ_BUFF))
 	{
 		if (!ln)
 			return (0);
-		if (!ft_parse_room(ln, dt))
-			return (free_ret(ln, 0));
+		if ((parse_res = ft_parse_room(ln, dt)) <= 0)
+			return (free_ret(ln, parse_res));
 		free(ln);
 	}
 	return (1);
@@ -127,13 +128,18 @@ int 	ft_check_start_end(t_data *dt)
 t_data	*ft_parser(void)
 {
 	t_data		*dt;
+	int 		parse_res;
 
 	if (!(dt = ft_make_data()))
 		return (0);
 	if ((dt->ant_count = ft_parse_ants_count()) <= 0)
 		return ((void*)(size_t)ft_free_data(dt, 0));
-	if (!ft_parse_rooms(dt) || !ft_check_start_end(dt))
+	if (!(parse_res = ft_parse_rooms(dt)))
 		return ((void*)(size_t)ft_free_data(dt, 0));
+	if (!ft_check_start_end(dt))
+		return ((void*)(size_t)ft_free_data(dt, 0));
+	if (parse_res == -1)
+		return (dt);
 	return (dt);
 }
 

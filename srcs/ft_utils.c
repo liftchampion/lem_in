@@ -75,7 +75,7 @@ int 	ft_free_data(t_data *dt, int ret)
 
 void		ft_print_parsed(t_data *dt)
 {
-	ft_printf("Ant-count: %d\n", dt->ant_count);
+	ft_printf("Ant-count: {Magenta}%d{eof}\n", dt->ant_count);
 	ft_printf("Start: {Magenta}%d{eof}\n", dt->start);
 	ft_printf("End:   {Magenta}%d{eof}\n", dt->end);
 	for (size_t i = 0; i < dt->nodes->len; ++i)
@@ -83,13 +83,13 @@ void		ft_print_parsed(t_data *dt)
 		t_node *nd = dt->nodes->data[i];
 		ft_printf("{\\202}%-10s{eof} %d %d idx={Green}%d{eof}\n", nd->name, nd->x, nd->y,
 				(int)*(void**)ft_map_get(dt->name_to_idx, nd->name));
-		ft_printf("\t\tc:<  ");
+		ft_printf("\t\tc:< ");
 		for (size_t j = 0; j < nd->children->len; ++j)
-			ft_printf("{Red}%d{eof}(%d)  ",
+			ft_printf("{Red}%d{eof}(%d) ",
 					GET_I(nd->children->data[j]), GET_W(nd->children->data[j]));
-		ft_printf(">\n\t\tp:[  ");
+		ft_printf(">\n\t\tp:[ ");
 		for (size_t j = 0; j < nd->parents->len; ++j)
-			ft_printf("{Blue}%d{eof}(%d)  ",
+			ft_printf("{Blue}%d{eof}(%d) ",
 					GET_I(nd->parents->data[j]), GET_W(nd->parents->data[j]));
 		ft_printf("]\n");
 	}
