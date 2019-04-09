@@ -16,7 +16,9 @@
 # include "libft.h"
 
 # define READ_BUFF 1000000
-
+# define INTMAX 2147483647
+# define LEFT weight[ind * 2 + 1]
+# define RIGHT weight[ind * 2 + 2]
 # define NODE struct s_node
 # define EDGE struct s_edge
 # define HEAP struct s_heap
@@ -29,6 +31,7 @@ typedef DATA	t_data;
 
 struct s_data
 {
+	t_heap		*heap;
 	t_vector	*nodes;
 	char 		*tmp_line;
 	t_map		*name_to_idx;
@@ -56,7 +59,9 @@ struct	s_edge
 
 struct	s_heap
 {
-	int	*v;
+	int	*weight;
+	int	*name;
+	int *num;
 	int len;
 };
 
