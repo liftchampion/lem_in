@@ -73,6 +73,57 @@ int		ft_parse_hash(t_data *dt, char *ln, t_parse_mode pm)
 	return (1);
 }
 
+int 	ft_find_in_map(char *ln, t_data *dt)
+{
+	void	**map_value;
+
+	if (!(map_value = ft_map_get(dt->name_to_idx, ln)) ||
+		(*map_value) == dt->name_to_idx->nil)
+		return (free_ret(ln, -1));
+	return (free_ret(ln, 1));
+}
+
+//int 	ft_add_link(t_node *nd1, t_node *nd2)
+//{
+//
+//}
+
+int 	ft_parse_link(char *ln, t_data *dt)
+{
+	char	*f_name;
+	char	*s_name;
+	//int		i1;
+	//int		i2;
+
+	if (!(f_name = ft_strsub_char_m(&ln, '-', INIT_NAME_LEN)))
+		return (0);
+	if (*(ln++) != '-')
+		return (free_ret(f_name, -1 * (dt->start == dt->end)));
+	if (!(s_name = ft_strsub_char_m(&ln, '\0', INIT_NAME_LEN)))
+		return (free_ret(f_name, 0));
+	//if ((i1 = ft_find_in_map(f_name, dt)) < 0 ||
+	//	(i2 = ft_find_in_map(s_name, dt)) < 0)
+	//	return (free_ret(f_name, 0) + free_ret(s_name, -1));
+	//if (!ft_vector_push_back(&((t_node*)dt->nodes->data[i1])->children, TO_EDGE(i2 + 1, 1)) ||
+	//	!ft_vector_push_back(&((t_node*)dt->nodes->data[i2])->children, TO_EDGE(i2 + 1, 1)))
+
+	ft_printf("{Blue}%s <-> %s{eof}\n", f_name, s_name);
+	free(s_name);
+	free(f_name);
+	return (1);
+}
+
+int 	ft_check_links_begin(char *end, t_node *nd, t_data *dt)
+{
+	char *ln;
+
+	ln = end - 1 - ft_strlen(nd->name);
+	ft_free_node(nd, 0);
+	if (ft_strchr(ln, '-'))
+		return (ft_parse_link(ln, dt));
+	return (-1);
+}
+
 int		ft_parse_room(char *ln, t_data *dt)
 {
 	t_node *node;
@@ -85,7 +136,8 @@ int		ft_parse_room(char *ln, t_data *dt)
 	if (!(node->name = ft_strsub_char_m(&ln, ' ', INIT_NAME_LEN)))
 		return (ft_free_node(node, 0));
 	if (*(ln++) != ' ')
-		return (ft_free_node(node, -1 * (dt->start == dt->end)));
+		return (!*(ln - 1) ? ft_check_links_begin(ln, node, dt) :
+							ft_free_node(node, -1 * (dt->start == dt->end)));
 	node->x = ft_atoi_m(&ln);
 	if (*(ln++) != ' ')
 		return (ft_free_node(node, -1 * (dt->start == dt->end)));
@@ -108,6 +160,7 @@ int		ft_parse_rooms(t_data *dt)
 
 	while ((ln = (char*)1lu) && ft_get_next_line(0, &ln, READ_BUFF))
 	{
+		ft_printf("{Green}%s{eof}\n", ln);
 		if (!ln)
 			return (0);
 		if ((parse_res = ft_parse_room(ln, dt)) <= 0)
@@ -132,10 +185,13 @@ t_data	*ft_parser(void)
 
 	if (!(dt = ft_make_data()))
 		return (0);
+	ft_printf("{Magenta}1{eof}\n");
 	if ((dt->ant_count = ft_parse_ants_count()) <= 0)
 		return ((void*)(size_t)ft_free_data(dt, 0));
+	ft_printf("{Magenta}2{eof}\n");
 	if (!(parse_res = ft_parse_rooms(dt)))
 		return ((void*)(size_t)ft_free_data(dt, 0));
+	ft_printf("{Magenta}3{eof}\n");
 	if (!ft_check_start_end(dt))
 		return ((void*)(size_t)ft_free_data(dt, 0));
 	if (parse_res == -1)
