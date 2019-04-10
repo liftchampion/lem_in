@@ -12,7 +12,7 @@
 
 #include "lem_in_structs.h"
 
-static inline void	ft_inl_swap(int *x, int *y, int h)
+/*static inline void	ft_inl_swap(int *x, int *y, int h)
 {
 	h = *x;
 	*x = *y;
@@ -122,8 +122,8 @@ void				fill_heap(t_data *graf)
 	num[i] = graf->start;
 	name[graf->start] = (int)i;
 	num[graf->start] = (int)i;
-}
-
+}*/
+/*
 void				dijkstra(t_data *graf)
 {
 	int		i;
@@ -139,4 +139,4 @@ void				dijkstra(t_data *graf)
 		graf->dsts[*heap->name] = take_min(graf->heap);
 		while (++i < graf->nodes->len)
 	}
-}
+}*/
