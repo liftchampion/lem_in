@@ -23,7 +23,7 @@
 # define FD 0
 # define INIT_NODES_COUNT 128
 # define INIT_NAME_LEN 16
-# define NODE_POSTFIX "______"
+# define NODE_POSTFIX "*"
 # define TO_EDGE(i, w) ((void*)((((size_t)(i)) << 32u) | (unsigned)(w)))
 # define GET_I(iw) ((int)((size_t)(iw) >> 32u))
 # define GET_W(iw) ((int)(iw))

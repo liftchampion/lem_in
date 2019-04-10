@@ -227,6 +227,9 @@ t_data	*ft_parser(void)
 		return (dt);
 	if (!ft_parse_links(dt))
 		return ((void*)(size_t)ft_free_data(dt, 0));
+	if (!(dt->heap = make_heap(dt->nodes->len)) ||
+		!(dt->dsts = malloc(sizeof(int) * dt->nodes->len)))
+		return ((void*)(size_t)ft_free_data(dt, 0));
 	return (dt);
 }
 

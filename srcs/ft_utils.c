@@ -100,5 +100,31 @@ void		ft_print_parsed(t_data *dt)
 	ft_printf("{\\200}Links count %d{eof}\n", links_count);
 }
 
+void		ft_print_heap(t_data *dt)
+{
+	t_heap *heap;
+
+	heap = dt->heap;
+	ft_printf("Dij: ");
+	for (size_t i = 0; i < dt->nodes->len; ++i)
+		ft_printf(" %2d", dt->dsts[i]);
+	ft_printf("\nHeap: ");
+	for (int i = 0; i < heap->len; ++i)
+		ft_printf(" %2d", heap->weight[i]);
+	ft_printf("\nHeap place to name:");
+	for (int i = 0; i < heap->len; ++i)
+		ft_printf(" %2d", heap->name[i]);
+	ft_printf("\nHeap name to place:");
+	for (size_t i = 0; i < dt->nodes->len; ++i)
+		ft_printf(" %2d", heap->num[i]);
+	ft_printf("\n");
+}
+
+void		ft_print_dijkstra(t_data *dt)
+{
+	for (size_t i = 0; i < dt->nodes->len; ++i)
+		ft_printf("%d\n", dt->dsts[i]);
+}
+
 
 
