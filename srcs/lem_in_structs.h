@@ -20,6 +20,7 @@
 # define INTMAX 2147483647
 # define LEFT weight[ind * 2 + 1]
 # define RIGHT weight[ind * 2 + 2]
+# define FD 0
 # define INIT_NODES_COUNT 128
 # define INIT_NAME_LEN 16
 # define NODE_POSTFIX "______"

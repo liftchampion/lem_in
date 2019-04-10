@@ -78,6 +78,7 @@ void		ft_print_parsed(t_data *dt)
 	ft_printf("Ant-count: {Magenta}%d{eof}\n", dt->ant_count);
 	ft_printf("Start: {Magenta}%d{eof}\n", dt->start);
 	ft_printf("End:   {Magenta}%d{eof}\n", dt->end);
+	int links_count = 0;
 	for (size_t i = 0; i < dt->nodes->len; ++i)
 	{
 		t_node *nd = dt->nodes->data[i];
@@ -85,14 +86,18 @@ void		ft_print_parsed(t_data *dt)
 				(int)*(void**)ft_map_get(dt->name_to_idx, nd->name));
 		ft_printf("\t\tc:< ");
 		for (size_t j = 0; j < nd->children->len; ++j)
+		{
+			links_count++;
 			ft_printf("{Red}%d{eof}(%d) ",
 					GET_I(nd->children->data[j]), GET_W(nd->children->data[j]));
+		}
 		ft_printf(">\n\t\tp:[ ");
 		for (size_t j = 0; j < nd->parents->len; ++j)
 			ft_printf("{Blue}%d{eof}(%d) ",
 					GET_I(nd->parents->data[j]), GET_W(nd->parents->data[j]));
 		ft_printf("]\n");
 	}
+	ft_printf("{\\200}Links count %d{eof}\n", links_count);
 }
 
 

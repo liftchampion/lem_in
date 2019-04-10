@@ -17,7 +17,7 @@ int			ft_parse_ants_count(void)
 	char *ln;
 	int count;
 
-	if (ft_get_next_line(0, &ln, READ_BUFF) <= 0)
+	if (ft_get_next_line(FD, &ln, READ_BUFF) <= 0)
 		return (0);
 	if ((count = ft_atoi(ln)) <= 0)
 		return (free_ret(ln, 0));
@@ -79,37 +79,71 @@ int 	ft_find_in_map(char *ln, t_data *dt)
 
 	if (!(map_value = ft_map_get(dt->name_to_idx, ln)) ||
 		(*map_value) == dt->name_to_idx->nil)
-		return (free_ret(ln, -1));
-	return (free_ret(ln, 1));
+		return (-1);
+	return ((int)(*map_value));
 }
 
-//int 	ft_add_link(t_node *nd1, t_node *nd2)
-//{
-//
-//}
+int 	ft_add_link(int i1, int i2, t_data *dt)
+{
+	t_node *n1;
+	t_node *n1_;
+	t_node *n2;
+	t_node *n2_;
+
+	n1 = dt->nodes->data[i1];
+	n1_ = dt->nodes->data[i1 + 1];
+	n2 = dt->nodes->data[i2];
+	n2_ = dt->nodes->data[i2 + 1];
+	if (!ft_vector_push_back(&n1->children, TO_EDGE(i2 + 1, 1)) ||
+		!ft_vector_push_back(&n1_->parents, TO_EDGE(i2, 1)) ||
+		!ft_vector_push_back(&n2->children, TO_EDGE(i1 + 1, 1)) ||
+		!ft_vector_push_back(&n2_->parents, TO_EDGE(i1, 1)))
+		return (0);
+	return (1);
+}
 
 int 	ft_parse_link(char *ln, t_data *dt)
 {
 	char	*f_name;
 	char	*s_name;
-	//int		i1;
-	//int		i2;
+	int		i1;
+	int		i2;
 
+	char *tmp = ln;
+	if (*ln == '#')
+		return (ft_parse_hash(dt, ln, LINKS));
 	if (!(f_name = ft_strsub_char_m(&ln, '-', INIT_NAME_LEN)))
 		return (0);
 	if (*(ln++) != '-')
+	{
+		ft_printf("%s\n", tmp);
 		return (free_ret(f_name, -1 * (dt->start == dt->end)));
+	}
 	if (!(s_name = ft_strsub_char_m(&ln, '\0', INIT_NAME_LEN)))
 		return (free_ret(f_name, 0));
-	//if ((i1 = ft_find_in_map(f_name, dt)) < 0 ||
-	//	(i2 = ft_find_in_map(s_name, dt)) < 0)
-	//	return (free_ret(f_name, 0) + free_ret(s_name, -1));
-	//if (!ft_vector_push_back(&((t_node*)dt->nodes->data[i1])->children, TO_EDGE(i2 + 1, 1)) ||
-	//	!ft_vector_push_back(&((t_node*)dt->nodes->data[i2])->children, TO_EDGE(i2 + 1, 1)))
-
-	ft_printf("{Blue}%s <-> %s{eof}\n", f_name, s_name);
+	if ((i1 = ft_find_in_map(f_name, dt)) < 0 ||
+		(i2 = ft_find_in_map(s_name, dt)) < 0)
+		return (free_ret(f_name, 0) + free_ret(s_name, -1));
+	if (!ft_add_link(i1, i2, dt))
+		return (free_ret(f_name, 0) + free_ret(s_name, 0));
 	free(s_name);
 	free(f_name);
+	return (1);
+}
+
+int 	ft_parse_links(t_data *dt)
+{
+	char *ln;
+	int parse_res;
+
+	while ((ln = (char*)1lu) && ft_get_next_line(FD, &ln, READ_BUFF))
+	{
+		if (!ln)
+			return (0);
+		if ((parse_res = ft_parse_link(ln, dt)) <= 0)
+			return (free_ret(ln, parse_res));
+		free(ln);
+	}
 	return (1);
 }
 
@@ -120,8 +154,8 @@ int 	ft_check_links_begin(char *end, t_node *nd, t_data *dt)
 	ln = end - 1 - ft_strlen(nd->name);
 	ft_free_node(nd, 0);
 	if (ft_strchr(ln, '-'))
-		return (ft_parse_link(ln, dt));
-	return (-1);
+		return (ft_parse_link(ln, dt) * -2);
+	return (-1 * (dt->start == dt->end));
 }
 
 int		ft_parse_room(char *ln, t_data *dt)
@@ -136,8 +170,7 @@ int		ft_parse_room(char *ln, t_data *dt)
 	if (!(node->name = ft_strsub_char_m(&ln, ' ', INIT_NAME_LEN)))
 		return (ft_free_node(node, 0));
 	if (*(ln++) != ' ')
-		return (!*(ln - 1) ? ft_check_links_begin(ln, node, dt) :
-							ft_free_node(node, -1 * (dt->start == dt->end)));
+		return (ft_check_links_begin(ln, node, dt));
 	node->x = ft_atoi_m(&ln);
 	if (*(ln++) != ' ')
 		return (ft_free_node(node, -1 * (dt->start == dt->end)));
@@ -158,9 +191,8 @@ int		ft_parse_rooms(t_data *dt)
 	char *ln;
 	int parse_res;
 
-	while ((ln = (char*)1lu) && ft_get_next_line(0, &ln, READ_BUFF))
+	while ((ln = (char*)1lu) && ft_get_next_line(FD, &ln, READ_BUFF))
 	{
-		ft_printf("{Green}%s{eof}\n", ln);
 		if (!ln)
 			return (0);
 		if ((parse_res = ft_parse_room(ln, dt)) <= 0)
@@ -185,17 +217,16 @@ t_data	*ft_parser(void)
 
 	if (!(dt = ft_make_data()))
 		return (0);
-	ft_printf("{Magenta}1{eof}\n");
 	if ((dt->ant_count = ft_parse_ants_count()) <= 0)
 		return ((void*)(size_t)ft_free_data(dt, 0));
-	ft_printf("{Magenta}2{eof}\n");
 	if (!(parse_res = ft_parse_rooms(dt)))
 		return ((void*)(size_t)ft_free_data(dt, 0));
-	ft_printf("{Magenta}3{eof}\n");
 	if (!ft_check_start_end(dt))
 		return ((void*)(size_t)ft_free_data(dt, 0));
 	if (parse_res == -1)
 		return (dt);
+	if (!ft_parse_links(dt))
+		return ((void*)(size_t)ft_free_data(dt, 0));
 	return (dt);
 }
 

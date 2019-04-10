@@ -118,7 +118,7 @@ print("NEW end is: " + str(ne))
 # print(grph)
 fill_predecessors(grph)
 # print(predecessors)
-print_predecessors(predecessors)
+# print_predecessors(predecessors)
 
 inf = 10**10
 
@@ -155,8 +155,8 @@ def count_links(graph):
 
 
 links_count = count_links(grph)
-print("Links count: " + str(links_count / 2))
-print("Nodes count: " + str(len(grph) / 2))
+print("Links count: " + str(links_count))
+print("Nodes count: " + str(len(grph)))
 print("Average links from node: " + str((links_count / 2.) / (len(grph) / 2.)))
 
 G = nx.MultiDiGraph()
@@ -242,45 +242,45 @@ te = time.time()
 print("time to 1 MyDijkstra search is " + str(te - ts))
 
 
-pr.disable()
-s = io.StringIO()
-sortby = SortKey.CUMULATIVE
-ps = pstats.Stats(pr, stream=s).sort_stats(sortby)
-ps.print_stats()
-print(s.getvalue())
-
-
-pr = cProfile.Profile()
-pr.enable()
-
-ts = time.time()
-nx.dijkstra_predecessor_and_distance(G, ns)
-te = time.time()
-print("time to 1 Dijkstra search is " + str(te - ts))
-
-pr.disable()
-s = io.StringIO()
-sortby = SortKey.CUMULATIVE
-ps = pstats.Stats(pr, stream=s).sort_stats(sortby)
-ps.print_stats()
-print(s.getvalue())
-
-resd = my_dijkstra(grph, ns, ne)
-their_d = nx.dijkstra_predecessor_and_distance(G, ns)
-
-res_ref = [-1] * len(grph)
-for key in their_d[1]:
-    res_ref[key] = their_d[1][key]
+# pr.disable()
+# s = io.StringIO()
+# sortby = SortKey.CUMULATIVE
+# ps = pstats.Stats(pr, stream=s).sort_stats(sortby)
+# ps.print_stats()
+# print(s.getvalue())
+#
+#
+# pr = cProfile.Profile()
+# pr.enable()
+#
+# ts = time.time()
+# nx.dijkstra_predecessor_and_distance(G, ns)
+# te = time.time()
+# print("time to 1 Dijkstra search is " + str(te - ts))
+#
+# pr.disable()
+# s = io.StringIO()
+# sortby = SortKey.CUMULATIVE
+# ps = pstats.Stats(pr, stream=s).sort_stats(sortby)
+# ps.print_stats()
+# print(s.getvalue())
+#
+# resd = my_dijkstra(grph, ns, ne)
+# their_d = nx.dijkstra_predecessor_and_distance(G, ns)
+#
+# res_ref = [-1] * len(grph)
+# for key in their_d[1]:
+#     res_ref[key] = their_d[1][key]
 
 # print(resd)
 # print(res_ref)
 
-for t in range(len(grph)):
-    if resd[t] != res_ref[t]:
-        print("AAAAA")
-        print(str(resd[t]), " vs ", str(res_ref[t]), "  -  ", t)
-
-print(resd == res_ref)
+# for t in range(len(grph)):
+#     if resd[t] != res_ref[t]:
+#         print("AAAAA")
+#         print(str(resd[t]), " vs ", str(res_ref[t]), "  -  ", t)
+#
+# print(resd == res_ref)
 
 
 
