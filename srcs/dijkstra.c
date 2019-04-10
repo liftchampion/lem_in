@@ -35,7 +35,7 @@ void				sift_down(t_heap *heap, int ind)
 	while (len >= ind * 2)
 	{
 		next = (len < ind * 2 + 3 || LEFT < RIGHT ? ind * 2 + 1 : ind * 2 + 2);
-		if (weight[ind] > weight[next])
+		if (next < heap->len && weight[ind] > weight[next])
 		{
 			//ft_printf("{Green}+{eof}\n");
 			heap->num[name[ind]] = next;
@@ -85,17 +85,17 @@ int					take_min(t_heap *heap)
 	len = --(heap->len);
 	r = *weight;
 	heap->num[name[len]] = 0;
-	heap->num[*heap->name] = -1;
+	//heap->num[*heap->name] = -1;
 	ft_inl_swap(name + len, name, help_var);
 	ft_inl_swap(weight + len, weight, help_var);
 
 	//ft_printf("{Magenta}Before sift{eof}\n");
 	//ft_printf("Heap: ");
 	//for (int i = 0; i < heap->len; ++i)
-	//	ft_printf(" %2d", heap->weight[i]);
+		//ft_printf(" %2d", heap->weight[i]);
 	//ft_printf("\nHeap place to name:");
 	//for (int i = 0; i < heap->len; ++i)
-	//	ft_printf(" %2d", heap->name[i]);
+		//ft_printf(" %2d", heap->name[i]);
 	//ft_printf("\n");
 	if (len > 1)
 		sift_down(heap, 0);
@@ -157,7 +157,9 @@ void				dijkstra(t_data *graf)
 		i = *heap->name;
 		int tmp = i; // todo
 		node = graf->nodes->data[i];
-		//ft_printf("{Red}Eject min %d{eof}\n", tmp);
+		/*ft_printf("{Red}Eject min %s(%d){eof}\n",
+				((t_node*)graf->nodes->data[tmp])->name,
+				tmp);*/
 		graf->dsts[i] = take_min(graf->heap);
 		i = -1;
 		//ft_print_heap(graf);
@@ -168,7 +170,11 @@ void				dijkstra(t_data *graf)
 			{
 				heap->weight[heap->num[GET_I(j)]] = graf->dsts[tmp] + node->p + GET_W(j) -
 					((t_node *)graf->nodes->data[GET_I(j)])->p;
-				//ft_printf("{Blue}Upd dst from %d to %d{eof}\n", tmp, GET_I(j));
+				/*ft_printf("{Blue}Upd dst from %s(%d) to %s(%d){eof}\n",
+						((t_node*)graf->nodes->data[tmp])->name,
+						tmp,
+						((t_node*)graf->nodes->data[GET_I(j)])->name,
+						GET_I(j));*/
 				sift_up(heap, heap->num[GET_I(j)]);
 				//ft_print_heap(graf);
 			}

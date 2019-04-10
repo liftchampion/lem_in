@@ -277,7 +277,7 @@ res_ref.sort()
 
 sssss = '\n'.join([str(i) for i in res_ref])
 
-with open('test1.test', 'w') as f:
+with open('testsp1.test', 'w') as f:
     f.write(sssss + '\n')
 # for t in range(len(grph)):
 #     if resd[t] != res_ref[t]:
