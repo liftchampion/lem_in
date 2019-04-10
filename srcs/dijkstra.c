@@ -27,6 +27,7 @@ void				sift_down(t_heap *heap, int ind)
 	register int	next;
 	int				help_var;
 
+	help_var = 0;
 	weight = heap->weight;
 	name = heap->name;
 	len = heap->len;
@@ -53,6 +54,7 @@ void				sift_up(t_heap *heap, int ind)
 	int				help_var;
 	int				next;
 
+	help_var = 0;
 	weight = heap->weight;
 	name = heap->name;
 	while (weight[ind] < weight[(ind - 1) / 2])
@@ -74,6 +76,7 @@ int					take_min(t_heap *heap)
 	int	help_var;
 	int	r;
 
+	help_var = 0;
 	name = heap->name;
 	weight = heap->weight;
 	len = --(heap->len);
@@ -127,16 +130,26 @@ void				fill_heap(t_data *graf)
 void				dijkstra(t_data *graf)
 {
 	int		i;
+	void	*j;
 	t_heap	*heap;
 	t_node	*node;
 
 	heap = graf->heap;
 	fill_heap(graf);
 	while (heap->len)
-	{graf->
+	{
 		i = -1;
-		node = *heap->name
+		node = graf->nodes->data[*heap->name];
 		graf->dsts[*heap->name] = take_min(graf->heap);
-		while (++i < graf->nodes->len)
+		while (++i < (int)node->children->len)
+		{
+			j = node->children->data[i++];
+			if (graf->dsts[GET_I(j)] == -57)
+			{
+				heap->weight[heap->num[GET_I(j)]] = node->p + GET_W(j) -
+					((t_node *)graf->nodes->data[GET_I(j)])->p;
+				sift_up(heap, heap->num[GET_I(j)]);
+			}
+		}
 	}
 }
