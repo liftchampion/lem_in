@@ -42,6 +42,7 @@ typedef enum {
 	SIZE_T,
 	SSIZE_T,
 	CHAR,
+	NON_FREE_STR,
 	STRING,
 	ARRAY,
 	VECTOR,

@@ -6,7 +6,7 @@
 /*   By: ggerardy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/26 17:25:22 by ggerardy          #+#    #+#             */
-/*   Updated: 2019/04/08 21:21:13 by ggerardy         ###   ########.fr       */
+/*   Updated: 2019/04/08 21:22:41 by ggerardy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int					ft_strncmp(const char *s1, const char *s2, unsigned int n);
 
 int					ft_atoi(const char *str);
 
-int					ft_atoi_m(const char **str);
+int					ft_atoi_m(char **str);
 
 long				ft_atoi_base_m(const char **str, int radix);
 

@@ -51,7 +51,8 @@ int		ft_printf_parse_modifiers(const char **frmt, t_arg_data *arg_data)
 	{
 		arg_data->was_dot = 1;
 		if (**frmt != '*')
-			ft_printf_arg_data_set_width_or_prec(arg_data, ft_atoi_m(frmt));
+			ft_printf_arg_data_set_width_or_prec(arg_data,
+					ft_atoi_m((char**)frmt));
 	}
 	return (was_found);
 }
@@ -111,7 +112,7 @@ int		ft_printf_parse_comlex_flags(const char **frmt, t_arg_data *arg_data,
 
 	was_star = (**frmt == '*' && *(*frmt)++) ? 1 : 0;
 	was_zero = **frmt == '0' ? 1 : 0;
-	num = ft_isdigit(**frmt) ? ft_atoi_m(frmt) : -1;
+	num = ft_isdigit(**frmt) ? ft_atoi_m((char**)frmt) : -1;
 	was_dollar = ((**frmt == '$' && num + was_star > 0) && *(*frmt)++) ? 1 : 0;
 	was_zero = (was_zero && !(was_star && was_dollar)) ? 1 : 0;
 	if (!ft_printf_parser_comlex_flags_proceeder(arg_data,

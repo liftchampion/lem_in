@@ -24,7 +24,7 @@ char		*ft_strsub_char_m(char **s, char c, int init_size)
 		return (0);
 	while (**s != c && **s)
 	{
-		if (!ft_string_push_back(&res, c))
+		if (!ft_string_push_back(&res, **s))
 			return (0);
 		++(*s);
 	}
