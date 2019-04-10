@@ -50,9 +50,9 @@ for i in range(len(s)):
         # print ''
 
 #print(room_tree)
-print("ant count: " + str(kolichestvo_muraviev))
-print("start is: " + start + " routes - " + str(len(room_tree[start]) - 1))
-print("end is : " + end + " routes - " + str(len(room_tree[end]) - 1))
+#print("ant count: " + str(kolichestvo_muraviev))
+#print("start is: " + start + " routes - " + str(len(room_tree[start]) - 1))
+#print("end is : " + end + " routes - " + str(len(room_tree[end]) - 1))
 
 
 def map_to_arr(graph):
@@ -113,8 +113,8 @@ fill_links(room_tree)
 grph = fill_links(room_tree)
 ns = get_idx(start)
 ne = get_idx(end)
-print("NEW start is: " + str(ns))
-print("NEW end is: " + str(ne))
+#print("NEW start is: " + str(ns))
+#print("NEW end is: " + str(ne))
 # print(grph)
 fill_predecessors(grph)
 # print(predecessors)
@@ -155,9 +155,9 @@ def count_links(graph):
 
 
 links_count = count_links(grph)
-print("Links count: " + str(links_count))
-print("Nodes count: " + str(len(grph)))
-print("Average links from node: " + str((links_count / 2.) / (len(grph) / 2.)))
+#print("Links count: " + str(links_count))
+#print("Nodes count: " + str(len(grph)))
+#print("Average links from node: " + str((links_count / 2.) / (len(grph) / 2.)))
 
 G = nx.MultiDiGraph()
 for i in range(len(grph)):
@@ -235,11 +235,11 @@ def my_dijkstra(graph, st, en):
 pr = cProfile.Profile()
 pr.enable()
 
-print("\n")
+#print("\n")
 ts = time.time()
 my_dijkstra(grph, ns, ne)
 te = time.time()
-print("time to 1 MyDijkstra search is " + str(te - ts))
+#print("time to 1 MyDijkstra search is " + str(te - ts))
 
 
 # pr.disable()
@@ -266,15 +266,19 @@ print("time to 1 MyDijkstra search is " + str(te - ts))
 # print(s.getvalue())
 #
 # resd = my_dijkstra(grph, ns, ne)
-# their_d = nx.dijkstra_predecessor_and_distance(G, ns)
-#
-# res_ref = [-1] * len(grph)
-# for key in their_d[1]:
-#     res_ref[key] = their_d[1][key]
+their_d = nx.dijkstra_predecessor_and_distance(G, ns)
+
+res_ref = [-1] * len(grph)
+for key in their_d[1]:
+    res_ref[key] = their_d[1][key]
 
 # print(resd)
-# print(res_ref)
+res_ref.sort()
 
+sssss = '\n'.join([str(i) for i in res_ref])
+
+with open('test1.test', 'w') as f:
+    f.write(sssss + '\n')
 # for t in range(len(grph)):
 #     if resd[t] != res_ref[t]:
 #         print("AAAAA")

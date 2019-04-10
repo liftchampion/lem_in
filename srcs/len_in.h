@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shapka                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmiklaz <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ggerardy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/10 05:04:56 by bmiklaz           #+#    #+#             */
-/*   Updated: 2019/04/10 05:04:56 by bmiklaz          ###   ########.fr       */
+/*   Created: 2019/04/10 06:42:45 by ggerardy          #+#    #+#             */
+/*   Updated: 2019/04/10 06:42:45 by ggerardy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@ int		ft_parse_ants_count(void);
 int		ft_split_room(t_data *dt);
 int		ft_parse_hash(t_data *dt, char *ln, t_parse_mode pm);
 int 	ft_find_in_map(char *ln, t_data *dt);
+int 	ft_add_link(int i1, int i2, t_data *dt);
 int 	ft_parse_link(char *ln, t_data *dt);
+int 	ft_parse_links(t_data *dt);
 int 	ft_check_links_begin(char *end, t_node *nd, t_data *dt);
 int		ft_parse_room(char *ln, t_data *dt);
 int		ft_parse_rooms(t_data *dt);
@@ -45,5 +47,7 @@ t_data	*ft_make_data(void);
 int 	ft_free_node(t_node *nd, int ret);
 int 	ft_free_data(t_data *dt, int ret);
 void	ft_print_parsed(t_data *dt);
+void	ft_print_heap(t_data *dt);
+void	ft_print_dijkstra(t_data *dt);
 
 #endif

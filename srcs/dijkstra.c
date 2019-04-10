@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "lem_in_structs.h"
+#include "len_in.h"
 
 static inline void	ft_inl_swap(int *x, int *y, int h)
 {
@@ -36,10 +37,11 @@ void				sift_down(t_heap *heap, int ind)
 		next = (len < ind * 2 + 3 || LEFT < RIGHT ? ind * 2 + 1 : ind * 2 + 2);
 		if (weight[ind] > weight[next])
 		{
+			//ft_printf("{Green}+{eof}\n");
+			heap->num[name[ind]] = next;
+			heap->num[name[next]] = ind;
 			ft_inl_swap(weight + ind, weight + next, help_var);
 			ft_inl_swap(name + ind, name + next, help_var);
-			heap->num[name[ind]] = ind;
-			heap->num[name[next]] = next;
 			ind = next;
 		}
 		else
@@ -59,11 +61,12 @@ void				sift_up(t_heap *heap, int ind)
 	name = heap->name;
 	while (weight[ind] < weight[(ind - 1) / 2])
 	{
+		//ft_printf("{Green}-{eof}\n");
 		next = (ind - 1) / 2;
+		heap->num[name[ind]] = next;
+		heap->num[name[next]] = ind;
 		ft_inl_swap(weight + ind, weight + next, help_var);
 		ft_inl_swap(name + ind, name + next, help_var);
-		heap->num[name[ind]] = ind;
-		heap->num[name[next]] = next;
 		ind = next;
 	}
 }
@@ -81,17 +84,29 @@ int					take_min(t_heap *heap)
 	weight = heap->weight;
 	len = --(heap->len);
 	r = *weight;
+	heap->num[name[len]] = 0;
+	heap->num[*heap->name] = -1;
 	ft_inl_swap(name + len, name, help_var);
 	ft_inl_swap(weight + len, weight, help_var);
-	sift_down(heap, 0);
+
+	//ft_printf("{Magenta}Before sift{eof}\n");
+	//ft_printf("Heap: ");
+	//for (int i = 0; i < heap->len; ++i)
+	//	ft_printf(" %2d", heap->weight[i]);
+	//ft_printf("\nHeap place to name:");
+	//for (int i = 0; i < heap->len; ++i)
+	//	ft_printf(" %2d", heap->name[i]);
+	//ft_printf("\n");
+	if (len > 1)
+		sift_down(heap, 0);
 	return (r);
 }
 
 t_heap				*make_heap(int len)
 {
-	t_heap	*heap;
+	t_heap	*heap; // todo protect
 
-	heap = (t_heap*)malloc(sizeof(t_heap));
+	heap = (t_heap*)ft_memalloc(sizeof(t_heap));
 	heap->weight = (int*)malloc((size_t)len * 4);
 	heap->name = (int*)malloc((size_t)len * 4);
 	heap->num = (int*)malloc((size_t)len * 4);
@@ -136,19 +151,26 @@ void				dijkstra(t_data *graf)
 
 	heap = graf->heap;
 	fill_heap(graf);
+	//ft_print_heap(graf);
 	while (heap->len)
 	{
+		i = *heap->name;
+		int tmp = i; // todo
+		node = graf->nodes->data[i];
+		//ft_printf("{Red}Eject min %d{eof}\n", tmp);
+		graf->dsts[i] = take_min(graf->heap);
 		i = -1;
-		node = graf->nodes->data[*heap->name];
-		graf->dsts[*heap->name] = take_min(graf->heap);
+		//ft_print_heap(graf);
 		while (++i < (int)node->children->len)
 		{
-			j = node->children->data[i++];
+			j = node->children->data[i];
 			if (graf->dsts[GET_I(j)] == -57)
 			{
-				heap->weight[heap->num[GET_I(j)]] = node->p + GET_W(j) -
+				heap->weight[heap->num[GET_I(j)]] = graf->dsts[tmp] + node->p + GET_W(j) -
 					((t_node *)graf->nodes->data[GET_I(j)])->p;
+				//ft_printf("{Blue}Upd dst from %d to %d{eof}\n", tmp, GET_I(j));
 				sift_up(heap, heap->num[GET_I(j)]);
+				//ft_print_heap(graf);
 			}
 		}
 	}
