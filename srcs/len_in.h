@@ -24,6 +24,6 @@ t_vector	*ft_parser(void);
 /*
 **	ft_utils.c
 */
-int 		ft_free_data(t_data *dt, int ret);
+int			ft_free_data(t_data *dt, int ret);
 
 #endif

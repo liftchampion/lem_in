@@ -19,7 +19,7 @@ static inline void	ft_inl_swap(int *x, int *y, int h)
 	*y = h;
 }
 
-void	sift_down(t_heap *heap, int ind)
+void				sift_down(t_heap *heap, int ind)
 {
 	int				len;
 	register int	*weight;
@@ -37,7 +37,8 @@ void	sift_down(t_heap *heap, int ind)
 		{
 			ft_inl_swap(weight + ind, weight + next, help_var);
 			ft_inl_swap(name + ind, name + next, help_var);
-
+			heap->num[name[ind]] = ind;
+			heap->num[name[next]] = next;
 			ind = next;
 		}
 		else
@@ -45,7 +46,7 @@ void	sift_down(t_heap *heap, int ind)
 	}
 }
 
-void	sift_up(t_heap *heap, int ind)
+void				sift_up(t_heap *heap, int ind)
 {
 	register int	*weight;
 	register int	*name;
@@ -57,24 +58,33 @@ void	sift_up(t_heap *heap, int ind)
 	while (weight[ind] < weight[(ind - 1) / 2])
 	{
 		next = (ind - 1) / 2;
-		help_var = weight[ind];
-		weight[ind] = weight[next];
-		weight[next] = help_var;
-		help_var = name[ind];
-		name[ind] = name[next];
-		name[next] = help_var;
+		ft_inl_swap(weight + ind, weight + next, help_var);
+		ft_inl_swap(name + ind, name + next, help_var);
+		heap->num[name[ind]] = ind;
+		heap->num[name[next]] = next;
 		ind = next;
 	}
 }
 
-t_edge	*take_min(t_heap *heap)
+int					take_min(t_heap *heap)
 {
+	int *name;
+	int *weight;
+	int len;
+	int	help_var;
 	int	r;
 
-	r = heap->weight[0];
+	name = heap->name;
+	weight = heap->weight;
+	len = --(heap->len);
+	r = *weight;
+	ft_inl_swap(name + len, name, help_var);
+	ft_inl_swap(weight + len, weight, help_var);
+	sift_down(heap, 0);
+	return (r);
 }
 
-t_heap	*make_heap(int len)
+t_heap				*make_heap(int len)
 {
 	t_heap	*heap;
 
@@ -85,20 +95,23 @@ t_heap	*make_heap(int len)
 	return (heap);
 }
 
-void	fill_heap(t_data *graf)
+void				fill_heap(t_data *graf)
 {
 	size_t	i;
 	int		*weight;
 	int		*name;
+	int		*num;
 	int		*dsts;
 
 	weight = graf->heap->weight;
 	name = graf->heap->name;
+	num = graf->heap->num;
 	dsts = graf->dsts;
 	i = graf->nodes->len;
 	graf->heap->len = (int)i;
 	while (--i)
 	{
+		num[i] = (int)i;
 		dsts[i] = -57;
 		weight[i] = 1000000;
 		name[i] = (int)i;
@@ -106,18 +119,24 @@ void	fill_heap(t_data *graf)
 	dsts[i] = -57;
 	weight[i] = (int)i;
 	name[i] = graf->start;
+	num[i] = graf->start;
 	name[graf->start] = (int)i;
+	num[graf->start] = (int)i;
 }
 
-void	dijkstra(t_data *graf)
+void				dijkstra(t_data *graf)
 {
-	int				i;
-	t_heap			*heap;
+	int		i;
+	t_heap	*heap;
+	t_node	*node;
 
 	heap = graf->heap;
 	fill_heap(graf);
 	while (heap->len)
-	{
-		i = take_min(graf->heap);
+	{graf->
+		i = -1;
+		node = *heap->name
+		graf->dsts[*heap->name] = take_min(graf->heap);
+		while (++i < graf->nodes->len)
 	}
 }
