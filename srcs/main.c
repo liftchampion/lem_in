@@ -26,11 +26,13 @@ int		main(void)
 	//for (int i = 0; i < 1000; ++i)
 	//ft_print_parsed(dt);
 
-	dijkstra(dt);
-	ft_upd_pts(dt);
-	ft_find_shortest_path(dt);
+	ft_find_all_flows(dt);
 
-	ft_send_flow(dt);
+	//dijkstra(dt);
+	//ft_upd_pts(dt);
+	//ft_find_shortest_path(dt);
+
+	//ft_send_flow(dt);
 	//ft_print_parsed(dt);
 
 
@@ -44,6 +46,6 @@ int		main(void)
 	//ft_print_parsed(dt);
 	//ft_print_dijkstra(dt, 2);
 
-	ft_print_path(dt, 3);
+	//ft_print_path(dt, 3);
 	return (ft_free_data(dt, 0));
 }

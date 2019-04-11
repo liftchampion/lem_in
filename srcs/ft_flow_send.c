@@ -22,30 +22,6 @@ static inline void	ft_inl_swap(void **x, void **y)
 	*y = h;
 }
 
-/*
-static inline int	ft_get_idx(void **v, int len, const int is[2], t_data *dt)
-{
-	int i;
-	int curr_wp;
-	int res_wp;
-	int res_idx;
-
-	i = -1;
-	res_wp = INF;
-	res_idx = INF;
-	while (++i < len)
-	{
-		if (GET_I(v[i]) == is[1] && (curr_wp = GET_W(v[i])
-				+ ((t_node*)dt->nodes->data[is[0]])->p
-				- ((t_node*)dt->nodes->data[is[1]])->p) < res_wp)
-		{
-			res_wp = curr_wp;
-			res_idx = i;
-		}
-	}
-	return (res_idx);
-}*/
-
 static inline int	ft_find_min_weigth(void **v, int len, int to_find)
 {
 	int i;
@@ -101,19 +77,6 @@ int		ft_rm_link(int i1, int i2, t_data *dt)
 		return (0);
 	return (1);
 }
-/*
-int 	ft_add_link_flow(int i1, int i2, t_data *dt, int w)
-{
-	t_node	*n1;
-	t_node	*n2;
-
-	n1 = dt->nodes->data[i1];
-	n2 = dt->nodes->data[i2];
-	if (!ft_vector_push_back(&n2->chs, TO_EDGE(i1, -w)) ||
-		!ft_vector_push_back(&n1->prs, TO_EDGE(i2, -w)))
-		return (0);
-	return (1);
-}*/
 
 int		ft_send_flow(t_data *dt)
 {
