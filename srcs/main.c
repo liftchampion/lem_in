@@ -21,11 +21,15 @@ int		main(void)
 	int fd = open("big.test", O_RDONLY);
 	if (!(dt = ft_parser(fd)))
 		return (ft_printf("Error\n") * 0);
-	dijkstra(dt);
-	ft_upd_pts(dt);
+	for (int i = 0; i < 1000; ++i)
+	{
+		dijkstra(dt);
+		ft_upd_pts(dt);
+		ft_find_shortest_path(dt);
+	}
 	//ft_print_parsed(dt);
 	//ft_print_dijkstra(dt, 2);
-	ft_find_shortest_path(dt);
+
 	ft_print_path(dt, 3);
 	return (ft_free_data(dt, 0));
 }

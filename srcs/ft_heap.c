@@ -58,15 +58,16 @@ void				sift_up(t_heap *heap, int ind)
 	help_var = 0;
 	weight = heap->weight;
 	name = heap->name;
-	while (weight[ind] < weight[(ind - 1) / 2])
+	next = (ind - 1) / 2;
+	while (weight[ind] < weight[next])
 	{
 		//ft_printf("{Green}-{eof}\n");
-		next = (ind - 1) / 2;
 		heap->num[name[ind]] = next;
 		heap->num[name[next]] = ind;
 		ft_inl_swap(weight + ind, weight + next, help_var);
 		ft_inl_swap(name + ind, name + next, help_var);
 		ind = next;
+		next = (ind - 1) / 2;
 	}
 }
 
