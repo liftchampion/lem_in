@@ -15,11 +15,11 @@
 
 void				dijkstra(t_data *graf)
 {
-	int		i;
-	void	*j;
-	t_heap	*heap;
-	t_node	*node;
-	size_t	vars[3];
+	int				i;
+	void			*j;
+	register t_heap	*heap;
+	register t_node	*node;
+	size_t			vars[3];
 
 	fill_heap(graf, (heap = graf->heap));
 	while (heap->len && (i = -1))

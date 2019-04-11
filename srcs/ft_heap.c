@@ -25,9 +25,7 @@ void				sift_down(t_heap *heap, int ind)
 	register int	*weight;
 	register int	*name;
 	register int	next;
-	int				help_var;
 
-	help_var = 0;
 	weight = heap->weight;
 	name = heap->name;
 	len = heap->len;
@@ -39,8 +37,8 @@ void				sift_down(t_heap *heap, int ind)
 			//ft_printf("{Green}+{eof}\n");
 			heap->num[name[ind]] = next;
 			heap->num[name[next]] = ind;
-			ft_inl_swap(weight + ind, weight + next, help_var);
-			ft_inl_swap(name + ind, name + next, help_var);
+			ft_inl_swap(weight + ind, weight + next, 0);
+			ft_inl_swap(name + ind, name + next, 0);
 			ind = next;
 		}
 		else
@@ -52,10 +50,8 @@ void				sift_up(t_heap *heap, int ind)
 {
 	register int	*weight;
 	register int	*name;
-	int				help_var;
 	int				next;
 
-	help_var = 0;
 	weight = heap->weight;
 	name = heap->name;
 	next = (ind - 1) / 2;
@@ -64,8 +60,8 @@ void				sift_up(t_heap *heap, int ind)
 		//ft_printf("{Green}-{eof}\n");
 		heap->num[name[ind]] = next;
 		heap->num[name[next]] = ind;
-		ft_inl_swap(weight + ind, weight + next, help_var);
-		ft_inl_swap(name + ind, name + next, help_var);
+		ft_inl_swap(weight + ind, weight + next, 0);
+		ft_inl_swap(name + ind, name + next, 0);
 		ind = next;
 		next = (ind - 1) / 2;
 	}
@@ -76,18 +72,16 @@ int					take_min(t_heap *heap)
 	int *name;
 	int *weight;
 	int len;
-	int	help_var;
 	int	r;
 
-	help_var = 0;
 	name = heap->name;
 	weight = heap->weight;
 	len = --(heap->len);
 	r = *weight;
 	heap->num[name[len]] = 0;
 	//heap->num[*heap->name] = -1;
-	ft_inl_swap(name + len, name, help_var);
-	ft_inl_swap(weight + len, weight, help_var);
+	ft_inl_swap(name + len, name, 0);
+	ft_inl_swap(weight + len, weight, 0);
 
 	//ft_printf("{Magenta}Before sift{eof}\n");
 	//ft_printf("Heap: ");

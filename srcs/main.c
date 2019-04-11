@@ -22,9 +22,24 @@ int		main(void)
 	if (!(dt = ft_parser(fd)))
 		return (ft_printf("Error\n") * 0);
 
+
+	//for (int i = 0; i < 1000; ++i)
+	//ft_print_parsed(dt);
+
 	dijkstra(dt);
 	ft_upd_pts(dt);
 	ft_find_shortest_path(dt);
+
+	ft_send_flow(dt);
+	//ft_print_parsed(dt);
+
+
+
+	//__uint128_t test = 0;
+	//test |= (__uint128_t)1 << 127u;
+	//test |= (__uint128_t)1 << 0u;
+
+
 
 	//ft_print_parsed(dt);
 	//ft_print_dijkstra(dt, 2);

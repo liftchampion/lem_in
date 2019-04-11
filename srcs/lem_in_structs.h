@@ -67,6 +67,7 @@ struct s_data
 
 struct	s_node
 {
+	__uint128_t	flows;
 	char		*name;
 	t_vector	*chs;
 	t_vector	*prs;
