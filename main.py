@@ -50,9 +50,9 @@ for i in range(len(s)):
         # print ''
 
 #print(room_tree)
-#print("ant count: " + str(kolichestvo_muraviev))
-#print("start is: " + start + " routes - " + str(len(room_tree[start]) - 1))
-#print("end is : " + end + " routes - " + str(len(room_tree[end]) - 1))
+print("ant count: " + str(kolichestvo_muraviev))
+print("start is: " + start + " routes - " + str(len(room_tree[start]) - 1))
+print("end is : " + end + " routes - " + str(len(room_tree[end]) - 1))
 
 
 def map_to_arr(graph):
@@ -113,15 +113,14 @@ fill_links(room_tree)
 grph = fill_links(room_tree)
 ns = get_idx(start)
 ne = get_idx(end)
-#print("NEW start is: " + str(ns))
-#print("NEW end is: " + str(ne))
+print("NEW start is: " + str(ns))
+print("NEW end is: " + str(ne))
 # print(grph)
 fill_predecessors(grph)
 # print(predecessors)
-# print_predecessors(predecessors)
+print_predecessors(predecessors)
 
 inf = 10**10
-
 
 
 def bell_ford(graph):
@@ -155,14 +154,14 @@ def count_links(graph):
 
 
 links_count = count_links(grph)
-#print("Links count: " + str(links_count))
-#print("Nodes count: " + str(len(grph)))
-#print("Average links from node: " + str((links_count / 2.) / (len(grph) / 2.)))
+print("Links count: " + str(links_count / 2))
+print("Nodes count: " + str(len(grph) / 2))
+print("Average links from node: " + str((links_count / 2.) / (len(grph) / 2.)))
 
-G = nx.MultiDiGraph()
+G = nx.DiGraph()
 for i in range(len(grph)):
     for k in grph[i]:
-        G.add_edge(i, k[0])
+        G.add_edge(i, k[0], capacity=1)
 
 # nx.draw(G)
 # matplotlib.pyplot.show()
@@ -207,6 +206,9 @@ def heap_upd(hp, n, not_visited):
         father = (n - 1) // 2
 
 
+preds_new = [] * len(grph)
+
+
 def my_dijkstra(graph, st, en):
     distances = [10000000000] * len(graph)  # array of final distances to all nodes
     distances[st] = 0  # dst from start to start is 0
@@ -235,37 +237,37 @@ def my_dijkstra(graph, st, en):
 pr = cProfile.Profile()
 pr.enable()
 
-#print("\n")
+print("\n")
 ts = time.time()
 my_dijkstra(grph, ns, ne)
 te = time.time()
-#print("time to 1 MyDijkstra search is " + str(te - ts))
+print("time to 1 MyDijkstra search is " + str(te - ts))
 
 
-# pr.disable()
-# s = io.StringIO()
-# sortby = SortKey.CUMULATIVE
-# ps = pstats.Stats(pr, stream=s).sort_stats(sortby)
-# ps.print_stats()
-# print(s.getvalue())
-#
-#
-# pr = cProfile.Profile()
-# pr.enable()
-#
-# ts = time.time()
-# nx.dijkstra_predecessor_and_distance(G, ns)
-# te = time.time()
-# print("time to 1 Dijkstra search is " + str(te - ts))
-#
-# pr.disable()
-# s = io.StringIO()
-# sortby = SortKey.CUMULATIVE
-# ps = pstats.Stats(pr, stream=s).sort_stats(sortby)
-# ps.print_stats()
-# print(s.getvalue())
-#
-# resd = my_dijkstra(grph, ns, ne)
+pr.disable()
+s = io.StringIO()
+sortby = SortKey.CUMULATIVE
+ps = pstats.Stats(pr, stream=s).sort_stats(sortby)
+ps.print_stats()
+print(s.getvalue())
+
+
+pr = cProfile.Profile()
+pr.enable()
+
+ts = time.time()
+nx.dijkstra_predecessor_and_distance(G, ns)
+te = time.time()
+print("time to 1 Dijkstra search is " + str(te - ts))
+
+pr.disable()
+s = io.StringIO()
+sortby = SortKey.CUMULATIVE
+ps = pstats.Stats(pr, stream=s).sort_stats(sortby)
+ps.print_stats()
+print(s.getvalue())
+
+resd = my_dijkstra(grph, ns, ne)
 their_d = nx.dijkstra_predecessor_and_distance(G, ns)
 
 res_ref = [-1] * len(grph)
@@ -273,32 +275,24 @@ for key in their_d[1]:
     res_ref[key] = their_d[1][key]
 
 # print(resd)
+# print(res_ref)
+
+for t in range(len(grph)):
+    if resd[t] != res_ref[t]:
+        print("AAAAA")
+        print(str(resd[t]), " vs ", str(res_ref[t]), "  -  ", t)
+
+print(resd == res_ref)
+
+print(ne)
+ne = get_idx(idx_to_name[ne] + "_____")
+print(ne)
 
 
-their_path = nx.dijkstra_path(G, ns, ne)
-for idx in their_path:
-    print (idx_to_name[idx])
-#print (their_path)
-print (len(their_path))
+#print(nx.algorithms.flow.maximum_flow(G, ns, ne))
+print(nx.algorithms.flow.maximum_flow_value(G, ns, ne))
 
-
-# res_ref.sort()
-# sssss = '\n'.join([str(i) for i in res_ref])
-# with open('testsp1.test', 'w') as f:
-#     f.write(sssss + '\n')
-
-
-
-
-
-
-# for t in range(len(grph)):
-#     if resd[t] != res_ref[t]:
-#         print("AAAAA")
-#         print(str(resd[t]), " vs ", str(res_ref[t]), "  -  ", t)
-#
-# print(resd == res_ref)
-
+#print(nx.algorithms.max_flow_min_cost(G, ns, ne))
 
 
 # import time
