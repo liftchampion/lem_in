@@ -10,3 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "len_in.h"
+/*
+int		ft_send_flow(t_data *dt)
+{
+	int i;
+	size_t *path;
+
+	path = (size_t*)dt->path->data;
+	i = dt->path->len;
+	while (--i >= 0)
+	{
+
+	}
+}*/

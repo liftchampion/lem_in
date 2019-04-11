@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggerardy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/11 06:16:35 by ggerardy          #+#    #+#             */
-/*   Updated: 2019/04/11 06:16:35 by ggerardy         ###   ########.fr       */
+/*   Created: 2019/04/11 08:03:34 by ggerardy          #+#    #+#             */
+/*   Updated: 2019/04/11 08:03:34 by ggerardy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@
 **	dijkstra.c
 */
 void	dijkstra(t_data *graf);
+/*
+**	ft_flows.c
+*/
+int		ft_send_flow(t_data *dt);
 /*
 **	ft_freeshers.c
 */
@@ -46,6 +50,7 @@ t_data	*ft_parser(int fd);
 /*
 **	ft_parser_links.c
 */
+void	ft_rm_link(int i1, int i2, t_data *dt);
 int 	ft_add_link(int i1, int i2, t_data *dt);
 int 	ft_parse_link(char *ln, t_data *dt);
 int 	ft_parse_links(t_data *dt, int fd);
@@ -66,7 +71,6 @@ int 	ft_check_start_end(t_data *dt);
 /*
 **	ft_shortest.c
 */
-int 	ft_find_min_parent(t_data *dt, const size_t *parents, int len);
 int		ft_find_shortest_path(t_data *dt);
 /*
 **	ft_utils.c

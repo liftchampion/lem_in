@@ -13,7 +13,7 @@
 #include "libft.h"
 #include "len_in.h"
 
-int 	ft_find_min_parent(t_data *dt, const size_t *parents, int len)
+static inline int	ft_find_min_parent(t_data *dt, const size_t *parents, int len)
 {
 	int i;
 	int min_p;

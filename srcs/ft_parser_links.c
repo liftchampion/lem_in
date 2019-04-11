@@ -11,6 +11,46 @@
 /* ************************************************************************** */
 
 #include "len_in.h"
+/*
+static inline void	ft_inl_swap(size_t *x, size_t *y)
+{
+	size_t h;
+
+	h = *x;
+	*x = *y;
+	*y = h;
+}*/
+
+/*static inline int	ft_get_idx(void **v, int len, int n, int w)
+{
+	int i;
+	int res_wp;
+	int res_idx;
+	void *to_find;
+
+	i = -1;
+	res_wp = INF;
+	res_idx = INF;
+	while (++i < len)
+	{
+		if (GET_I(arr[i]) == s && GET_W(arr[i]) + st_p - dt->nodes->data[])
+	}
+	return (res_idx);
+}*/
+
+void	ft_rm_link(int i1, int i2, t_data *dt)
+{
+	t_node *n1;
+	t_node *n1_;
+	t_node *n2;
+	t_node *n2_;
+
+	n1 = dt->nodes->data[i1];
+	n1_ = dt->nodes->data[i1 + 1];
+	n2 = dt->nodes->data[i2];
+	n2_ = dt->nodes->data[i2 + 1];
+
+}
 
 int 	ft_add_link(int i1, int i2, t_data *dt)
 {
