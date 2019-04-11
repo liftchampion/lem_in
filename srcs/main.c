@@ -17,11 +17,36 @@ int		main(void)
 {
 	t_data *dt;
 
-	if (!(dt = ft_parser()))
+	//int fd = 0;
+	int fd = open("bad3.t", O_RDONLY);
+	if (!(dt = ft_parser(fd)))
 		return (ft_printf("Error\n") * 0);
+
+
+	//for (int i = 0; i < 1000; ++i)
+	//	dijkstra(dt);
 	//ft_print_parsed(dt);
-	//for (int i = 1; i < 1000; i++)
-	dijkstra(dt);
-	ft_print_dijkstra(dt);
+
+	ft_find_all_flows(dt);
+
+
+	//ft_upd_pts(dt);
+	//ft_find_shortest_path(dt);
+
+	//ft_send_flow(dt);
+	//ft_print_parsed(dt);
+
+
+
+	//__uint128_t test = 0;
+	//test |= (__uint128_t)1 << 127u;
+	//test |= (__uint128_t)1 << 0u;
+
+
+
+	//ft_print_parsed(dt);
+	//ft_print_dijkstra(dt, 2);
+
+	//ft_print_path(dt, 3);
 	return (ft_free_data(dt, 0));
 }

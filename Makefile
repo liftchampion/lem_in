@@ -17,17 +17,18 @@ HEADERS_DIR = srcs
 SRCDIR = srcs
 INCS = ./libft/includes
 LIBFT = ./libft
-ADD_FLAGS =
+ADD_FLAGS_LINK =
+ADD_FLAGS_COMPILE =
 OBJS_DIR = objs
 DPDS_DIR = dpds
 
 CC = clang
 WFLAGS = -Wall -Wextra -Werror
 DFLAGS = -g
-SANITIZE_ADDRESS_FLAGS = -fsanitize=address -g
-SANITIZE_LEAK_FLAGS = -g -fno-sanitize=all
+SANITIZE_FLAGS = -fsanitize=address -g
+OPTIMIZE_FLAGS = -O3
 
-GITIGNORE_DATA = $(NAME)\n.norm_script.sh\n*.o\n*.d\nobjs\ndpds\n.idea\n*.dSYM\n*.test\
+GITIGNORE_DATA = $(NAME)\n.norm_script.sh\n*.o\n*.d\nobjs\ndpds\n.idea\n*.dSYM\n*.test*\
 				\ncmake-build-debug\n*.a\n.DS_Store
 GITIGNORE = .gitignore
 
@@ -63,7 +64,7 @@ $(NAME): $(OBJS_DIR) $(OBJS_SUBDIRS) $(DPDS_SUBDIRS) $(DPDS_DIR) $(OBJS) $(HEADE
 	@printf "\e[?25h\033[A\033[K\e[?25h\x1B[38;5;30mLinking   $(NAME)...\x1B[0m\n"
 # Set flags
 	$(eval FLAGS := $(WFLAGS))
-	$(eval FLAGS += $(ADD_FLAGS))
+	$(eval FLAGS += $(ADD_FLAGS_LINKE))
 # Link as lib/exe
 ifeq ($(IS_LIB),a)
 		@ar rcs $(NAME) $(OBJS) $(LIBFT)/libft.a;
@@ -86,6 +87,7 @@ $(OBJS_DIR)/%.o: $(SRCDIR)/%.c
 	@echo "\x1B[38;5;105m$(notdir $*.c)\x1B[0m"
 # Set flags
 	@$(eval FLAGS := $(WFLAGS))
+	@$(eval FLAGS += $(ADD_FLAGS_COMPILE))
 # Compile
 	@$(CC) -c $(SRCDIR)/$*.c -I $(INCS) $(FLAGS) -o $(OBJS_DIR)/$*.o
 # Make dependency
@@ -144,11 +146,11 @@ endif
 debug: WFLAGS = $(DFLAGS)
 debug: print_debug make_lib re_this
 
-sanitize_address: WFLAGS = $(SANITIZE_ADDRESS_FLAGS)
-sanitize_address: print_sanitize_address make_lib re_this
+sanitize: WFLAGS = $(SANITIZE_FLAGS)
+sanitize: print_sanitize_address make_lib re_this
 
-sanitize_leak: WFLAGS = $(SANITIZE_LEAK_FLAGS)
-sanitize_leak: print_sanitize_leak make_lib re_this
+optimize: WFLAGS = $(OPTIMIZE_FLAGS)
+optimize: print_optimize make_lib re_this
 
 #--tool=massif
 valgrind: print_valgrind debug
@@ -217,8 +219,8 @@ print_debug:
 print_sanitize_address:
 	@echo "\x1B[38;5;200mSanitize address mode $(NAME)...\x1B[0m"
 
-print_sanitize_leak:
-	@echo "\x1B[38;5;200mSanitize leak mode $(NAME)...\x1B[0m"
+print_optimize:
+	@echo "\x1B[38;5;47mOptimization mode $(NAME)...\x1B[0m"
 
 print_valgrind:
 	@echo "\x1B[38;5;202mValgrinding $(NAME)...\x1B[0m"

@@ -18,11 +18,11 @@ t_node		*ft_make_node(void)
 
 	if (!(node = ft_memalloc(sizeof(t_node))))
 		return (0);
-	if (!(node->children = ft_make_vector(4)))
+	if (!(node->chs = ft_make_vector(4)))
 		return ((void*)(size_t)free_ret(node, 0));
-	if (!(node->parents = ft_make_vector(4)))
+	if (!(node->prs = ft_make_vector(4)))
 	{
-		ft_free_vector(&node->children);
+		ft_free_vector(&node->chs);
 		return ((void*)(size_t)free_ret(node, 0));
 	}
 	return (node);
@@ -35,7 +35,8 @@ t_data		*ft_make_data(void)
 	if (!(dt = ft_memalloc(sizeof(t_data))))
 		return (0);
 	if (!(dt->nodes = ft_make_vector(INIT_NODES_COUNT)) ||
-			!(dt->name_to_idx = ft_make_std_map(NON_FREE_STR, INT32_T)))
+		!(dt->name_to_idx = ft_make_std_map(NON_FREE_STR, INT32_T)) ||
+		!(dt->path = ft_make_vector(INIT_PATH_LEN)))
 		return ((void*)(size_t)ft_free_data(dt, 0));
 	dt->start = -1;
 	dt->end = -1;
