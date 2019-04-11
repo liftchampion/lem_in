@@ -74,6 +74,7 @@ struct	s_node
 	int			p;
 	int 		x;
 	int 		y;
+	int 		was_here;
 };
 
 struct	s_edge

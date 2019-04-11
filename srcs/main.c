@@ -18,17 +18,18 @@ int		main(void)
 	t_data *dt;
 
 	//int fd = 0;
-	int fd = open("big.test", O_RDONLY);
+	int fd = open("bad3.t", O_RDONLY);
 	if (!(dt = ft_parser(fd)))
 		return (ft_printf("Error\n") * 0);
 
 
 	//for (int i = 0; i < 1000; ++i)
+	//	dijkstra(dt);
 	//ft_print_parsed(dt);
 
 	ft_find_all_flows(dt);
 
-	//dijkstra(dt);
+
 	//ft_upd_pts(dt);
 	//ft_find_shortest_path(dt);
 

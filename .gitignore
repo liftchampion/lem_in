@@ -6,7 +6,7 @@ objs
 dpds
 .idea
 *.dSYM
-*.test 
+*.test*
 cmake-build-debug
 *.a
 .DS_Store

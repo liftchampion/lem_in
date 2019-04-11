@@ -28,7 +28,7 @@ DFLAGS = -g
 SANITIZE_FLAGS = -fsanitize=address -g
 OPTIMIZE_FLAGS = -O3
 
-GITIGNORE_DATA = $(NAME)\n.norm_script.sh\n*.o\n*.d\nobjs\ndpds\n.idea\n*.dSYM\n*.test\
+GITIGNORE_DATA = $(NAME)\n.norm_script.sh\n*.o\n*.d\nobjs\ndpds\n.idea\n*.dSYM\n*.test*\
 				\ncmake-build-debug\n*.a\n.DS_Store
 GITIGNORE = .gitignore
 
