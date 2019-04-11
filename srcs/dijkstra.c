@@ -19,35 +19,23 @@ void				dijkstra(t_data *graf)
 	void	*j;
 	t_heap	*heap;
 	t_node	*node;
+	size_t	vars[3];
 
-	heap = graf->heap;
-	fill_heap(graf);
-	//ft_print_heap(graf);
-	while (heap->len)
+	fill_heap(graf, (heap = graf->heap));
+	while (heap->len && (i = -1))
 	{
-		i = *heap->name;
-		int tmp = i; // todo
-		node = graf->nodes->data[i];
-		/*ft_printf("{Red}Eject min %s(%d){eof}\n",
-				((t_node*)graf->nodes->data[tmp])->name,
-				tmp);*/
-		graf->dsts[i] = take_min(graf->heap);
-		i = -1;
-		//ft_print_heap(graf);
-		while (++i < (int)node->children->len)
+		vars[CN] = *heap->name;
+		node = graf->nodes->data[vars[CN]];
+		graf->dsts[vars[CN]] = take_min(graf->heap);
+		while (++i < (int)node->chs->len && (j = node->chs->data[i]) >= 0)
 		{
-			j = node->children->data[i];
-			if (graf->dsts[GET_I(j)] == -57)
+			if (graf->dsts[GET_I(j)] == NOT_VISITED &&
+				*(int*)(vars[OLD] = (size_t)&heap->weight[heap->num[GET_I(j)]])
+				> (int)(vars[NEW] = graf->dsts[vars[CN]] + node->p + GET_W(j) -
+					((t_node*)graf->nodes->data[GET_I(j)])->p))
 			{
-				heap->weight[heap->num[GET_I(j)]] = graf->dsts[tmp] + node->p + GET_W(j) -
-					((t_node *)graf->nodes->data[GET_I(j)])->p;
-				/*ft_printf("{Blue}Upd dst from %s(%d) to %s(%d){eof}\n",
-						((t_node*)graf->nodes->data[tmp])->name,
-						tmp,
-						((t_node*)graf->nodes->data[GET_I(j)])->name,
-						GET_I(j));*/
+				*(int*)vars[OLD] = vars[NEW];
 				sift_up(heap, heap->num[GET_I(j)]);
-				//ft_print_heap(graf);
 			}
 		}
 	}

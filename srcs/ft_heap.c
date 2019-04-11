@@ -101,7 +101,7 @@ int					take_min(t_heap *heap)
 	return (r);
 }
 
-void				fill_heap(t_data *graf)
+void				fill_heap(t_data *graf, t_heap *heap)
 {
 	size_t	i;
 	int		*weight;
@@ -109,20 +109,20 @@ void				fill_heap(t_data *graf)
 	int		*num;
 	int		*dsts;
 
-	weight = graf->heap->weight;
-	name = graf->heap->name;
-	num = graf->heap->num;
+	weight = heap->weight;
+	name = heap->name;
+	num = heap->num;
 	dsts = graf->dsts;
 	i = graf->nodes->len;
-	graf->heap->len = (int)i;
+	heap->len = (int)i;
 	while (--i)
 	{
 		num[i] = (int)i;
-		dsts[i] = -57;
-		weight[i] = 1000000;
+		dsts[i] = NOT_VISITED;
+		weight[i] = INF;
 		name[i] = (int)i;
 	}
-	dsts[i] = -57;
+	dsts[i] = NOT_VISITED;
 	weight[i] = (int)i;
 	name[i] = graf->start;
 	num[i] = graf->start;

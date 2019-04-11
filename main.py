@@ -273,12 +273,25 @@ for key in their_d[1]:
     res_ref[key] = their_d[1][key]
 
 # print(resd)
-res_ref.sort()
 
-sssss = '\n'.join([str(i) for i in res_ref])
 
-with open('testsp1.test', 'w') as f:
-    f.write(sssss + '\n')
+their_path = nx.dijkstra_path(G, ns, ne)
+for idx in their_path:
+    print (idx_to_name[idx])
+#print (their_path)
+print (len(their_path))
+
+
+# res_ref.sort()
+# sssss = '\n'.join([str(i) for i in res_ref])
+# with open('testsp1.test', 'w') as f:
+#     f.write(sssss + '\n')
+
+
+
+
+
+
 # for t in range(len(grph)):
 #     if resd[t] != res_ref[t]:
 #         print("AAAAA")

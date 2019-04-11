@@ -11,4 +11,4 @@ add_executable(lem_in ${LIBFT_SRCS} srcs/main.c srcs/lem_in_structs.h srcs/len_i
 		srcs/ft_parser.c srcs/len_in.h srcs/ft_utils.c
 		srcs/dijkstra.c srcs/ft_makers.c srcs/ft_freeshers.c
 		srcs/ft_heap.c srcs/ft_parser_utils.c
-		srcs/ft_parser_links.c srcs/ft_parser_rooms.c)
+		srcs/ft_parser_links.c srcs/ft_parser_rooms.c srcs/ft_shortest.c srcs/ft_flows.c)

@@ -23,10 +23,10 @@ int 	ft_add_link(int i1, int i2, t_data *dt)
 	n1_ = dt->nodes->data[i1 + 1];
 	n2 = dt->nodes->data[i2];
 	n2_ = dt->nodes->data[i2 + 1];
-	if (!ft_vector_push_back(&n1->children, TO_EDGE(i2 + 1, 1)) ||
-			!ft_vector_push_back(&n1_->parents, TO_EDGE(i2, 1)) ||
-			!ft_vector_push_back(&n2->children, TO_EDGE(i1 + 1, 1)) ||
-			!ft_vector_push_back(&n2_->parents, TO_EDGE(i1, 1)))
+	if (!ft_vector_push_back(&n1->chs, TO_EDGE(i2 + 1, 1)) ||
+		!ft_vector_push_back(&n1_->prs, TO_EDGE(i2, 1)) ||
+		!ft_vector_push_back(&n2->chs, TO_EDGE(i1 + 1, 1)) ||
+		!ft_vector_push_back(&n2_->prs, TO_EDGE(i1, 1)))
 		return (0);
 	return (1);
 }
@@ -60,12 +60,12 @@ int 	ft_parse_link(char *ln, t_data *dt)
 	return (1);
 }
 
-int 	ft_parse_links(t_data *dt)
+int 	ft_parse_links(t_data *dt, int fd)
 {
 	char *ln;
 	int parse_res;
 
-	while ((ln = (char*)1lu) && ft_get_next_line(FD, &ln, READ_BUFF))
+	while ((ln = (char*)1lu) && ft_get_next_line(fd, &ln, READ_BUFF))
 	{
 		if (!ln)
 			return (0);

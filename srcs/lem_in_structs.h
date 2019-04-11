@@ -18,15 +18,21 @@
 # define READ_BUFF 1000000
 
 # define INTMAX 2147483647
+# define INF 1000000000
+# define NOT_VISITED -57
 # define LEFT weight[ind * 2 + 1]
 # define RIGHT weight[ind * 2 + 2]
-# define FD 0
+# define FD 3
 # define INIT_NODES_COUNT 128
 # define INIT_NAME_LEN 16
+# define INIT_PATH_LEN 64
 # define NODE_POSTFIX "*"
 # define TO_EDGE(i, w) ((void*)((((size_t)(i)) << 32u) | (unsigned)(w)))
 # define GET_I(iw) ((int)((size_t)(iw) >> 32u))
 # define GET_W(iw) ((int)(iw))
+# define CN 0
+# define OLD 1
+# define NEW 2
 
 # define NODE struct s_node
 # define EDGE struct s_edge
@@ -53,6 +59,7 @@ struct s_data
 	char 		*tmp_line;
 	t_map		*name_to_idx;
 	int 		*dsts;
+	t_vector	*path;
 	int 		ant_count;
 	int 		start;
 	int 		end;
@@ -61,8 +68,8 @@ struct s_data
 struct	s_node
 {
 	char		*name;
-	t_vector	*children;
-	t_vector	*parents;
+	t_vector	*chs;
+	t_vector	*prs;
 	int			p;
 	int 		x;
 	int 		y;

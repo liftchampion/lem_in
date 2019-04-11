@@ -12,12 +12,12 @@
 
 #include "len_in.h"
 
-int			ft_parse_ants_count(void)
+int			ft_parse_ants_count(int fd)
 {
 	char *ln;
 	int count;
 
-	if (ft_get_next_line(FD, &ln, READ_BUFF) <= 0)
+	if (ft_get_next_line(fd, &ln, READ_BUFF) <= 0)
 		return (0);
 	if ((count = ft_atoi(ln)) <= 0)
 		return (free_ret(ln, 0));
@@ -40,7 +40,7 @@ int		ft_parse_hash(t_data *dt, char *ln, t_parse_mode pm)
 	{
 		if (dt->end != -1)
 			return (0);
-		dt->end = dt->nodes->len;
+		dt->end = dt->nodes->len + 1;
 	}
 	return (1);
 }

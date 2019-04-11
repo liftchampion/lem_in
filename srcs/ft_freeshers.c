@@ -17,8 +17,8 @@ int 	ft_free_node(t_node *nd, int ret)
 	if (!nd)
 		return (ret);
 	free(nd->name);
-	ft_free_vector(&nd->children);
-	ft_free_vector(&nd->parents);
+	ft_free_vector(&nd->chs);
+	ft_free_vector(&nd->prs);
 	free(nd);
 	return (ret);
 }
@@ -35,6 +35,7 @@ int 	ft_free_data(t_data *dt, int ret)
 		ft_free_node(dt->nodes->data[i], 0);
 	free(dt->nodes->data);
 	free(dt->nodes);
+	ft_free_vector(&dt->path);
 	ft_free_heap(dt->heap, 0);
 	ft_free_map(&dt->name_to_idx);
 	free(dt->dsts);
