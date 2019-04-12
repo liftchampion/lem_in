@@ -17,7 +17,6 @@
 
 # define READ_BUFF 1000000
 
-# define INTMAX 2147483647
 # define INF 1000000000
 # define NOT_VISITED -57
 # define LEFT weight[ind * 2 + 1]
@@ -54,15 +53,28 @@ enum e_parse_mode
 	LINKS,
 };
 
+typedef union
+{
+	__uint128_t ui;
+	unsigned long long ll[2];
+}	tt;
+/*
+struct s_edge
+{
+	__uint128_t	flows;
+	int 		name;
+};*/
+
 struct s_data
 {
+	__uint128_t	*nd_to_flow;
 	t_heap		*heap;
 	t_vector	*nodes;
 	char 		*tmp_line;
 	t_map		*name_to_idx;
 	int 		*dsts;
 	t_vector	*path;
-	t_vector	*flows;
+	t_vector	**flows;
 	int 		max_flow;
 	int 		ant_count;
 	int 		start;
@@ -74,10 +86,13 @@ struct	s_node
 	__uint128_t	flows;
 	char		*name;
 	t_vector	*chs;
+	t_vector	*bros;
 	int			p;
 	int 		x;
 	int 		y;
 	int 		from;
+	int			was_here;
+	struct s_edge edg;
 };
 
 struct	s_edge

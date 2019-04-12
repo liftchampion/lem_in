@@ -33,6 +33,26 @@ void		ft_upd_pts(t_data *dt)
 	}
 }
 
+void		ft_print_flows(t_data *dt)
+{
+	ft_printf("Flows count: %d\n", dt->max_flow);
+	for (int i = 0; i < dt->max_flow; ++i)
+	{
+		ft_printf("~~~~~~~~~~~~~~~~~~~~~~ %d ~~~~~~~~~~~~~~~~~~~~~~\n", i + 1);
+		for (int j = 0; j <= i; ++j)
+		{
+			ft_printf("1: ");
+			for (size_t k = 0; k < ((t_vector*)dt->flows[i]->data[j])->len; ++k)
+			{
+				int idx = (int)((t_vector*)dt->flows[i]->data[j])->data[k];
+				ft_printf("%s ", ((t_node*)dt->nodes->data[idx])->name);
+			}
+			ft_printf("\n");
+		}
+		ft_printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+	}
+}
+
 void		ft_print_parsed(t_data *dt)
 {
 	ft_printf("Ant-count: {Magenta}%d{eof}\n", dt->ant_count);

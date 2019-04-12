@@ -45,15 +45,23 @@ static inline int	ft_find_min_w_and_rm_lnk(void **v, int len, int to_find)
 
 int		ft_reverse_link(int i1, int i2, t_data *dt, unsigned flow_size)
 {
-	t_node	*n1;
-	t_node	*n2;
-	int		w;
+	t_node		*n1;
+	t_node		*n2;
+	__uint128_t	*flows;
+	int			w;
 
+	flows = &dt->nd_to_flow[i2];
 	n1 = dt->nodes->data[i1];
 	n2 = dt->nodes->data[i2];
 	w = ft_find_min_w_and_rm_lnk(n1->chs->data, n1->chs->len--, i2);
-	n2->flows = (w == 1) ? (n2->flows | (__uint128_t)-1 >> (flow_size - 1u)) :
-				(n2->flows & ~((__uint128_t)-1 >> (flow_size - 1u)));
+	tt u;
+	u.ui = *flows;
+	ft_printf("%3sb: %#llB |%d|%d\n", ((t_node*)dt->nodes->data[i2])->name,
+			u.ll[1], w, flow_size + 1);
+	*flows = (w == 1) ? (*flows | (__uint128_t)-1 >> (flow_size)) :
+			(*flows & ~((__uint128_t)-1 >> (flow_size)));
+	u.ui = *flows;
+	ft_printf("%3sa: %#llB\n\n", ((t_node*)dt->nodes->data[i2])->name, u.ll[1]);
 	if (!ft_vector_push_back(&n2->chs, TO_EDGE(i1, -w)))
 		return (0);
 	return (1);
