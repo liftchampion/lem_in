@@ -18,13 +18,8 @@ t_node		*ft_make_node(void)
 
 	if (!(node = ft_memalloc(sizeof(t_node))))
 		return (0);
-	if (!(node->chs = ft_make_vector(4)))
+	if (!(node->chs = ft_make_vector(INIT_LINKS_FROM_NODE)))
 		return ((void*)(size_t)free_ret(node, 0));
-	if (!(node->prs = ft_make_vector(4)))
-	{
-		ft_free_vector(&node->chs);
-		return ((void*)(size_t)free_ret(node, 0));
-	}
 	return (node);
 }
 

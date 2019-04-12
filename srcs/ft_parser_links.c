@@ -15,18 +15,12 @@
 int 	ft_add_link(int i1, int i2, t_data *dt)
 {
 	t_node *n1;
-	t_node *n1_;
 	t_node *n2;
-	t_node *n2_;
 
 	n1 = dt->nodes->data[i1];
-	n1_ = dt->nodes->data[i1 + 1];
 	n2 = dt->nodes->data[i2];
-	n2_ = dt->nodes->data[i2 + 1];
 	if (!ft_vector_push_back(&n1->chs, TO_EDGE(i2 + 1, 1)) ||
-		!ft_vector_push_back(&n1_->prs, TO_EDGE(i2, 1)) ||
-		!ft_vector_push_back(&n2->chs, TO_EDGE(i1 + 1, 1)) ||
-		!ft_vector_push_back(&n2_->prs, TO_EDGE(i1, 1)))
+		!ft_vector_push_back(&n2->chs, TO_EDGE(i1 + 1, 1)))
 		return (0);
 	return (1);
 }

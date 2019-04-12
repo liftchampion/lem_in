@@ -26,6 +26,7 @@
 # define INIT_NODES_COUNT 128
 # define INIT_NAME_LEN 16
 # define INIT_PATH_LEN 64
+# define INIT_LINKS_FROM_NODE 4
 # define NODE_POSTFIX "*"
 # define TO_EDGE(i, w) ((void*)((((size_t)(i)) << 32u) | (unsigned)(w)))
 # define GET_I(iw) ((int)((size_t)(iw) >> 32u))
@@ -70,11 +71,11 @@ struct	s_node
 	__uint128_t	flows;
 	char		*name;
 	t_vector	*chs;
-	t_vector	*prs;
 	int			p;
 	int 		x;
 	int 		y;
 	int 		was_here;
+	int 		from;
 };
 
 struct	s_edge
