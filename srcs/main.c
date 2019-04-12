@@ -11,23 +11,33 @@
 /* ************************************************************************** */
 
 #include <fcntl.h>
+#include <zconf.h>
 #include "len_in.h"
 
 int		main(void)
 {
-	t_data *dt;
+
 
 	//int fd = 0;
-	int fd = open("bad3.t", O_RDONLY);
-	if (!(dt = ft_parser(fd)))
-		return (ft_printf("Error\n") * 0);
 
 
-	//for (int i = 0; i < 1000; ++i)
-	//	dijkstra(dt);
-	//ft_print_parsed(dt);
+	for (int i = 0; i < 1000; ++i)
+	{
+		t_data *dt;
+		int fd = open("tmp.test", O_RDONLY);
+		if (!(dt = ft_parser(fd)))
+			return (ft_printf("Error\n") * 0);
 
-	ft_find_all_flows(dt);
+
+		//for (int i = 0; i < 1000; ++i)
+		//	dijkstra(dt);
+		//ft_print_parsed(dt);
+
+		ft_find_all_flows(dt);
+		ft_free_data(dt, 0);
+		close(fd);
+	}
+	return (0);
 
 
 	//ft_upd_pts(dt);
@@ -48,5 +58,5 @@ int		main(void)
 	//ft_print_dijkstra(dt, 2);
 
 	//ft_print_path(dt, 3);
-	return (ft_free_data(dt, 0));
+	//return (ft_free_data(dt, 0));
 }

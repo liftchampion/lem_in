@@ -53,11 +53,7 @@ void		ft_print_parsed(t_data *dt)
 			ft_printf("{Red}%d{eof}(%d) ",
 					GET_I(nd->chs->data[j]), GET_W(nd->chs->data[j]));
 		}
-		ft_printf(">\n\t\tp:[ ");
-		for (size_t j = 0; j < nd->prs->len; ++j)
-			ft_printf("{Blue}%d{eof}(%d) ",
-					GET_I(nd->prs->data[j]), GET_W(nd->prs->data[j]));
-		ft_printf("]\n");
+		ft_printf("\n");
 	}
 	ft_printf("{\\200}Links count %d{eof}\n", links_count);
 }

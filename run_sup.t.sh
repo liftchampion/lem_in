@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
-
-for (( i=1; i <= 1000000; i++ ))
+make
+for (( i=1; i <= 10000000; i++ ))
 do
-./generator --big > tmp.test
+./generator --big-superposition > tmp.test
 time ./lem-in < tmp.test
+echo "$i"
 done

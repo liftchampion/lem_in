@@ -18,7 +18,6 @@ int 	ft_free_node(t_node *nd, int ret)
 		return (ret);
 	free(nd->name);
 	ft_free_vector(&nd->chs);
-	ft_free_vector(&nd->prs);
 	free(nd);
 	return (ret);
 }

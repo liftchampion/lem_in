@@ -43,24 +43,6 @@ static inline int	ft_find_min_weigth(void **v, int len, int to_find)
 	return (res_w);
 }
 
-static inline void	ft_rm_curr(void **v, void *to_del, int len)
-{
-	int i;
-	int stop;
-
-	i = 0;
-	stop = 0;
-	while (!stop)
-	{
-		if (v[i] == to_del)
-		{
-			ft_inl_swap(v + i, v + len - 1);
-			stop = 1;
-		}
-		i++;
-	}
-}
-
 int		ft_rm_link(int i1, int i2, t_data *dt)
 {
 	t_node	*n1;
@@ -70,9 +52,6 @@ int		ft_rm_link(int i1, int i2, t_data *dt)
 	n1 = dt->nodes->data[i1];
 	n2 = dt->nodes->data[i2];
 	w = ft_find_min_weigth(n1->chs->data, n1->chs->len--, i2);
-	if (!ft_vector_push_back(&n1->prs, TO_EDGE(i2, -w)))
-		return (0);
-	ft_rm_curr(n2->prs->data, TO_EDGE(i1, w), n2->prs->len--);
 	if (!ft_vector_push_back(&n2->chs, TO_EDGE(i1, -w)))
 		return (0);
 	return (1);
