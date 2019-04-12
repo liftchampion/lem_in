@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggerardy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/12 16:05:09 by ggerardy          #+#    #+#             */
-/*   Updated: 2019/04/12 16:05:09 by ggerardy         ###   ########.fr       */
+/*   Created: 2019/04/12 17:40:51 by ggerardy          #+#    #+#             */
+/*   Updated: 2019/04/12 17:40:51 by ggerardy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,13 @@ void	dijkstra(t_data *graf);
 /*
 **	ft_flow.c
 */
+int		ft_make_flows(t_data *dt, size_t max_size);
 int		ft_find_all_flows(t_data *dt);
 /*
 **	ft_flow_send.c
 */
-int		ft_rm_link(int i1, int i2, t_data *dt);
-int		ft_send_flow(t_data *dt);
+int		ft_reverse_link(int i1, int i2, t_data *dt, unsigned flow_size);
+int		ft_send_flow(t_data *dt, unsigned flow_size);
 /*
 **	ft_freeshers.c
 */

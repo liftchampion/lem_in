@@ -27,6 +27,7 @@
 # define INIT_NAME_LEN 16
 # define INIT_PATH_LEN 64
 # define INIT_LINKS_FROM_NODE 4
+# define INIT_FLOW_COUNT 32
 # define NODE_POSTFIX "*"
 # define TO_EDGE(i, w) ((void*)((((size_t)(i)) << 32u) | (unsigned)(w)))
 # define GET_I(iw) ((int)((size_t)(iw) >> 32u))
@@ -61,6 +62,8 @@ struct s_data
 	t_map		*name_to_idx;
 	int 		*dsts;
 	t_vector	*path;
+	t_vector	*flows;
+	int 		max_flow;
 	int 		ant_count;
 	int 		start;
 	int 		end;
@@ -74,7 +77,6 @@ struct	s_node
 	int			p;
 	int 		x;
 	int 		y;
-	int 		was_here;
 	int 		from;
 };
 
