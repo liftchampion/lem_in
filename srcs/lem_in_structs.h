@@ -58,23 +58,16 @@ typedef union
 	__uint128_t ui;
 	unsigned long long ll[2];
 }	tt;
-/*
-struct s_edge
-{
-	__uint128_t	flows;
-	int 		name;
-};*/
 
 struct s_data
 {
-	__uint128_t	*nd_to_flow;
 	t_heap		*heap;
 	t_vector	*nodes;
 	char 		*tmp_line;
 	t_map		*name_to_idx;
 	int 		*dsts;
 	t_vector	*path;
-	t_vector	**flows;
+	t_vector	*flows;
 	int 		max_flow;
 	int 		ant_count;
 	int 		start;
@@ -83,7 +76,6 @@ struct s_data
 
 struct	s_node
 {
-	__uint128_t	flows;
 	char		*name;
 	t_vector	*chs;
 	t_vector	*bros;
@@ -91,14 +83,6 @@ struct	s_node
 	int 		x;
 	int 		y;
 	int 		from;
-	int			was_here;
-	struct s_edge edg;
-};
-
-struct	s_edge
-{
-	int	node;
-	int	weight;
 };
 
 struct	s_heap

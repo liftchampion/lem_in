@@ -19,7 +19,7 @@ int		main(void)
 	t_data *dt;
 
 	//int fd = 0;
-	int fd = open("3.test", O_RDONLY);
+	int fd = open("tmp.test", O_RDONLY);
 	if (!(dt = ft_parser(fd)))
 		return (ft_printf("Error\n") * 0);
 
@@ -29,18 +29,18 @@ int		main(void)
 		return (0);
 	ft_printf("{Red}Flows count: %d{eof}\n", dt->max_flow);
 
-	for (size_t i = 0; i < dt->nodes->len; ++i)
+	/*for (size_t i = 0; i < dt->nodes->len; ++i)
 	{
 		tt u;
 		u.ui = dt->nd_to_flow[i];
 		ft_printf("%-10s: %#llB\n", ((t_node*)dt->nodes->data[i])->name, u.ll[1]);
-	}
+	}*/
 
-	ft_printf(">>\n");
-	if (!ft_make_flows(dt, dt->max_flow))
-		return (0);
-	ft_printf("Done!\n");
-	ft_print_flows(dt);
+	ft_sort_flows(dt);
+	//if (!ft_make_flows(dt, dt->max_flow))
+	//	return (0);
+	//ft_printf("Done!\n");
+	ft_print_flows(dt, 2);
 
 	/*for (int i = 0; i < 1000; ++i)
 	{

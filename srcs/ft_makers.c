@@ -32,7 +32,8 @@ t_data		*ft_make_data(void)
 		return (0);
 	if (!(dt->nodes = ft_make_vector(INIT_NODES_COUNT)) ||
 		!(dt->name_to_idx = ft_make_std_map(NON_FREE_STR, INT32_T)) ||
-		!(dt->path = ft_make_vector(INIT_PATH_LEN)))
+		!(dt->path = ft_make_vector(INIT_PATH_LEN)) ||
+		!(dt->flows = ft_make_vector(INIT_FLOW_COUNT)))
 		return ((void*)(size_t)ft_free_data(dt, 0));
 	dt->start = -1;
 	dt->end = -1;

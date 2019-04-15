@@ -43,31 +43,21 @@ static inline int	ft_find_min_w_and_rm_lnk(void **v, int len, int to_find)
 	return (res_w);
 }
 
-int		ft_reverse_link(int i1, int i2, t_data *dt, unsigned flow_size)
+int		ft_reverse_link(int i1, int i2, t_data *dt)
 {
 	t_node		*n1;
 	t_node		*n2;
-	__uint128_t	*flows;
 	int			w;
 
-	flows = &dt->nd_to_flow[i2];
 	n1 = dt->nodes->data[i1];
 	n2 = dt->nodes->data[i2];
 	w = ft_find_min_w_and_rm_lnk(n1->chs->data, n1->chs->len--, i2);
-	tt u;
-	u.ui = *flows;
-	ft_printf("%3sb: %#llB |%d|%d\n", ((t_node*)dt->nodes->data[i2])->name,
-			u.ll[1], w, flow_size + 1);
-	*flows = (w == 1) ? (*flows | (__uint128_t)-1 >> (flow_size)) :
-			(*flows & ~((__uint128_t)-1 >> (flow_size)));
-	u.ui = *flows;
-	ft_printf("%3sa: %#llB\n\n", ((t_node*)dt->nodes->data[i2])->name, u.ll[1]);
 	if (!ft_vector_push_back(&n2->chs, TO_EDGE(i1, -w)))
 		return (0);
 	return (1);
 }
 
-int		ft_send_flow(t_data *dt, unsigned flow_size)
+int		ft_send_flow(t_data *dt)
 {
 	int i;
 	int curr;
@@ -80,7 +70,7 @@ int		ft_send_flow(t_data *dt, unsigned flow_size)
 	{
 		curr = path[i];
 		next = path[i - 1];
-		if (!ft_reverse_link(curr, next, dt, flow_size))
+		if (!ft_reverse_link(curr, next, dt))
 			return (0);
 	}
 	return (1);

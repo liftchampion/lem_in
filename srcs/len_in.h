@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggerardy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/12 20:27:16 by ggerardy          #+#    #+#             */
-/*   Updated: 2019/04/12 20:27:16 by ggerardy         ###   ########.fr       */
+/*   Created: 2019/04/15 16:41:24 by ggerardy          #+#    #+#             */
+/*   Updated: 2019/04/15 16:41:24 by ggerardy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,14 @@ void	dijkstra(t_data *graf);
 /*
 **	ft_flow.c
 */
-int 	ft_alloc_flows(t_data *dt, int max_size);
-int 	ft_restore_path(t_data *dt, int start, int flow);
-int 	ft_restore_paths(t_data *dt, int start);
-int		ft_make_flows(t_data *dt, size_t max_size);
+int 	ft_restore_path(t_data *dt, int start, t_vector **path);
+int		ft_restore_flow(t_data *dt);
 int		ft_find_all_flows(t_data *dt);
 /*
 **	ft_flow_send.c
 */
-int		ft_reverse_link(int i1, int i2, t_data *dt, unsigned flow_size);
-int		ft_send_flow(t_data *dt, unsigned flow_size);
+int		ft_reverse_link(int i1, int i2, t_data *dt);
+int		ft_send_flow(t_data *dt);
 /*
 **	ft_freeshers.c
 */
@@ -84,7 +82,8 @@ int		ft_find_shortest_path(t_data *dt);
 **	ft_utils.c
 */
 void	ft_upd_pts(t_data *dt);
-void	ft_print_flows(t_data *dt);
+void	ft_sort_flows(t_data *dt);
+void	ft_print_flows(t_data *dt, int mode);
 void	ft_print_parsed(t_data *dt);
 void	ft_print_path(t_data *dt, int mode);
 void	ft_print_heap(t_data *dt);

@@ -13,6 +13,15 @@
 #include "len_in.h"
 #include "lem_in_structs.h"
 
+static inline void	ft_inl_swap(void **x, void **y)
+{
+	void *h;
+
+	h = *x;
+	*x = *y;
+	*y = h;
+}
+
 void		ft_upd_pts(t_data *dt)
 {
 	int i;
@@ -33,23 +42,64 @@ void		ft_upd_pts(t_data *dt)
 	}
 }
 
-void		ft_print_flows(t_data *dt)
+void		ft_sort_flows(t_data *dt)
 {
-	ft_printf("Flows count: %d\n", dt->max_flow);
-	for (int i = 0; i < dt->max_flow; ++i)
+	size_t i;
+	size_t j;
+	size_t k;
+	t_vector *curr_flow;
+
+	i = (size_t)-1;
+	while (++i < dt->flows->len)
 	{
-		ft_printf("~~~~~~~~~~~~~~~~~~~~~~ %d ~~~~~~~~~~~~~~~~~~~~~~\n", i + 1);
-		for (int j = 0; j <= i; ++j)
+		curr_flow = dt->flows->data[i];
+		j = (size_t)-1;
+
+		while (++j < curr_flow->len)
 		{
-			ft_printf("1: ");
-			for (size_t k = 0; k < ((t_vector*)dt->flows[i]->data[j])->len; ++k)
+			k = j - 1;
+			while (++k < curr_flow->len)
 			{
-				int idx = (int)((t_vector*)dt->flows[i]->data[j])->data[k];
-				ft_printf("%s ", ((t_node*)dt->nodes->data[idx])->name);
+				if (((t_vector*)curr_flow->data[k])->len <
+				        ((t_vector*)curr_flow->data[j])->len)
+					ft_inl_swap(curr_flow->data + j, curr_flow->data + k);
 			}
-			ft_printf("\n");
 		}
-		ft_printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+	}
+}
+
+void		ft_print_flows(t_data *dt, int mode)
+{
+	t_vector *flows;
+	t_vector *curr_flow;
+	t_vector *curr_path;
+
+	flows = dt->flows;
+
+	ft_printf("Flows count: %d\n", (int)flows->len);
+	for (size_t i = 0; i < flows->len; ++i)
+	{
+		ft_printf("~~~~~~~~~~~~~~~~~~~~~~ %2d ~~~~~~~~~~~~~~~~~~~~~~\n", i + 1);
+		curr_flow = flows->data[i];
+		for (size_t j = 0; j < curr_flow->len; ++j)
+		{
+			ft_printf("%2d: ", j + 1);
+			curr_path = curr_flow->data[j];
+			if (mode == 1)
+			{
+				for (size_t k = 0; k < curr_path->len; ++k)
+				{
+					int idx = (int)curr_path->data[k];
+					ft_printf("%s ", ((t_node *)dt->nodes->data[idx])->name);
+				}
+				ft_printf("\n");
+			}
+			if (mode == 2)
+			{
+				ft_printf("%d\n", (int)curr_path->len);
+			}
+		}
+		ft_printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
 	}
 }
 

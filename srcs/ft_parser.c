@@ -36,8 +36,7 @@ t_data	*ft_parser(int fd)
 		return ((void*)(size_t)ft_free_data(dt, 0));
 	//ft_printf("{Red}6{eof}\n");
 	if (!(dt->heap = make_heap(dt->nodes->len)) ||
-		!(dt->dsts = ft_memalloc(sizeof(int) * dt->nodes->len)) ||
-		!(dt->nd_to_flow = ft_memalloc(sizeof(__uint128_t) * dt->nodes->len)))
+		!(dt->dsts = ft_memalloc(sizeof(int) * dt->nodes->len)))
 		return ((void*)(size_t)ft_free_data(dt, 0));
 	//ft_printf("{Red}7{eof}\n");
 	//ft_upd_pts_sort_links(dt);
