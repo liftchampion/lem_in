@@ -29,7 +29,10 @@ int			ft_parse_ants_count(int fd)
 int		ft_parse_hash(t_data *dt, char *ln, t_parse_mode pm)
 {
 	if (ln[1] != '#' || pm == LINKS)
+	{
+		ft_printf("%s\n", ln); // TODO
 		return (1);
+	}
 	if (!ft_strcmp("start", ln + 2))
 	{
 		if (dt->start != -1)

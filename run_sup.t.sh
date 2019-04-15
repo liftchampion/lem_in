@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-make
+#make
 for (( i=1; i <= 10000000; i++ ))
 do
 ./generator --big > tmp.test

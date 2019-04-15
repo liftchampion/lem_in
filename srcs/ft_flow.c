@@ -30,18 +30,21 @@ static inline int	ft_find_next(t_data *dt, int from)
 	return (INF); // todo for segfault
 }
 
-int 	ft_restore_path(t_data *dt, int start, t_vector **path)
+int 	ft_restore_path(t_data *dt, int from, t_vector **path)
 {
 	int		curr_node;
 	int		finish;
 
-	curr_node = start;
+	curr_node = from;
 	finish = dt->start;
 	while (curr_node != finish)
 	{
 		curr_node = ft_find_next(dt, curr_node);
-		if (!ft_vector_push_back(path, (void*)(size_t)curr_node))
-			return (0);
+		if (curr_node % 2 == 0 && curr_node != dt->start)
+		{
+			if (!ft_vector_push_back(path, (void *)(size_t)curr_node))
+				return (0);
+		}
 	}
 	return (1);
 }
@@ -64,8 +67,9 @@ int		ft_restore_flow(t_data *dt)
 	{
 		if (GET_W(starts[i]) == -1 &&
 			(!(path = ft_make_vector(INIT_PATH_LEN)) ||
-			!ft_vector_push_back(&path, (void*)(size_t)dt->end) ||
-			!ft_vector_push_back(&path, (void*)(size_t)GET_I(starts[i])) ||
+			!ft_vector_push_back(&path, (void*)(size_t)dt->end - 1) ||
+			!ft_vector_push_back(GET_I(starts[i]) == dt->start ? 0 : &path,
+					(void*)(size_t)GET_I(starts[i])) ||
 			!ft_restore_path(dt, GET_I(starts[i]), &path) ||
 			!ft_vector_push_back(&flow, path)))
 			return (ft_free_ret_vector(&path, 0) +

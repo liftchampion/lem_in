@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggerardy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/15 16:41:24 by ggerardy          #+#    #+#             */
-/*   Updated: 2019/04/15 16:41:24 by ggerardy         ###   ########.fr       */
+/*   Created: 2019/04/15 18:35:58 by ggerardy          #+#    #+#             */
+/*   Updated: 2019/04/15 18:35:58 by ggerardy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,13 @@ void	sift_down(t_heap *heap, int ind);
 void	sift_up(t_heap *heap, int ind);
 int		take_min(t_heap *heap);
 void	fill_heap(t_data *graf, t_heap *heap);
+/*
+**	ft_lems.c
+*/
+int		ft_send_lems_last_way(t_data *dt, int flow, int last_way,
+		int ant_count);
+int 	ft_send_lems_one_flow(t_data *dt, int flow);
+int 	ft_send_lems(t_data *dt);
 /*
 **	ft_makers.c
 */

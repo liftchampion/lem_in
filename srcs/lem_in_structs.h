@@ -21,7 +21,6 @@
 # define NOT_VISITED -57
 # define LEFT weight[ind * 2 + 1]
 # define RIGHT weight[ind * 2 + 2]
-# define FD 3
 # define INIT_NODES_COUNT 128
 # define INIT_NAME_LEN 16
 # define INIT_PATH_LEN 64
@@ -52,12 +51,6 @@ enum e_parse_mode
 	NODES,
 	LINKS,
 };
-
-typedef union
-{
-	__uint128_t ui;
-	unsigned long long ll[2];
-}	tt;
 
 struct s_data
 {

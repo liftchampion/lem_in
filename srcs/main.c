@@ -19,7 +19,7 @@ int		main(void)
 	t_data *dt;
 
 	//int fd = 0;
-	int fd = open("tmp.test", O_RDONLY);
+	int fd = open("big.test", O_RDONLY);
 	if (!(dt = ft_parser(fd)))
 		return (ft_printf("Error\n") * 0);
 
@@ -40,6 +40,7 @@ int		main(void)
 	//if (!ft_make_flows(dt, dt->max_flow))
 	//	return (0);
 	//ft_printf("Done!\n");
+	ft_send_lems(dt);
 	ft_print_flows(dt, 2);
 
 	/*for (int i = 0; i < 1000; ++i)

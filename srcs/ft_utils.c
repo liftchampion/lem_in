@@ -96,7 +96,9 @@ void		ft_print_flows(t_data *dt, int mode)
 			}
 			if (mode == 2)
 			{
-				ft_printf("%d\n", (int)curr_path->len);
+				ft_printf("%d({Yellow}%d{eof})\n",
+						(int)curr_path->len,
+						curr_path->offset);
 			}
 		}
 		ft_printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
