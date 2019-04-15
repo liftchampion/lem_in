@@ -27,20 +27,28 @@ int		ft_send_lems_last_way(t_data *dt, int flow, int last_way, int ant_count)
 	while (++i <= last_way)
 	{
 		total += len - ((t_vector*)paths->data[i])->len + 1;
-		//((t_vector*)paths->data[i])->offset +=
-		//		len - ((t_vector*)paths->data[i])->len + 1;
+		((t_vector*)paths->data[i])->offset +=
+				len - ((t_vector*)paths->data[i])->len + 1;
 	}
 	///ft_printf("{Blue}Total is %d{eof}\n", total);
-	wave_count = ant_count / total;
+	//wave_count = ant_count / total;
+	ant_count -= total; // todo negative ???
+	wave_count = ant_count / (last_way + 1);
+	ant_count -= wave_count * (last_way + 1);
 	///ft_printf("{Blue}Wave count is %d{eof}\n", wave_count);
 	///ft_printf("{Blue}Max len is %d{eof}\n", len);
 	i = -1;
 	while (++i <= last_way)
 	{
-		((t_vector*)paths->data[i])->offset +=
-				(len - ((t_vector*)paths->data[i])->len + 1) * wave_count;
+		((t_vector*)paths->data[i])->offset += wave_count;
 	}
-	return (ant_count - total * wave_count);
+	i = -1;
+	while (++i <= last_way && ant_count > 0)
+	{
+		((t_vector*)paths->data[i])->offset += 1;
+		ant_count--;
+	}
+	return (0);
 }
 
 int 	ft_send_lems_one_flow(t_data *dt, int flow)
@@ -91,5 +99,6 @@ int 	ft_send_lems(t_data *dt)
 	}
 	ft_printf("{Green}Best{eof} flow is: {\\202}%d{eof}. Time is: {\\200}%d{eof}\n",
 			best_flow + 1, best_flow_time);
+	ft_printf("%d\n", best_flow_time);
 	return (best_flow);
 }

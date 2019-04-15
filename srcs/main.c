@@ -18,8 +18,8 @@ int		main(void)
 {
 	t_data *dt;
 
-	//int fd = 0;
-	int fd = open("big.test", O_RDONLY);
+	int fd = 0;
+	//int fd = open("big.test", O_RDONLY);
 	if (!(dt = ft_parser(fd)))
 		return (ft_printf("Error\n") * 0);
 
@@ -27,7 +27,7 @@ int		main(void)
 
 	if (!ft_find_all_flows(dt))
 		return (0);
-	ft_printf("{Red}Flows count: %d{eof}\n", dt->max_flow);
+	//ft_printf("{Red}Flows count: %d{eof}\n", dt->max_flow);
 
 	/*for (size_t i = 0; i < dt->nodes->len; ++i)
 	{
@@ -41,7 +41,7 @@ int		main(void)
 	//	return (0);
 	//ft_printf("Done!\n");
 	ft_send_lems(dt);
-	ft_print_flows(dt, 2);
+	//ft_print_flows(dt, 2);
 
 	/*for (int i = 0; i < 1000; ++i)
 	{

@@ -100,6 +100,6 @@ int		ft_find_all_flows(t_data *dt)
 		dijkstra(dt);
 	}
 	dt->max_flow = size;
-	ft_printf("Max flow is: %d\n", size);
+	//ft_printf("Max flow is: %d\n", size);
 	return (1);
 }
