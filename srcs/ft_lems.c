@@ -37,12 +37,13 @@ int		ft_send_lems_last_way(t_data *dt, int flow, int last_way, int ant_count)
 	{
 		((t_vector*)paths->data[i])->offset += wave_count;
 	}
-	i = -1;
+	//ft_printf("Ants left %d. Current time for them is %d\n", );
+	/*i = -1;
 	while (++i <= last_way && ant_count > 0)
 	{
 		((t_vector*)paths->data[i])->offset += 1;
 		ant_count--;
-	}
+	}*/
 	return (0);
 }
 

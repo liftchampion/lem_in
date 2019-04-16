@@ -19,7 +19,7 @@ int		main(void)
 	t_data *dt;
 
 	//int fd = 0;
-	int fd = open("10k.test", O_RDONLY);
+	int fd = open("big.test", O_RDONLY);
 	if (!(dt = ft_parser(fd)))
 		return (ft_printf("Error\n") * 0);
 
