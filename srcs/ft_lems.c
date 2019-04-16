@@ -14,29 +14,24 @@
 
 int		ft_send_lems_last_way(t_data *dt, int flow, int last_way, int ant_count)
 {
-	int		i;
+	int			i;
 	t_vector	*paths;
 	int			len;
-	int 		total;
 	int 		wave_count;
+	int 		delta;
 
 	paths = dt->flows->data[flow];
 	len = ((t_vector*)paths->data[last_way])->len;
 	i = -1;
-	total = 0;
-	while (++i <= last_way)
+	while (++i <= last_way && ant_count)
 	{
-		total += len - ((t_vector*)paths->data[i])->len + 1;
-		((t_vector*)paths->data[i])->offset +=
-				len - ((t_vector*)paths->data[i])->len + 1;
+		delta = (ant_count >= len - (int)((t_vector*)paths->data[i])->len + 1) ?
+				len - ((t_vector*)paths->data[i])->len + 1 : ant_count;
+		((t_vector*)paths->data[i])->offset += delta;
+		ant_count -= delta;
 	}
-	///ft_printf("{Blue}Total is %d{eof}\n", total);
-	//wave_count = ant_count / total;
-	ant_count -= total; // todo negative ???
 	wave_count = ant_count / (last_way + 1);
 	ant_count -= wave_count * (last_way + 1);
-	///ft_printf("{Blue}Wave count is %d{eof}\n", wave_count);
-	///ft_printf("{Blue}Max len is %d{eof}\n", len);
 	i = -1;
 	while (++i <= last_way)
 	{
