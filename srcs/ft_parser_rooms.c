@@ -33,9 +33,7 @@ int		ft_split_room(t_data *dt)
 	node->y = old_node->y;
 	if (!ft_vector_push_back(&dt->nodes, node) ||
 		!ft_vector_push_back(&node->chs, TO_EDGE(node_idx - 1, 1)) ||
-		!ft_vector_push_back(&old_node->chs, TO_EDGE(node_idx, 1)) ||
-		!ft_vector_push_back(&node->bros, (void*)(size_t)(node_idx - 1)) ||
-		!ft_vector_push_back(&old_node->bros, (void*)(size_t)(node_idx)))
+		!ft_vector_push_back(&old_node->chs, TO_EDGE(node_idx, 1)))
 		return (0);
 	return (1);
 }

@@ -65,13 +65,13 @@ struct s_data
 	int 		ant_count;
 	int 		start;
 	int 		end;
+	int 		best_flow;
 };
 
 struct	s_node
 {
 	char		*name;
 	t_vector	*chs;
-	t_vector	*bros;
 	int			p;
 	int 		x;
 	int 		y;

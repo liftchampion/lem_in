@@ -117,6 +117,9 @@ void				ft_free_matrix(void **ptr, size_t n);
 void				*ft_realloc(void *old_data, size_t prev_size,
 														size_t new_size);
 
+void		*ft_realloc_free(void *old_data, size_t prev_size, size_t new_size,
+		void (*free_data)(void*));
+
 void				*ft_memalloc(size_t size);
 
 void				ft_memdel(void **ap);

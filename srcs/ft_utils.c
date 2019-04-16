@@ -42,6 +42,26 @@ void		ft_upd_pts(t_data *dt)
 	}
 }
 
+void		ft_sort_paths_in_flow(t_data *dt, int flow)
+{
+	size_t j;
+	size_t k;
+	t_vector *curr_flow;
+
+	curr_flow = dt->flows->data[flow];
+	j = (size_t)-1;
+	while (++j < curr_flow->len)
+	{
+		k = j - 1;
+		while (++k < curr_flow->len)
+		{
+			if (((t_vector*)curr_flow->data[k])->len <
+					((t_vector*)curr_flow->data[j])->len)
+				ft_inl_swap(curr_flow->data + j, curr_flow->data + k);
+		}
+	}
+}
+
 void		ft_sort_flows(t_data *dt)
 {
 	size_t i;

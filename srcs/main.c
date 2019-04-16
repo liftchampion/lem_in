@@ -19,7 +19,7 @@ int		main(void)
 	t_data *dt;
 
 	//int fd = 0;
-	int fd = open("big_sup.test", O_RDONLY);
+	int fd = open("long.test", O_RDONLY);
 	if (!(dt = ft_parser(fd)))
 		return (ft_printf("Error\n") * 0);
 
@@ -28,36 +28,8 @@ int		main(void)
 	if (!ft_find_all_flows(dt))
 		return (0);
 
-	ft_sort_flows(dt);
-	ft_send_lems(dt);
-
-	dt->ant_count = 1;
-	ft_printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%d\n", dt->ant_count);
-	ft_send_lems(dt);
-
-	dt->ant_count = 3;
-	ft_printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%d\n", dt->ant_count);
-	ft_send_lems(dt);
-
-	dt->ant_count = 4;
-	ft_printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%d\n", dt->ant_count);
-	ft_send_lems(dt);
-
-	dt->ant_count = 5;
-	ft_printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%d\n", dt->ant_count);
-	ft_send_lems(dt);
-
-	dt->ant_count = 6;
-	ft_printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%d\n", dt->ant_count);
-	ft_send_lems(dt);
-
-	dt->ant_count = 9;
-	ft_printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%d\n", dt->ant_count);
-	ft_send_lems(dt);
-
-	dt->ant_count = 11;
-	ft_printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%d\n", dt->ant_count);
-	ft_send_lems(dt);
+	//ft_sort_flows(dt);
+	//ft_send_lems(dt);
 
 	//ft_print_flows(dt, 2);
 

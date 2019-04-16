@@ -20,9 +20,7 @@ int 	ft_add_link(int i1, int i2, t_data *dt)
 	n1 = dt->nodes->data[i1];
 	n2 = dt->nodes->data[i2];
 	if (!ft_vector_push_back(&n1->chs, TO_EDGE(i2 + 1, 1)) ||
-		!ft_vector_push_back(&n2->chs, TO_EDGE(i1 + 1, 1)) ||
-		!ft_vector_push_back(&n1->bros, (void*)(size_t)(i2 + 1)) ||
-		!ft_vector_push_back(&n2->bros, (void*)(size_t)(i1 + 1)))
+		!ft_vector_push_back(&n2->chs, TO_EDGE(i1 + 1, 1)))
 		return (0);
 	return (1);
 }

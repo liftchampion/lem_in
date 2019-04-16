@@ -37,6 +37,7 @@ int 	ft_free_data(t_data *dt, int ret)
 	ft_free_vector(&dt->path);
 	ft_free_heap(dt->heap, 0);
 	ft_free_map(&dt->name_to_idx);
+	ft_free_vector(&dt->flows);
 	free(dt->dsts);
 	free(dt->tmp_line);
 	free(dt);
