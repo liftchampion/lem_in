@@ -22,7 +22,7 @@ static inline void	ft_inl_swap(void **x, void **y)
 	*y = h;
 }
 
-static inline int	ft_find_min_weigth(void **v, int len, int to_find)
+static inline int	ft_find_min_w_and_rm_lnk(void **v, int len, int to_find)
 {
 	int i;
 	int res_w;
@@ -43,15 +43,15 @@ static inline int	ft_find_min_weigth(void **v, int len, int to_find)
 	return (res_w);
 }
 
-int		ft_rm_link(int i1, int i2, t_data *dt)
+int		ft_reverse_link(int i1, int i2, t_data *dt)
 {
-	t_node	*n1;
-	t_node	*n2;
-	int		w;
+	t_node		*n1;
+	t_node		*n2;
+	int			w;
 
 	n1 = dt->nodes->data[i1];
 	n2 = dt->nodes->data[i2];
-	w = ft_find_min_weigth(n1->chs->data, n1->chs->len--, i2);
+	w = ft_find_min_w_and_rm_lnk(n1->chs->data, n1->chs->len--, i2);
 	if (!ft_vector_push_back(&n2->chs, TO_EDGE(i1, -w)))
 		return (0);
 	return (1);
@@ -70,7 +70,7 @@ int		ft_send_flow(t_data *dt)
 	{
 		curr = path[i];
 		next = path[i - 1];
-		if (!ft_rm_link(curr, next, dt))
+		if (!ft_reverse_link(curr, next, dt))
 			return (0);
 	}
 	return (1);
