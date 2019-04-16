@@ -12,6 +12,8 @@
 
 #include "len_in.h"
 
+int counter = 0;
+
 int		ft_send_lems_last_way(t_data *dt, int flow, int last_way, int ant_count)
 {
 	int			i;
@@ -27,7 +29,7 @@ int		ft_send_lems_last_way(t_data *dt, int flow, int last_way, int ant_count)
 	{
 		delta = (ant_count >= len - (int)((t_vector*)paths->data[i])->len + 1) ?
 				len - ((t_vector*)paths->data[i])->len + 1 : ant_count;
-		((t_vector*)paths->data[i])->offset += delta;
+		((t_vector*)paths->data[i])->offset = delta;
 		ant_count -= delta;
 	}
 	wave_count = ant_count / (last_way + 1);
@@ -37,13 +39,16 @@ int		ft_send_lems_last_way(t_data *dt, int flow, int last_way, int ant_count)
 	{
 		((t_vector*)paths->data[i])->offset += wave_count;
 	}
-	//ft_printf("Ants left %d. Current time for them is %d\n", );
-	/*i = -1;
+	if (!counter)
+		ft_printf("{Red}Ants left %d. Current time for them is %d{eof}\n",
+			ant_count, (ant_count + ((t_vector*)paths->data[0])->len - 1) *
+					(ant_count > 0));
+	i = -1;
 	while (++i <= last_way && ant_count > 0)
 	{
 		((t_vector*)paths->data[i])->offset += 1;
 		ant_count--;
-	}*/
+	}
 	return (0);
 }
 
@@ -90,11 +95,13 @@ int 	ft_send_lems(t_data *dt)
 			best_flow = i;
 			best_flow_time = curr_flow_time;
 		}
-		ft_printf("Curr flow is: {\\202}%d{eof}. Time is: {\\200}%d{eof}\n",
+		if (!counter)
+			ft_printf("Curr flow is: {\\202}%d{eof}. Time is: {\\200}%d{eof}\n",
 				i + 1, curr_flow_time);
 	}
+	counter++;
 	ft_printf("{Green}Best{eof} flow is: {\\202}%d{eof}. Time is: {\\200}%d{eof}\n",
 			best_flow + 1, best_flow_time);
-	ft_printf("%d\n", best_flow_time);
+	//ft_printf("%d\n", best_flow_time);
 	return (best_flow);
 }
