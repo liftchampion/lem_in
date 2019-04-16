@@ -88,6 +88,16 @@ void		ft_sort_flows(t_data *dt)
 	}
 }
 
+void	ft_printf_ants2(t_data *dt)
+{
+	for (int i = 0; i < dt->ant_count; ++i)
+	{
+		ft_printf("Ant %3d: path:%2d pos:%2d\n", i, dt->ants[i].path, dt->ants[i].pos);
+		if (i % (dt->best_flow + 1) == dt->best_flow)
+			ft_printf("\n");
+	}
+}
+
 void		ft_print_flows(t_data *dt, int mode)
 {
 	t_vector *flows;

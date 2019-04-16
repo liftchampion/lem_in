@@ -39,7 +39,8 @@ int 	ft_free_data(t_data *dt, int ret)
 	ft_free_map(&dt->name_to_idx);
 	ft_free_vector(&dt->flows);
 	free(dt->dsts);
-	free(dt->tmp_line);
+	free(dt->tmp_line); // todo check if you really need tmp-line
+	free(dt->ants);
 	free(dt);
 	return (ret);
 }

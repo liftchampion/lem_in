@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggerardy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/16 20:10:06 by ggerardy          #+#    #+#             */
-/*   Updated: 2019/04/16 20:10:06 by ggerardy         ###   ########.fr       */
+/*   Created: 2019/04/16 23:37:28 by ggerardy          #+#    #+#             */
+/*   Updated: 2019/04/16 23:37:28 by ggerardy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	dijkstra(t_data *graf);
 **	ft_flow.c
 */
 int 	ft_restore_path(t_data *dt, int from, t_vector **path);
+int 	ft_flow_push_backs(t_data *dt, t_vector **flow, void **starts, int idx);
 int		ft_restore_flow(t_data *dt);
 int		ft_find_all_flows(t_data *dt);
 /*
@@ -50,7 +51,6 @@ void	fill_heap(t_data *graf, t_heap *heap);
 void	ft_send_lems_last_way(t_data *dt, int flow, int last_way,
 		int ant_count);
 int 	ft_send_lems_one_flow(t_data *dt, int flow);
-int 	ft_send_lems(t_data *dt);
 /*
 **	ft_makers.c
 */
@@ -82,6 +82,11 @@ int 	ft_check_links_begin(char *end, t_node *nd, t_data *dt);
 int 	ft_find_in_map(char *ln, t_data *dt);
 int 	ft_check_start_end(t_data *dt);
 /*
+**	ft_print_answer.c
+*/
+void	ft_print_ants(t_data *dt);
+void	ft_print_murashi(t_data *dt);
+/*
 **	ft_shortest.c
 */
 int		ft_find_shortest_path(t_data *dt);
@@ -91,6 +96,7 @@ int		ft_find_shortest_path(t_data *dt);
 void	ft_upd_pts(t_data *dt);
 void	ft_sort_paths_in_flow(t_data *dt, int flow);
 void	ft_sort_flows(t_data *dt);
+void	ft_printf_ants2(t_data *dt);
 void	ft_print_flows(t_data *dt, int mode);
 void	ft_print_parsed(t_data *dt);
 void	ft_print_path(t_data *dt, int mode);

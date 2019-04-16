@@ -60,8 +60,7 @@ int 	ft_flow_push_backs(t_data *dt, t_vector **flow, void **starts, int idx)
 							(void*)(size_t)GET_I(starts[idx])) ||
 		!ft_restore_path(dt, GET_I(starts[idx]), &path) ||
 		!ft_vector_push_back(flow, path))
-		return (ft_free_ret_vector(&path, 0) +
-				ft_free_ret_vector(flow, 0));
+		return (ft_free_ret_vector(&path, 0) + ft_free_ret_vector(flow, 0));
 	return (1);
 }
 
@@ -102,7 +101,6 @@ int		ft_find_all_flows(t_data *dt)
 		if (!ft_find_shortest_path(dt) || !ft_send_flow(dt) ||
 			!ft_restore_flow(dt))
 			return (0);
-		//curr_fl_tm = ft_send_lems_one_flow(dt, size);
 		if ((curr_fl_tm = ft_send_lems_one_flow(dt, size)) > best_fl_tm)
 			break ;
 		if (curr_fl_tm < best_fl_tm && (best_fl_tm = curr_fl_tm))
@@ -110,9 +108,8 @@ int		ft_find_all_flows(t_data *dt)
 		size++;
 		dijkstra(dt);
 	}
-	ft_printf("%d\n", best_fl_tm);
-	//ft_printf("{Green}Best{eof} flow is: {\\202}%d{eof}. Time is: {\\200}%d{eof}\n",
-	//		dt->best_flow + 1, best_fl_tm);
-	dt->max_flow = size;
+	//ft_printf("%d\n", best_fl_tm);
+	ft_printf("{Green}Best{eof} flow is: {\\202}%d{eof}. Time is: {\\200}%d{eof}\n",
+			dt->best_flow + 1, best_fl_tm);
 	return (1);
 }
