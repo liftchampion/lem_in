@@ -23,39 +23,6 @@ int		main(int ac, char **av)
 		return (0);
 
 
-	unsigned char test = 0;
-
-	SET_FAST(test);
-	ft_printf("%#B\n", test);
-	SET_FMT_F(test);
-	ft_printf("%#B\n", test);
-	SET_FMT_A(test);
-	ft_printf("%#B\n", test);
-	SET_FMT_M(test);
-	ft_printf("%#B\n", test);
-	SET_VIS(test);
-	ft_printf("%#B\n", test);
-	SET_F_IN(test);
-	ft_printf("%#B\n", test);
-	SET_A_NMS(test);
-	ft_printf("%#B\n", test);
-	SET_USAGE(test);
-	ft_printf("%#B\n", test);
-
-	UNSET_FMT(test);
-	ft_printf("%#B\n", test);
-
-	ft_printf("{Red}%d{eof}\n", ((test & (1u << 0u)) != 0));
-	ft_printf("{Red}%d{eof}\n", ((test & (1u << 1u)) != 0));
-	ft_printf("{Red}%d{eof}\n", ((test & (1u << 2u)) != 0));
-	ft_printf("{Red}%d{eof}\n", ((test & (1u << 3u)) != 0));
-	ft_printf("{Red}%d{eof}\n", ((test & (1u << 4u)) != 0));
-	ft_printf("{Red}%d{eof}\n", ((test & (1u << 5u)) != 0));
-	ft_printf("{Red}%d{eof}\n", ((test & (1u << 6u)) != 0));
-	ft_printf("{Red}%d{eof}\n", ((test & (1u << 7u)) != 0));
-
-	ft_printf("{Green}%d{eof}\n", GET_FMT_A(test));
-
 	//int fd = 0;
 	int fd = open("1.test", O_RDONLY);
 	if (!(dt = ft_parser(fd)))
