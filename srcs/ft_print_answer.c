@@ -41,14 +41,25 @@ int 	ft_fill_ants(t_data *dt)
 	return (1);
 }
 
-void	ft_print_murashi(t_data *dt)
+int 	ft_push_ant_move(t_data *dt, int i, t_vector **paths)
+{
+	char	*str_tmp;
+
+	ft_sprintf(&str_tmp, "L%d-%s ", i + 1, ((t_node *)dt->nodes->data[
+			(int)paths[CURR_PATH]->data[PATH_LEN - CURR_POS]])->name);
+	if (!ft_string_push_back_s(&dt->output, str_tmp))
+		return (0);
+	free(str_tmp);
+	return (1);
+}
+
+int		ft_print_murashi(t_data *dt)
 {
 	int i;
 	int start;
 	int	pool;
 	int k;
 	t_vector **paths;
-	char *str_tmp;
 
 	k = 0;
 	start = 0;
@@ -56,24 +67,17 @@ void	ft_print_murashi(t_data *dt)
 	paths = (t_vector**)((t_vector*)dt->flows->data[dt->best_flow])->data;
 	while (start != pool && (i = -1))
 	{
-		while (++i < pool)
+		while (++i < pool && (++CURR_POS))
 		{
-			CURR_POS++;
 			if (!dt->gone_ants[i])
-			{
-				ft_sprintf(&str_tmp, "L%d-%s ", i + 1, ((t_node *)dt->nodes->data[
-					(int)paths[CURR_PATH]->data[PATH_LEN - CURR_POS]])->name);
-				// todo NOT VOID!
-				if (!ft_string_push_back_s(&dt->output, str_tmp))
-					return ;
-				free(str_tmp);
-			}
+				if (!ft_push_ant_move(dt, i, paths))
+					return (0);
 			if (CURR_POS == PATH_LEN && ++start)
 				dt->gone_ants[i] = 1;
 		}
 		if (!ft_string_push_back(&dt->output, '\n'))
-			return ;
-		//ft_printf("\n");
+			return (0);
 		pool += dt->wave_sizes[k++];
 	}
+	return (1);
 }

@@ -12,6 +12,19 @@
 
 #include "len_in.h"
 
+t_pars	*ft_parse_flags(int ac, char **av)
+{
+	t_pars *prs;
+
+	if (!(prs = ft_memalloc(sizeof(t_pars))))
+		return (0);
+
+	ac = 0;
+	av = 0;
+
+	return (prs);
+}
+
 t_data	*ft_parser(int fd)
 {
 	t_data		*dt;

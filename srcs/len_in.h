@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggerardy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/18 23:15:32 by ggerardy          #+#    #+#             */
-/*   Updated: 2019/04/18 23:15:32 by ggerardy         ###   ########.fr       */
+/*   Created: 2019/04/19 01:32:13 by ggerardy          #+#    #+#             */
+/*   Updated: 2019/04/19 01:32:13 by ggerardy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ t_heap	*make_heap(int len);
 /*
 **	ft_parser.c
 */
+t_pars	*ft_parse_flags(int ac, char **av);
 t_data	*ft_parser(int fd);
 /*
 **	ft_parser_links.c
@@ -85,7 +86,8 @@ int 	ft_check_start_end(t_data *dt);
 **	ft_print_answer.c
 */
 int 	ft_fill_ants(t_data *dt);
-void	ft_print_murashi(t_data *dt);
+int 	ft_push_ant_move(t_data *dt, int i, t_vector **paths);
+int		ft_print_murashi(t_data *dt);
 /*
 **	ft_shortest.c
 */

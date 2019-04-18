@@ -38,16 +38,36 @@
 # define CURR_POS dt->ants[i].pos
 # define PATH_LEN (int)paths[CURR_PATH]->len
 
+# define SET_FAST(flags) ((test) |= 1u << 0u)
+# define SET_FMT_F(flags) ((test) |= 1u << 1u)
+# define SET_FMT_A(flags) ((test) |= 1u << 2u)
+# define SET_FMT_M(flags) ((test) |= 1u << 3u)
+# define SET_VIS(flags) ((test) |= 1u << 4u)
+# define SET_F_IN(flags) ((test) |= 1u << 5u)
+# define SET_A_NMS(flags) ((test) |= 1u << 6u)
+# define SET_USAGE(flags) ((test) |= 1u << 7u)
+# define UNSET_FMT(flags) ((test) &= 0B11110001u)
+# define GET_FAST(test) (((test) & (1u << 0u)) != 0)
+# define GET_FMT_F(test) (((test) & (1u << 1u)) != 0)
+# define GET_FMT_A(test) (((test) & (1u << 2u)) != 0)
+# define GET_FMT_M(test) (((test) & (1u << 3u)) != 0)
+# define GET_VIS(test) (((test) & (1u << 4u)) != 0)
+# define GET_F_IN(test) (((test) & (1u << 5u)) != 0)
+# define GET_A_NMS(test) (((test) & (1u << 6u)) != 0)
+# define GET_USAGE(test) (((test) & (1u << 7u)) != 0)
+
 # define NODE struct s_node
 # define HEAP struct s_heap
 # define DATA struct s_data
 # define ANT struct s_ant
+# define PRS struct s_pars
 # define PMOD enum e_parse_mode
 
 typedef NODE	t_node;
 typedef HEAP	t_heap;
 typedef DATA	t_data;
 typedef ANT		t_ant;
+typedef PRS		t_pars;
 typedef PMOD	t_parse_mode;
 
 enum	e_parse_mode
@@ -60,7 +80,6 @@ struct	s_data
 {
 	t_heap		*heap;
 	t_vector	*nodes;
-	char 		*tmp_line;
 	t_map		*name_to_idx;
 	int 		*dsts;
 	t_vector	*path;
@@ -73,7 +92,6 @@ struct	s_data
 	int 		start;
 	int 		end;
 	int 		best_flow;
-
 };
 
 struct	s_ant
@@ -90,6 +108,13 @@ struct	s_node
 	int 		x;
 	int 		y;
 	int 		from;
+};
+
+struct	s_pars
+{
+	char			*input_file;
+	char			*ant_names;
+	unsigned char	flags;
 };
 
 struct	s_heap
