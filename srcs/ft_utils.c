@@ -90,11 +90,14 @@ void		ft_sort_flows(t_data *dt)
 
 void	ft_printf_ants2(t_data *dt)
 {
+	int prev;
+	prev = -1;
 	for (int i = 0; i < dt->ant_count; ++i)
 	{
-		ft_printf("Ant %3d: path:%2d pos:%2d\n", i, dt->ants[i].path, dt->ants[i].pos);
-		if (i % (dt->best_flow + 1) == dt->best_flow)
+		if (dt->ants[i].path < prev)
 			ft_printf("\n");
+		ft_printf("Ant %3d: path:%2d pos:%2d\n", i, dt->ants[i].path, dt->ants[i].pos);
+		prev = dt->ants[i].path;
 	}
 }
 

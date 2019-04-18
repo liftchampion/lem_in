@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggerardy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/16 23:37:28 by ggerardy          #+#    #+#             */
-/*   Updated: 2019/04/16 23:37:28 by ggerardy         ###   ########.fr       */
+/*   Created: 2019/04/18 22:16:12 by ggerardy          #+#    #+#             */
+/*   Updated: 2019/04/18 22:16:12 by ggerardy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int 	ft_check_start_end(t_data *dt);
 /*
 **	ft_print_answer.c
 */
+int 	ft_fill_ants(t_data *dt);
 void	ft_print_ants(t_data *dt);
 void	ft_print_murashi(t_data *dt);
 /*

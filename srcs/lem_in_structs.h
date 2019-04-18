@@ -26,7 +26,7 @@
 # define INIT_PATH_LEN 64
 # define INIT_LINKS_FROM_NODE 4
 # define INIT_FLOW_COUNT 32
-# define NODE_POSTFIX "*"
+# define NODE_POSTFIX "_______"
 # define TO_EDGE(i, w) ((void*)((((size_t)(i)) << 32u) | (unsigned)(w)))
 # define GET_I(iw) ((int)((size_t)(iw) >> 32u))
 # define GET_W(iw) ((int)(iw))
@@ -62,6 +62,8 @@ struct	s_data
 	t_vector	*path;
 	t_vector	*flows;
 	t_ant		*ants;
+	char 		*gone_ants;
+	int 		*wave_sizes;
 	int 		ant_count;
 	int 		start;
 	int 		end;

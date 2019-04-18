@@ -31,7 +31,8 @@ t_data	*ft_parser(int fd)
 		return ((void*)(size_t)ft_free_data(dt, 0));
 	if (!(dt->heap = make_heap(dt->nodes->len)) ||
 		!(dt->dsts = ft_memalloc(sizeof(int) * dt->nodes->len)) ||
-		!(dt->ants = ft_memalloc(sizeof(t_ant) * dt->ant_count)))
+		!(dt->ants = ft_memalloc(sizeof(t_ant) * dt->ant_count)) ||
+		!(dt->gone_ants = ft_memalloc(dt->ant_count)))
 		return ((void*)(size_t)ft_free_data(dt, 0));
 	return (dt);
 }
