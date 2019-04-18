@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggerardy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/18 22:16:12 by ggerardy          #+#    #+#             */
-/*   Updated: 2019/04/18 22:16:12 by ggerardy         ###   ########.fr       */
+/*   Created: 2019/04/18 23:15:32 by ggerardy          #+#    #+#             */
+/*   Updated: 2019/04/18 23:15:32 by ggerardy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int		ft_parse_rooms(t_data *dt, int fd);
 /*
 **	ft_parser_utils.c
 */
-int		ft_parse_ants_count(int fd);
+int		ft_parse_ants_count(int fd, t_data *dt);
 int		ft_parse_hash(t_data *dt, char *ln, t_parse_mode pm);
 int 	ft_check_links_begin(char *end, t_node *nd, t_data *dt);
 int 	ft_find_in_map(char *ln, t_data *dt);
@@ -85,7 +85,6 @@ int 	ft_check_start_end(t_data *dt);
 **	ft_print_answer.c
 */
 int 	ft_fill_ants(t_data *dt);
-void	ft_print_ants(t_data *dt);
 void	ft_print_murashi(t_data *dt);
 /*
 **	ft_shortest.c

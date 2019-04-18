@@ -33,7 +33,8 @@ t_data		*ft_make_data(void)
 		!(dt->name_to_idx = ft_make_std_map(NON_FREE_STR, INT32_T)) ||
 		!(dt->path = ft_make_vector(INIT_PATH_LEN)) ||
 		!(dt->flows = ft_make_vector_free(INIT_FLOW_COUNT,
-				ft_free_vector_simple)))
+				ft_free_vector_simple)) ||
+		!(dt->output = ft_make_string(INIT_OUTPUT_SIZE)))
 		return ((void*)(size_t)ft_free_data(dt, 0));
 	dt->start = -1;
 	dt->end = -1;

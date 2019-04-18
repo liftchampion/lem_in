@@ -33,6 +33,8 @@ int		main(void)
 	ft_fill_ants(dt);
 	ft_print_murashi(dt);
 
+	ft_print_string(dt->output);
+
 	//ft_print_ants(dt);
 
 	return (ft_free_data(dt, 0));

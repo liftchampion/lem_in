@@ -19,7 +19,7 @@ t_data	*ft_parser(int fd)
 
 	if (!(dt = ft_make_data()))
 		return (0);
-	if ((dt->ant_count = ft_parse_ants_count(fd)) <= 0)
+	if ((dt->ant_count = ft_parse_ants_count(fd, dt)) <= 0)
 		return ((void*)(size_t)ft_free_data(dt, 0));
 	if (!(parse_res = ft_parse_rooms(dt, fd)))
 		return ((void*)(size_t)ft_free_data(dt, 0));
@@ -32,7 +32,8 @@ t_data	*ft_parser(int fd)
 	if (!(dt->heap = make_heap(dt->nodes->len)) ||
 		!(dt->dsts = ft_memalloc(sizeof(int) * dt->nodes->len)) ||
 		!(dt->ants = ft_memalloc(sizeof(t_ant) * dt->ant_count)) ||
-		!(dt->gone_ants = ft_memalloc(dt->ant_count)))
+		!(dt->gone_ants = ft_memalloc(dt->ant_count)) ||
+		!ft_string_push_back(&dt->output, '\n'))
 		return ((void*)(size_t)ft_free_data(dt, 0));
 	return (dt);
 }

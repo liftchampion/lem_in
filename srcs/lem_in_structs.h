@@ -16,7 +16,6 @@
 # include "libft.h"
 
 # define READ_BUFF 1000000
-
 # define INF 1000000000
 # define NOT_VISITED -57
 # define LEFT weight[ind * 2 + 1]
@@ -26,13 +25,15 @@
 # define INIT_PATH_LEN 64
 # define INIT_LINKS_FROM_NODE 4
 # define INIT_FLOW_COUNT 32
+# define INIT_OUTPUT_SIZE 1024
 # define NODE_POSTFIX "_______"
-# define TO_EDGE(i, w) ((void*)((((size_t)(i)) << 32u) | (unsigned)(w)))
-# define GET_I(iw) ((int)((size_t)(iw) >> 32u))
-# define GET_W(iw) ((int)(iw))
 # define CN 0
 # define OLD 1
 # define NEW 2
+
+# define TO_EDGE(i, w) ((void*)((((size_t)(i)) << 32u) | (unsigned)(w)))
+# define GET_I(iw) ((int)((size_t)(iw) >> 32u))
+# define GET_W(iw) ((int)(iw))
 # define CURR_PATH dt->ants[i].path
 # define CURR_POS dt->ants[i].pos
 # define PATH_LEN (int)paths[CURR_PATH]->len
@@ -67,6 +68,7 @@ struct	s_data
 	t_ant		*ants;
 	char 		*gone_ants;
 	int 		*wave_sizes;
+	t_string	*output;
 	int 		ant_count;
 	int 		start;
 	int 		end;

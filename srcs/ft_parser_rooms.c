@@ -77,6 +77,9 @@ int		ft_parse_rooms(t_data *dt, int fd)
 			return (0);
 		if ((parse_res = ft_parse_room(ln, dt)) <= 0)
 			return (free_ret(ln, parse_res));
+		if (parse_res == 1 && (!ft_string_push_back_s(&dt->output, ln) ||
+							!ft_string_push_back(&dt->output, '\n')))
+			return (0);
 		free(ln);
 	}
 	return (1);
