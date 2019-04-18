@@ -19,7 +19,7 @@ int		main(void)
 	t_data *dt;
 
 	//int fd = 0;
-	int fd = open("big_sup.test", O_RDONLY);
+	int fd = open("0.test", O_RDONLY);
 	if (!(dt = ft_parser(fd)))
 		return (ft_printf("Error\n") * 0);
 
@@ -28,7 +28,7 @@ int		main(void)
 	if (!ft_find_all_flows(dt))
 		return (0);
 
-	ft_print_flows(dt, 2);
+	//ft_print_flows(dt, 2);
 
 	ft_fill_ants(dt);
 	ft_print_murashi(dt);

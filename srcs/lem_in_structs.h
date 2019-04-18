@@ -33,6 +33,9 @@
 # define CN 0
 # define OLD 1
 # define NEW 2
+# define CURR_PATH dt->ants[i].path
+# define CURR_POS dt->ants[i].pos
+# define PATH_LEN (int)paths[CURR_PATH]->len
 
 # define NODE struct s_node
 # define HEAP struct s_heap

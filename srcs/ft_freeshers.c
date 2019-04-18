@@ -42,6 +42,7 @@ int 	ft_free_data(t_data *dt, int ret)
 	free(dt->tmp_line); // todo check if you really need tmp-line
 	free(dt->ants);
 	free(dt->gone_ants);
+	free(dt->wave_sizes);
 	free(dt);
 	return (ret);
 }
