@@ -102,7 +102,7 @@ t_pars	*ft_parse_flags(int ac, char **av)
 	int		i;
 	int 	flag_res;
 
-	if (!(prs = ft_memalloc(sizeof(t_pars))))
+	if (!(prs = ft_memalloc(sizeof(t_pars))) || (flag_res = 0))
 		return
 		((void*)(size_t)(ft_printf("Malloc error during parsing flags\n") * 0));
 	SET_FMT_F(prs->flags);
