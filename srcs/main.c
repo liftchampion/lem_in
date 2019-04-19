@@ -64,7 +64,7 @@ int 	ft_procede_partitial_case(t_data *dt)
 	int		end;
 	int 	len;
 
-	if (dt->start == dt->end)
+	if (dt->start == dt->end - 1)
 		return (1);
 	i = -1;
 	start_children = ((t_node*)dt->nodes->data[dt->start])->chs->data;
@@ -104,7 +104,8 @@ int		main(int ac, char **av)
 		return (ft_free_data(dt, 0));
 	if (!ft_processing(dt))
 		return (ft_free_data(dt, 0) * ft_printf("Error\n"));
-	ft_print_string(dt->output);
+	if (dt->output)
+		ft_print_string(dt->output);
 
 	return (ft_free_data(dt, 0)); // todo close file if it was opened
 }

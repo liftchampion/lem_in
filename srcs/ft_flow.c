@@ -94,7 +94,7 @@ int		ft_find_all_flows(t_data *dt)
 
 	size = 0;
 	best_fl_tm = INF;
-	dijkstra(dt);
+	dijkstra(dt); // todo if VIZ copy result somewhere
 	while (dt->dsts[dt->end] != INF)
 	{
 		ft_upd_pts(dt);
@@ -108,5 +108,5 @@ int		ft_find_all_flows(t_data *dt)
 		size++;
 		dijkstra(dt);
 	}
-	return (1);
+	return (size ? 1 : 0);
 }

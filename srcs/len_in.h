@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggerardy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/19 05:30:31 by ggerardy          #+#    #+#             */
-/*   Updated: 2019/04/19 05:30:31 by ggerardy         ###   ########.fr       */
+/*   Created: 2019/04/19 07:00:17 by ggerardy          #+#    #+#             */
+/*   Updated: 2019/04/19 07:00:17 by ggerardy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ t_heap	*make_heap(int len);
 /*
 **	ft_parser.c
 */
+int 	ft_append_ants_names(t_data *dt);
 int 	ft_parse_ants_names(t_data *dt);
 int 	ft_check_file(char *name);
 int		ft_set_flag(char *ln, t_pars *prs);

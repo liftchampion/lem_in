@@ -49,7 +49,7 @@ int		ft_parse_hash(t_data *dt, char *ln, t_parse_mode pm)
 	{
 		if (dt->end != -1)
 			return (0);
-		dt->end = dt->nodes->len + 1;
+		dt->end = dt->nodes->len;
 	}
 	if (start_or_end && (!ft_string_push_back_s(&dt->output, ln) ||
 							!ft_string_push_back(&dt->output, '\n')))
@@ -90,5 +90,6 @@ int 	ft_check_start_end(t_data *dt)
 	if (dt->start == -1 || dt->end == -1 ||
 			dt->start >= (int)dt->nodes->len || dt->end >= (int)dt->nodes->len)
 		return (0);
+	++dt->end;
 	return (1);
 }
