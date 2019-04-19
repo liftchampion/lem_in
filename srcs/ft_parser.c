@@ -27,7 +27,7 @@ t_data	*ft_parser(int fd, t_pars *prs)
 	if (!ft_check_start_end(dt))
 		return ((void*)(size_t)ft_free_data(dt, 0));
 	if (parse_res == -1)
-		return (dt + 0 * ft_get_next_line(fd, 0, READ_BUFF));
+		return (dt + 0 * ft_get_next_line(fd, 0, dt->buff_size));
 	if (!ft_parse_links(dt, fd))
 		return ((void*)(size_t)ft_free_data(dt, 0));
 	if (!(dt->heap = make_heap(dt->nodes->len)) ||
@@ -38,5 +38,5 @@ t_data	*ft_parser(int fd, t_pars *prs)
 		(GET_FMT_A(prs->flags) &&
 		!(dt->output = ft_make_string(INIT_OUTPUT_SIZE))))
 		return ((void*)(size_t)ft_free_data(dt, 0));
-	return (dt + 0 * ft_get_next_line(fd, 0, READ_BUFF));
+	return (dt + 0 * ft_get_next_line(fd, 0, dt->buff_size));
 }

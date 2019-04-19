@@ -71,7 +71,7 @@ int		ft_parse_rooms(t_data *dt, int fd)
 	char *ln;
 	int parse_res;
 
-	while ((ln = (char*)1lu) && ft_get_next_line(fd, &ln, READ_BUFF))
+	while ((ln = (char*)1lu) && ft_get_next_line(fd, &ln, dt->buff_size))
 	{
 		if (!ln)
 			return (0);

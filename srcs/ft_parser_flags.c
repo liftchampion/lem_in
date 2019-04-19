@@ -40,14 +40,14 @@ int 	ft_parse_ants_names(t_data *dt)
 			!(dt->ant_names = ft_make_vector_free(dt->ant_count, free)))
 		return (0);
 	while ((int)dt->ant_names->len < dt->ant_count &&
-			(ln = (char*)1lu) && ft_get_next_line(fd, &ln, READ_BUFF))
+			(ln = (char*)1lu) && ft_get_next_line(fd, &ln, READ_BUFF_FILE))
 	{
 		if (!ln)
-			return (close(fd) * 0 * ft_get_next_line(fd, 0, READ_BUFF));
+			return (close(fd) * 0 * ft_get_next_line(fd, 0, READ_BUFF_FILE));
 		if (!ft_vector_push_back(&dt->ant_names, ln))
-			return (close(fd) * 0  * ft_get_next_line(fd, 0, READ_BUFF));
+			return (close(fd) * 0  * ft_get_next_line(fd, 0, READ_BUFF_FILE));
 	}
-	ft_get_next_line(fd, 0, READ_BUFF);
+	ft_get_next_line(fd, 0, READ_BUFF_FILE);
 	if (!ft_append_ants_names(dt))
 		return (close(fd) * 0);
 	return (close(fd) * 0 + 1);
@@ -91,7 +91,9 @@ int		ft_set_flag(char *ln, t_pars *prs)
 		return ((size_t)(prs->input_file = ln + 5) * 0 + 1);
 	else if (!ft_strncmp(ln, "ants=", 5))
 		return ((size_t)(prs->ant_names = ln + 5) * 0 + 1);
-	return (ft_check_generator_flags(ln));
+	else if (!ft_strcmp(ln, "answer"))
+		return (SET_ANSWER(prs->flags) * 0 + 1);
+	return (0);
 }
 
 t_pars	*ft_parse_flags(int ac, char **av)

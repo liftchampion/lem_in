@@ -21,6 +21,8 @@
 
 # define FT_ABS(x) (((x) >= 0) ? (x) : -(x))
 
+ssize_t				ft_read(int fd, void *buf, size_t buf_size);
+
 char				*ft_strsub_char_m(char **s, char c, int init_size);
 
 int					free_ret(void *to_free, int ret);

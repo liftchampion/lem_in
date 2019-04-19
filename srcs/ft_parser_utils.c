@@ -17,7 +17,7 @@ int			ft_parse_ants_count(int fd, t_data *dt)
 	char *ln;
 	int count;
 
-	if (ft_get_next_line(fd, &ln, READ_BUFF) <= 0)
+	if (ft_get_next_line(fd, &ln, dt->buff_size) <= 0)
 		return (0);
 	if (ln[0] == '-')
 		return (free_ret(ln, 0));
@@ -34,10 +34,11 @@ int		ft_parse_hash(t_data *dt, char *ln, t_parse_mode pm)
 {
 	int start_or_end;
 
+	if (!ft_strncmp("#Here is the number of lines required: ", ln, 39) &&
+		GET_ANSWER(dt->prs->flags))
+		return (ft_printf("%s\n", ln) * 0 * UNSET_ANSWER(dt->prs->flags) + 1);
 	if (ln[1] != '#' || pm == LINKS)
-	{
 		return (2);
-	}
 	start_or_end = 0;
 	if (!ft_strcmp("start", ln + 2) && (start_or_end = 1))
 	{

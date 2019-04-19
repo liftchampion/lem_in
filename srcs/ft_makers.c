@@ -38,6 +38,7 @@ t_data		*ft_make_data(t_pars *prs)
 	if (GET_FMT_F(prs->flags) &&
 			!(dt->output = ft_make_string(INIT_OUTPUT_SIZE)))
 		return ((void*)(size_t)ft_free_data(dt, 0));
+	dt->buff_size = prs->input_file ? READ_BUFF_FILE : READ_BUFF_STDIN;
 	dt->start = -1;
 	dt->end = -1;
 	return (dt);

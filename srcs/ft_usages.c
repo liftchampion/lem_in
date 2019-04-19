@@ -21,6 +21,7 @@ char g_flags_usage_txt[] =
 "            {Magenta}(enables  --format=minimal)\n"
 "            (disables --vis)\n"
 "            (disables --ants=file){eof}\n"
+"{Bold}{Green}--answer{eof}    {Bold}add{eof} line with answer from input.\n"
 "{Bold}{Green}--vis{eof}       enable visualizer.\n"
 "{Bold}{Green}--file={eof}{Blue}file{eof} specify input file.\n"
 "{Bold}{Green}--ants={eof}{Blue}file{eof} specify file for ants' names.\n"

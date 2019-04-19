@@ -17,7 +17,8 @@
 # include <fcntl.h>
 # include <zconf.h>
 
-# define READ_BUFF 1000000
+# define READ_BUFF_FILE 500000
+# define READ_BUFF_STDIN 1000
 # define INF 1000000000
 # define NOT_VISITED -57
 # define LEFT weight[ind * 2 + 1]
@@ -40,16 +41,19 @@
 # define CURR_POS dt->ants[i].pos
 # define PATH_LEN (int)paths[CURR_PATH]->len
 
-# define SET_FAST(flags)   ((flags) = 0B00001001u)
-# define SET_FMT_F(flags)  ((flags) = (((flags) & 0B11110001u) | (1u << 1u)))
-# define SET_FMT_A(flags)  ((flags) = (((flags) & 0B11110001u) | (1u << 2u)))
-# define SET_FMT_M(flags)  ((flags) = (((flags) & 0B11110001u) | (1u << 3u)))
-# define SET_VIS(flags)    ((flags) |= 1u << 4u)
-# define GET_FAST(flags)  (((flags) & (1u << 0u)) != 0)
-# define GET_FMT_F(flags) (((flags) & (1u << 1u)) != 0)
-# define GET_FMT_A(flags) (((flags) & (1u << 2u)) != 0)
-# define GET_FMT_M(flags) (((flags) & (1u << 3u)) != 0)
-# define GET_VIS(flags)   (((flags) & (1u << 4u)) != 0)
+# define SET_FAST(flags)     ((flags) = 0B00001001u | ((flags) & 0B00100000u))
+# define SET_FMT_F(flags)    ((flags) = (((flags) & 0B11110001u) | (1u << 1u)))
+# define SET_FMT_A(flags)    ((flags) = (((flags) & 0B11110001u) | (1u << 2u)))
+# define SET_FMT_M(flags)    ((flags) = (((flags) & 0B11110001u) | (1u << 3u)))
+# define SET_VIS(flags)      ((flags) |= 1u << 4u)
+# define SET_ANSWER(flags)   ((flags) |= 1u << 5u)
+# define UNSET_ANSWER(flags) ((flags) &= 0B11011111u)
+# define GET_FAST(flags)    (((flags) & (1u << 0u)) != 0)
+# define GET_FMT_F(flags)   (((flags) & (1u << 1u)) != 0)
+# define GET_FMT_A(flags)   (((flags) & (1u << 2u)) != 0)
+# define GET_FMT_M(flags)   (((flags) & (1u << 3u)) != 0)
+# define GET_VIS(flags)     (((flags) & (1u << 4u)) != 0)
+# define GET_ANSWER(flags)  (((flags) & (1u << 5u)) != 0)
 
 extern char g_invalid_flag_txt[];
 extern char g_flags_usage_txt[];
@@ -89,6 +93,7 @@ struct	s_data
 	t_string	*output;
 	t_pars		*prs;
 	t_vector	*ant_names;
+	int 		buff_size;
 	int 		ant_count;
 	int 		start;
 	int 		end;

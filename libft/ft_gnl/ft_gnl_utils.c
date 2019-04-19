@@ -21,7 +21,7 @@ t_result		ft_get_line_from_buffer(t_buf *buf, t_string **str, int fd)
 
 	if (buf->pos >= buf->len && buf->len == buf->capac)
 	{
-		buf->len = read(fd, buf->buffer, (size_t)buf->capac);
+		buf->len = ft_read(fd, buf->buffer, (size_t)buf->capac);
 		buf->pos = 0;
 		if (buf->len <= 0)
 			return (buf->len == 0 ? NO_LINE : ERROR);
@@ -51,7 +51,7 @@ t_result		ft_append_line(t_buf *buf, int fd, t_string *str)
 	res = ENDL_NOT_FOUND;
 	while (res == ENDL_NOT_FOUND)
 	{
-		buf->len = read(fd, buf->buffer, (size_t)buf->capac);
+		buf->len = ft_read(fd, buf->buffer, (size_t)buf->capac);
 		buf->pos = 0;
 		res = ft_get_line_from_buffer(buf, &str, fd);
 		if (res == ERROR || res == NO_LINE)
@@ -64,20 +64,6 @@ void			ft_free_buf(void *buf)
 {
 	free(((t_buf*)buf)->buffer);
 	free(buf);
-}
-
-void			ft_gnl_check_stdin(t_result *res, t_buf *buf, const int fd)
-{
-	ssize_t read_res;
-
-	read_res = read(fd, buf->buffer + buf->len,
-			(size_t)(buf->capac - buf->len));
-	if (read_res == -1)
-	{
-		*res = ERROR;
-		return ;
-	}
-	buf->len += read_res;
 }
 
 t_result		ft_gnl_init_works(int fd, t_map **fd_bf, t_buf ***curr_buf,
@@ -101,7 +87,7 @@ t_result		ft_gnl_init_works(int fd, t_map **fd_bf, t_buf ***curr_buf,
 			return (ERROR);
 		***curr_buf = (t_buf){(char*)ft_memalloc((size_t)buf_size), 0, 0,
 						buf_size};
-		if (!(**curr_buf)->buffer || ((**curr_buf)->len = read(fd,
+		if (!(**curr_buf)->buffer || ((**curr_buf)->len = ft_read(fd,
 				(**curr_buf)->buffer, (size_t)(**curr_buf)->capac)) == -1)
 			return (ERROR);
 	}
