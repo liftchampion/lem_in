@@ -53,29 +53,3 @@ int 	ft_send_lems_one_flow(t_data *dt, int flow)
 	return (((t_vector*)paths->data[0])->offset +
 		((t_vector*)paths->data[0])->len - 1);
 }
-/*
-int 	ft_send_lems(t_data *dt)
-{
-	size_t	i;
-	int 	best_flow_time;
-	int 	best_flow;
-	int 	curr_flow_time;
-
-	i = (size_t)-1;
-	best_flow_time = INF;
-	best_flow = INF;
-	while (++i < dt->flows->len)
-	{
-		curr_flow_time = ft_send_lems_one_flow(dt, i);
-		if (curr_flow_time < best_flow_time)
-		{
-			best_flow = i;
-			best_flow_time = curr_flow_time;
-		}
-		ft_printf("Curr flow is: {\\202}%d{eof}. Time is: {\\200}%d{eof}\n",
-				i + 1, curr_flow_time);
-	}
-	ft_printf("{Green}Best{eof} flow is: {\\202}%d{eof}. Time is: {\\200}%d{eof}\n",
-			best_flow + 1, best_flow_time);
-	return (best_flow);
-}*/

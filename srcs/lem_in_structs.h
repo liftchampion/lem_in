@@ -51,6 +51,10 @@
 # define GET_FMT_M(flags) (((flags) & (1u << 3u)) != 0)
 # define GET_VIS(flags)   (((flags) & (1u << 4u)) != 0)
 
+extern char g_invalid_flag_txt[];
+extern char g_flags_usage_txt[];
+extern char g_program_usage_txt[];
+
 # define NODE struct s_node
 # define HEAP struct s_heap
 # define DATA struct s_data

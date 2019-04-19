@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggerardy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/19 07:00:17 by ggerardy          #+#    #+#             */
-/*   Updated: 2019/04/19 07:00:17 by ggerardy         ###   ########.fr       */
+/*   Created: 2019/04/19 08:39:49 by ggerardy          #+#    #+#             */
+/*   Updated: 2019/04/19 08:39:49 by ggerardy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,15 @@ t_heap	*make_heap(int len);
 /*
 **	ft_parser.c
 */
+t_data	*ft_parser(int fd, t_pars *prs);
+/*
+**	ft_parser_flags.c
+*/
 int 	ft_append_ants_names(t_data *dt);
 int 	ft_parse_ants_names(t_data *dt);
 int 	ft_check_file(char *name);
 int		ft_set_flag(char *ln, t_pars *prs);
 t_pars	*ft_parse_flags(int ac, char **av);
-t_data	*ft_parser(int fd, t_pars *prs);
 /*
 **	ft_parser_links.c
 */
@@ -86,6 +89,11 @@ int		ft_parse_hash(t_data *dt, char *ln, t_parse_mode pm);
 int 	ft_check_links_begin(char *end, t_node *nd, t_data *dt);
 int 	ft_find_in_map(char *ln, t_data *dt);
 int 	ft_check_start_end(t_data *dt);
+/*
+**	ft_partitial_cases.c
+*/
+int 	ft_print_murashi_simple(t_data *dt);
+int 	ft_procede_partitial_case(t_data *dt);
 /*
 **	ft_print_answer.c
 */
