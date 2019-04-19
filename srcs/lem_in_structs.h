@@ -84,10 +84,12 @@ struct	s_data
 	int 		*wave_sizes;
 	t_string	*output;
 	t_pars		*prs;
+	t_vector	*ant_names;
 	int 		ant_count;
 	int 		start;
 	int 		end;
 	int 		best_flow;
+	int 		turns;
 };
 
 struct	s_ant

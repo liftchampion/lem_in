@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggerardy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/19 03:51:27 by ggerardy          #+#    #+#             */
-/*   Updated: 2019/04/19 03:51:27 by ggerardy         ###   ########.fr       */
+/*   Created: 2019/04/19 05:30:31 by ggerardy          #+#    #+#             */
+/*   Updated: 2019/04/19 05:30:31 by ggerardy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,12 @@ int 	ft_send_lems_one_flow(t_data *dt, int flow);
 **	ft_makers.c
 */
 t_node	*ft_make_node(void);
-t_data	*ft_make_data(int save_input);
+t_data	*ft_make_data(t_pars *prs);
 t_heap	*make_heap(int len);
 /*
 **	ft_parser.c
 */
+int 	ft_parse_ants_names(t_data *dt);
 int 	ft_check_file(char *name);
 int		ft_set_flag(char *ln, t_pars *prs);
 t_pars	*ft_parse_flags(int ac, char **av);

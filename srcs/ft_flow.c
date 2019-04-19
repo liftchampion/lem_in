@@ -27,7 +27,7 @@ static inline int	ft_find_next(t_data *dt, int from)
 		if (GET_W(starts[i]) == -1)
 			return (GET_I(starts[i]));
 	}
-	return (INF); // todo for segfault
+	return (INF);
 }
 
 int 	ft_restore_path(t_data *dt, int from, t_vector **path)
@@ -108,8 +108,5 @@ int		ft_find_all_flows(t_data *dt)
 		size++;
 		dijkstra(dt);
 	}
-	//ft_printf("%d\n", best_fl_tm);
-	//ft_printf("{Green}Best{eof} flow is: {\\202}%d{eof}. Time is: {\\200}%d{eof}\n",
-	//		dt->best_flow + 1, best_fl_tm);
 	return (1);
 }

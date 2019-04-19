@@ -23,7 +23,7 @@ t_node		*ft_make_node(void)
 	return (node);
 }
 
-t_data		*ft_make_data(int save_input)
+t_data		*ft_make_data(t_pars *prs)
 {
 	t_data		*dt;
 
@@ -35,7 +35,8 @@ t_data		*ft_make_data(int save_input)
 		!(dt->flows = ft_make_vector_free(INIT_FLOW_COUNT,
 				ft_free_vector_simple)))
 		return ((void*)(size_t)ft_free_data(dt, 0));
-	if (save_input && !(dt->output = ft_make_string(INIT_OUTPUT_SIZE)))
+	if (GET_FMT_F(prs->flags) &&
+			!(dt->output = ft_make_string(INIT_OUTPUT_SIZE)))
 		return ((void*)(size_t)ft_free_data(dt, 0));
 	dt->start = -1;
 	dt->end = -1;

@@ -19,26 +19,66 @@ char g_invalid_flag_txt[] =
 char g_flags_usage_txt[] =
 "{Bold}{Green}--usage{eof}     program usage.\n"
 "{Bold}{Green}--help{eof}      flags usage.\n"
-"{Bold}{Green}--fast{eof}      fast mode\n"
+"{Bold}{Green}--fast{eof}      fast mode.\n"
 "            {Magenta}(enables minimal\n"
 "             output format){eof}\n"
 "{Bold}{Green}--vis{eof}       enable visualizer.\n"
-"{Bold}{Green}--file={eof}{Blue}file{eof} specify input file\n"
+"{Bold}{Green}--file={eof}{Blue}file{eof} specify input file.\n"
 "{Bold}{Green}--ants={eof}{Blue}file{eof} specify file for ants' names.\n"
 "{Bold}{Green}--format{eof}    specify output format:\n"
 "            {Blue}full{eof} - default format with map data "
-"and ants movements\n"
-"            {Blue}ants{eof} - only ants movements\n"
-"            {Blue}minimal{eof} - only number of turns\n";
+"and ants movements.\n"
+"            {Blue}ants{eof} - only ants movements.\n"
+"            {Blue}minimal{eof} - only number of turns.\n";
 
 char g_prorgam_usage_txt[] =
-"The program takes input data in format\n"
-"     {Blue}number_of_ants{eof} (strictly {Magenta}positive{eof})\n"
-"     {Blue}the_rooms{eof}      ({Magenta}any{eof} symbols you want)\n"
-"                      mark start and end\n"
-"                       with {Magenta}\"##start\"{eof}\n"
-"                       or   {Magenta}\"##end\"{eof}\n"
-"     {Blue}the_links{eof}      (as {Magenta}\"room1-room2\"{eof})\n";
+"The program takes input data in format:\n"
+"    {Blue}number_of_ants{eof}   (strictly {Magenta}positive{eof})\n"
+"    {Blue}the_rooms{eof}        ({Magenta}any{eof} symbols you want)\n"
+"                         mark start and end\n"
+"                          with {Magenta}\"##start\"{eof}\n"
+"                          or   {Magenta}\"##end\"{eof}\n"
+"    {Blue}the_links{eof}        (as {Magenta}\"room1-room2\"{eof})\n";
+
+int 	ft_append_ants_names(t_data *dt)
+{
+	int 	i;
+	char 	*tmp_ln;
+	int 	names_count;
+
+	names_count = dt->ant_names->len;
+	i = 0;
+	while ((int)dt->ant_names->len < dt->ant_count)
+	{
+		ft_sprintf(&tmp_ln, "%s%d", dt->ant_names->data[i % names_count],
+				i / names_count);
+		++i;
+		if (!tmp_ln || !ft_vector_push_back(&dt->ant_names, tmp_ln))
+			return (0);
+	}
+	return (1);
+}
+
+int 	ft_parse_ants_names(t_data *dt)
+{
+	char	*ln;
+	int		fd;
+
+	if ((fd = open(dt->prs->ant_names, O_RDONLY)) == -1 ||
+		!(dt->ant_names = ft_make_vector_free(dt->ant_count, free)))
+		return (0);
+	while ((int)dt->ant_names->len < dt->ant_count &&
+		(ln = (char*)1lu) && ft_get_next_line(fd, &ln, READ_BUFF))
+	{
+		if (!ln)
+			return (close(fd) * 0);
+		if (!ft_vector_push_back(&dt->ant_names, ln))
+			return (close(fd) * 0);
+	}
+	if (!ft_append_ants_names(dt))
+		return (close(fd) * 0);
+	return (close(fd) * 0 + 1);
+}
 
 int 	ft_check_file(char *name)
 {
@@ -105,7 +145,6 @@ t_pars	*ft_parse_flags(int ac, char **av)
 	if (!ft_check_file(prs->ant_names))
 		return ((void*)(size_t)free_ret(prs, 0) +
 		0 * ft_printf("Bad file \"{Bold}{Red}%s{eof}\"\n", prs->ant_names));
-	ft_printf("%#hhB\n%s\n%s\n", prs->flags, prs->input_file, prs->ant_names); // todo
 	return (prs);
 }
 
@@ -114,7 +153,7 @@ t_data	*ft_parser(int fd, t_pars *prs)
 	t_data		*dt;
 	int 		parse_res;
 
-	if (!(dt = ft_make_data(GET_FMT_F(prs->flags))))
+	if (!(dt = ft_make_data(prs)))
 		return (0);
 	dt->prs = prs;
 	if ((dt->ant_count = ft_parse_ants_count(fd, dt)) <= 0)
