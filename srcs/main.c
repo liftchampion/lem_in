@@ -10,25 +10,30 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
-#include <zconf.h>
 #include "len_in.h"
 
-int		main(int ac, char **av)
+t_data 	*ft_parsing(int ac, char **av)
 {
-	t_data *dt;
-	t_pars *prs;
+	t_data	*dt;
+	t_pars	*prs;
+	int		fd;
 
 	if (!(prs = ft_parse_flags(ac, av)))
 		return (0);
+	fd = prs->input_file ? open(prs->input_file, O_RDONLY) : 0;
+	if (!(dt = ft_parser(fd, prs)))
+		return ((void*)(size_t)(ft_printf("Error\n") * 0));
+	if (fd)
+		close(fd);
+	return (dt);
+}
 
+int		main(int ac, char **av)
+{
+	t_data	*dt;
 
-	//int fd = 0;
-	int fd = open("1.test", O_RDONLY);
-	if (!(dt = ft_parser(fd)))
-		return (ft_printf("Error\n") * 0);
-
-	//ft_print_parsed(dt);
+	if (!(dt = ft_parsing(ac, av)))
+		return (ft_free_data(dt, 0));
 
 	if (!ft_find_all_flows(dt))
 		return (0);

@@ -14,6 +14,8 @@
 # define LEM_IN_STRUCTS_H
 
 # include "libft.h"
+# include <fcntl.h>
+# include <zconf.h>
 
 # define READ_BUFF 1000000
 # define INF 1000000000
@@ -81,6 +83,7 @@ struct	s_data
 	char 		*gone_ants;
 	int 		*wave_sizes;
 	t_string	*output;
+	t_pars		*prs;
 	int 		ant_count;
 	int 		start;
 	int 		end;

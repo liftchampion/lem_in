@@ -40,7 +40,25 @@ char g_prorgam_usage_txt[] =
 "                       or   {Magenta}\"##end\"{eof}\n"
 "     {Blue}the_links{eof}      (as {Magenta}\"room1-room2\"{eof})\n";
 
-int 	ft_set_flag(char *ln, t_pars *prs)
+int 	ft_check_file(char *name)
+{
+	int fd;
+
+	if (!name)
+		return (-1);
+	fd = open(name, O_RDONLY);
+	if (fd == -1)
+		return (0);
+	if (read(fd, 0, 0) == -1)
+	{
+		close(fd);
+		return (0);
+	}
+	close(fd);
+	return (1);
+}
+
+int		ft_set_flag(char *ln, t_pars *prs)
 {
 	if (!ft_strcmp(ln, "help"))
 		return (ft_printf(g_flags_usage_txt) * 0 - 1);
@@ -70,7 +88,9 @@ t_pars	*ft_parse_flags(int ac, char **av)
 	int 	flag_res;
 
 	if (!(prs = ft_memalloc(sizeof(t_pars))))
-		return (0);
+		return
+		((void*)(size_t)(ft_printf("Malloc error during parsing flags\n") * 0));
+	SET_FMT_F(prs->flags);
 	i = 0;
 	while (++i < ac)
 	{
@@ -79,18 +99,24 @@ t_pars	*ft_parse_flags(int ac, char **av)
 			return ((void*)(size_t)free_ret(prs, 0) +
 					0 * ft_printf(!flag_res ? g_invalid_flag_txt : "", av[i]));
 	}
-	ft_printf("%#hhB\n%s\n%s\n", prs->flags, prs->input_file, prs->ant_names);
-
+	if (!ft_check_file(prs->input_file))
+		return ((void*)(size_t)free_ret(prs, 0) +
+		0 * ft_printf("Bad file \"{Bold}{Red}%s{eof}\"\n", prs->input_file));
+	if (!ft_check_file(prs->ant_names))
+		return ((void*)(size_t)free_ret(prs, 0) +
+		0 * ft_printf("Bad file \"{Bold}{Red}%s{eof}\"\n", prs->ant_names));
+	ft_printf("%#hhB\n%s\n%s\n", prs->flags, prs->input_file, prs->ant_names); // todo
 	return (prs);
 }
 
-t_data	*ft_parser(int fd)
+t_data	*ft_parser(int fd, t_pars *prs)
 {
 	t_data		*dt;
 	int 		parse_res;
 
-	if (!(dt = ft_make_data()))
+	if (!(dt = ft_make_data(GET_FMT_F(prs->flags))))
 		return (0);
+	dt->prs = prs;
 	if ((dt->ant_count = ft_parse_ants_count(fd, dt)) <= 0)
 		return ((void*)(size_t)ft_free_data(dt, 0));
 	if (!(parse_res = ft_parse_rooms(dt, fd)))
@@ -105,7 +131,9 @@ t_data	*ft_parser(int fd)
 		!(dt->dsts = ft_memalloc(sizeof(int) * dt->nodes->len)) ||
 		!(dt->ants = ft_memalloc(sizeof(t_ant) * dt->ant_count)) ||
 		!(dt->gone_ants = ft_memalloc(dt->ant_count)) ||
-		!ft_string_push_back(&dt->output, '\n'))
+		!ft_string_push_back(&dt->output, '\n') ||
+		(GET_FMT_A(prs->flags) &&
+		!(dt->output = ft_make_string(INIT_OUTPUT_SIZE))))
 		return ((void*)(size_t)ft_free_data(dt, 0));
 	return (dt);
 }
