@@ -10,28 +10,64 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
-#include <zconf.h>
 #include "len_in.h"
 
-int		main(void)
+t_data 	*ft_parsing(int ac, char **av)
 {
-	t_data *dt;
+	t_data	*dt;
+	t_pars	*prs;
+	int		fd;
 
-	//int fd = 0;
-	int fd = open("big.test", O_RDONLY);
-	if (!(dt = ft_parser(fd)))
-		return (ft_printf("Error\n") * 0);
+	if (!(prs = ft_parse_flags(ac, av)))
+		return (0);
+	fd = prs->input_file ? open(prs->input_file, O_RDONLY) : 0;
+	if (!(dt = ft_parser(fd, prs)))
+		return ((void*)(size_t)(ft_printf("Error\n") * 0));
+	if (fd)
+		close(fd);
+	if (prs->ant_names && !ft_parse_ants_names(dt))
+		return
+		((void*)(size_t)(ft_printf("Error during parsing ants' names\n") * 0));
+	return (dt);
+}
 
-	//ft_print_parsed(dt);
+int 	ft_processing(t_data *dt)
+{
+	int partitial_case;
+	t_vector *first_path;
 
+	if (!(partitial_case = ft_procede_partitial_case(dt)))
+		return (0);
+	if (partitial_case == 1 || partitial_case == 2)
+		return (1);
 	if (!ft_find_all_flows(dt))
 		return (0);
+	if (GET_FAST(dt->prs->flags))
+	{
+		first_path =
+			((t_vector*)((t_vector*)dt->flows->data[dt->best_flow])->data[0]);
+		dt->turns = first_path->offset + first_path->len - 1;
+		return (1);
+	}
+	if (!ft_fill_ants(dt))
+		return (0);
+	if (!ft_print_murashi(dt))
+		return (0);
+	return (1);
+}
 
-	ft_sort_flows(dt);
-	ft_send_lems(dt);
+int		main(int ac, char **av)
+{
+	t_data	*dt;
 
-	ft_print_flows(dt, 2);
+	if (!(dt = ft_parsing(ac, av)))
+		return (ft_free_data(dt, 0));
+	if (!ft_processing(dt))
+		return (ft_free_data(dt, 0) * ft_printf("Error\n"));
+	if (dt->output)
+		ft_print_string(dt->output);
+	if (GET_FMT_M(dt->prs->flags))
+		ft_printf("%d\n", dt->turns);
 
 	return (ft_free_data(dt, 0));
 }

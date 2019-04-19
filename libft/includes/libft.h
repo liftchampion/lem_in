@@ -21,6 +21,8 @@
 
 # define FT_ABS(x) (((x) >= 0) ? (x) : -(x))
 
+ssize_t				ft_read(int fd, void *buf, size_t buf_size);
+
 char				*ft_strsub_char_m(char **s, char c, int init_size);
 
 int					free_ret(void *to_free, int ret);
@@ -116,6 +118,9 @@ void				ft_free_matrix(void **ptr, size_t n);
 
 void				*ft_realloc(void *old_data, size_t prev_size,
 														size_t new_size);
+
+void		*ft_realloc_free(void *old_data, size_t prev_size, size_t new_size,
+		void (*free_data)(void*));
 
 void				*ft_memalloc(size_t size);
 

@@ -37,8 +37,14 @@ int 	ft_free_data(t_data *dt, int ret)
 	ft_free_vector(&dt->path);
 	ft_free_heap(dt->heap, 0);
 	ft_free_map(&dt->name_to_idx);
+	ft_free_vector(&dt->flows);
+	ft_free_string(&dt->output);
+	ft_free_vector(&dt->ant_names);
 	free(dt->dsts);
-	free(dt->tmp_line);
+	free(dt->ants);
+	free(dt->gone_ants);
+	free(dt->wave_sizes);
+	free(dt->prs);
 	free(dt);
 	return (ret);
 }

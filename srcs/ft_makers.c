@@ -18,13 +18,12 @@ t_node		*ft_make_node(void)
 
 	if (!(node = ft_memalloc(sizeof(t_node))))
 		return (0);
-	if (!(node->chs = ft_make_vector(INIT_LINKS_FROM_NODE)) ||
-		!(node->bros = ft_make_vector(INIT_LINKS_FROM_NODE)))
+	if (!(node->chs = ft_make_vector(INIT_LINKS_FROM_NODE)))
 		return ((void*)(size_t)free_ret(node, 0));
 	return (node);
 }
 
-t_data		*ft_make_data(void)
+t_data		*ft_make_data(t_pars *prs)
 {
 	t_data		*dt;
 
@@ -33,8 +32,13 @@ t_data		*ft_make_data(void)
 	if (!(dt->nodes = ft_make_vector(INIT_NODES_COUNT)) ||
 		!(dt->name_to_idx = ft_make_std_map(NON_FREE_STR, INT32_T)) ||
 		!(dt->path = ft_make_vector(INIT_PATH_LEN)) ||
-		!(dt->flows = ft_make_vector(INIT_FLOW_COUNT)))
+		!(dt->flows = ft_make_vector_free(INIT_FLOW_COUNT,
+				ft_free_vector_simple)))
 		return ((void*)(size_t)ft_free_data(dt, 0));
+	if (GET_FMT_F(prs->flags) &&
+			!(dt->output = ft_make_string(INIT_OUTPUT_SIZE)))
+		return ((void*)(size_t)ft_free_data(dt, 0));
+	dt->buff_size = prs->input_file ? READ_BUFF_FILE : READ_BUFF_STDIN;
 	dt->start = -1;
 	dt->end = -1;
 	return (dt);

@@ -33,9 +33,7 @@ int		ft_split_room(t_data *dt)
 	node->y = old_node->y;
 	if (!ft_vector_push_back(&dt->nodes, node) ||
 		!ft_vector_push_back(&node->chs, TO_EDGE(node_idx - 1, 1)) ||
-		!ft_vector_push_back(&old_node->chs, TO_EDGE(node_idx, 1)) ||
-		!ft_vector_push_back(&node->bros, (void*)(size_t)(node_idx - 1)) ||
-		!ft_vector_push_back(&old_node->bros, (void*)(size_t)(node_idx)))
+		!ft_vector_push_back(&old_node->chs, TO_EDGE(node_idx, 1)))
 		return (0);
 	return (1);
 }
@@ -73,12 +71,15 @@ int		ft_parse_rooms(t_data *dt, int fd)
 	char *ln;
 	int parse_res;
 
-	while ((ln = (char*)1lu) && ft_get_next_line(fd, &ln, READ_BUFF))
+	while ((ln = (char*)1lu) && ft_get_next_line(fd, &ln, dt->buff_size))
 	{
 		if (!ln)
 			return (0);
 		if ((parse_res = ft_parse_room(ln, dt)) <= 0)
 			return (free_ret(ln, parse_res));
+		if (parse_res == 1 && (!ft_string_push_back_s(&dt->output, ln) ||
+							!ft_string_push_back(&dt->output, '\n')))
+			return (0);
 		free(ln);
 	}
 	return (1);
