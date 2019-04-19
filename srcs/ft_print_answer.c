@@ -45,8 +45,16 @@ int 	ft_push_ant_move(t_data *dt, int i, t_vector **paths)
 {
 	char	*str_tmp;
 
-	ft_sprintf(&str_tmp, "L%d-%s ", i + 1, ((t_node *)dt->nodes->data[
+	if (dt->ant_names)
+		ft_sprintf(&str_tmp, "L%s-%s ",
+				dt->ant_names->data[i],
+				((t_node*)dt->nodes->data[
+				(int)paths[CURR_PATH]->data[PATH_LEN - CURR_POS]])->name);
+	else
+		ft_sprintf(&str_tmp, "L%d-%s ", i + 1, ((t_node *)dt->nodes->data[
 			(int)paths[CURR_PATH]->data[PATH_LEN - CURR_POS]])->name);
+	if (!str_tmp)
+		return (0);
 	if (!ft_string_push_back_s(&dt->output, str_tmp))
 		return (0);
 	free(str_tmp);
@@ -75,7 +83,7 @@ int		ft_print_murashi(t_data *dt)
 			if (CURR_POS == PATH_LEN && ++start)
 				dt->gone_ants[i] = 1;
 		}
-		if (!ft_string_push_back(&dt->output, '\n'))
+		if (!ft_string_push_back(&dt->output + (++dt->turns) * 0, '\n'))
 			return (0);
 		pool += dt->wave_sizes[k++];
 	}
