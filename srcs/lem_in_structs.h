@@ -39,22 +39,15 @@
 # define PATH_LEN (int)paths[CURR_PATH]->len
 
 # define SET_FAST(flags)   ((flags) |= 1u << 0u)
-# define SET_FMT_F(flags)  ((flags) |= 1u << 1u)
-# define SET_FMT_A(flags)  ((flags) |= 1u << 2u)
-# define SET_FMT_M(flags)  ((flags) |= 1u << 3u)
+# define SET_FMT_F(flags)  ((flags) = (((flags) & 0B11110001u) | (1u << 1u)))
+# define SET_FMT_A(flags)  ((flags) = (((flags) & 0B11110001u) | (1u << 2u)))
+# define SET_FMT_M(flags)  ((flags) = (((flags) & 0B11110001u) | (1u << 3u)))
 # define SET_VIS(flags)    ((flags) |= 1u << 4u)
-# define SET_F_IN(flags)   ((flags) |= 1u << 5u)
-# define SET_A_NMS(flags)  ((flags) |= 1u << 6u)
-# define SET_USAGE(flags)  ((flags) |= 1u << 7u)
-# define UNSET_FMT(flags)  ((flags) &= 0B11110001u)
 # define GET_FAST(flags)  (((flags) & (1u << 0u)) != 0)
 # define GET_FMT_F(flags) (((flags) & (1u << 1u)) != 0)
 # define GET_FMT_A(flags) (((flags) & (1u << 2u)) != 0)
 # define GET_FMT_M(flags) (((flags) & (1u << 3u)) != 0)
 # define GET_VIS(flags)   (((flags) & (1u << 4u)) != 0)
-# define GET_F_IN(flags)  (((flags) & (1u << 5u)) != 0)
-# define GET_A_NMS(flags) (((flags) & (1u << 6u)) != 0)
-# define GET_USAGE(flags) (((flags) & (1u << 7u)) != 0)
 
 # define NODE struct s_node
 # define HEAP struct s_heap

@@ -14,7 +14,7 @@
 
 char g_invalid_flag_txt[] =
 "Invalid option {Bold}{Red}%s{eof}.\n"
-"Use {Bold}{Green}--help{eof} flags usage.\n";
+"Use {Bold}{Green}--help{eof} to see flags usage.\n";
 
 char g_flags_usage_txt[] =
 "{Bold}{Green}--usage{eof}     program usage.\n"
@@ -22,10 +22,10 @@ char g_flags_usage_txt[] =
 "{Bold}{Green}--fast{eof}      fast mode\n"
 "            {Magenta}(enables minimal\n"
 "             output format){eof}\n"
-"{Bold}{Green}--vis{eof}       to enable visualizer.\n"
-"{Bold}{Green}--file={eof}{Blue}file{eof} to specify input file\n"
-"{Bold}{Green}--ants={eof}{Blue}file{eof} to specify file for ants' names.\n"
-"{Bold}{Green}--format{eof}    to specify output format.\n"
+"{Bold}{Green}--vis{eof}       enable visualizer.\n"
+"{Bold}{Green}--file={eof}{Blue}file{eof} specify input file\n"
+"{Bold}{Green}--ants={eof}{Blue}file{eof} specify file for ants' names.\n"
+"{Bold}{Green}--format{eof}    specify output format:\n"
 "            {Blue}full{eof} - default format with map data "
 "and ants movements\n"
 "            {Blue}ants{eof} - only ants movements\n"
@@ -43,11 +43,23 @@ char g_prorgam_usage_txt[] =
 int 	ft_set_flag(char *ln, t_pars *prs)
 {
 	if (!ft_strcmp(ln, "help"))
-		return (ft_printf(g_flags_usage_txt) * 0);
+		return (ft_printf(g_flags_usage_txt) * 0 - 1);
 	else if (!ft_strcmp(ln, "usage"))
-		return (ft_printf(g_prorgam_usage_txt) * 0);
+		return (ft_printf(g_prorgam_usage_txt) * 0 - 1);
 	else if (!ft_strcmp(ln, "fast"))
-		return (SET_FAST(prs->flags) * 0 + 1);
+		return (SET_FAST(prs->flags) * SET_FMT_M(prs->flags) * 0 + 1);
+	else if (!ft_strcmp(ln, "viz"))
+		return (SET_VIS(prs->flags) * 0 + 1);
+	else if (!ft_strcmp(ln, "format=full"))
+		return (SET_FMT_F(prs->flags) * 0 + 1);
+	else if (!ft_strcmp(ln, "format=ants"))
+		return (SET_FMT_A(prs->flags) * 0 + 1);
+	else if (!ft_strcmp(ln, "format=minimal"))
+		return (SET_FMT_M(prs->flags) * 0 + 1);
+	else if (!ft_strncmp(ln, "file=", 5))
+		return ((size_t)(prs->input_file = ln + 5) * 0 + 1);
+	else if (!ft_strncmp(ln, "ants=", 5))
+		return ((size_t)(prs->ant_names = ln + 5) * 0 + 1);
 	return (0);
 }
 
@@ -55,17 +67,19 @@ t_pars	*ft_parse_flags(int ac, char **av)
 {
 	t_pars	*prs;
 	int		i;
+	int 	flag_res;
 
 	if (!(prs = ft_memalloc(sizeof(t_pars))))
 		return (0);
 	i = 0;
 	while (++i < ac)
 	{
-		if (av[i][0] != '-' || av[i][1] != '-' || !ft_set_flag(av[i] + 2, prs))
+		if (av[i][0] != '-' || av[i][1] != '-' ||
+			(flag_res = ft_set_flag(av[i] + 2, prs)) <= 0)
 			return ((void*)(size_t)free_ret(prs, 0) +
-				0 * ft_printf(g_invalid_flag_txt, av[i]));
+					0 * ft_printf(!flag_res ? g_invalid_flag_txt : "", av[i]));
 	}
-	ft_printf("%#hhB\n", prs->flags);
+	ft_printf("%#hhB\n%s\n%s\n", prs->flags, prs->input_file, prs->ant_names);
 
 	return (prs);
 }
