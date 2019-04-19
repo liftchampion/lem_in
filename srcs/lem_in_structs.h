@@ -40,7 +40,7 @@
 # define CURR_POS dt->ants[i].pos
 # define PATH_LEN (int)paths[CURR_PATH]->len
 
-# define SET_FAST(flags)   ((flags) |= 1u << 0u)
+# define SET_FAST(flags)   ((flags) = 0B00001001u)
 # define SET_FMT_F(flags)  ((flags) = (((flags) & 0B11110001u) | (1u << 1u)))
 # define SET_FMT_A(flags)  ((flags) = (((flags) & 0B11110001u) | (1u << 2u)))
 # define SET_FMT_M(flags)  ((flags) = (((flags) & 0B11110001u) | (1u << 3u)))

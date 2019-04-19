@@ -20,8 +20,9 @@ char g_flags_usage_txt[] =
 "{Bold}{Green}--usage{eof}     program usage.\n"
 "{Bold}{Green}--help{eof}      flags usage.\n"
 "{Bold}{Green}--fast{eof}      fast mode.\n"
-"            {Magenta}(enables minimal\n"
-"             output format){eof}\n"
+"            {Magenta}(enables  --format=minimal)\n"
+"            (disables --vis)\n"
+"            (disables --ants=file){eof}\n"
 "{Bold}{Green}--vis{eof}       enable visualizer.\n"
 "{Bold}{Green}--file={eof}{Blue}file{eof} specify input file.\n"
 "{Bold}{Green}--ants={eof}{Blue}file{eof} specify file for ants' names.\n"
@@ -106,8 +107,8 @@ int		ft_set_flag(char *ln, t_pars *prs)
 	else if (!ft_strcmp(ln, "usage"))
 		return (ft_printf(g_prorgam_usage_txt) * 0 - 1);
 	else if (!ft_strcmp(ln, "fast"))
-		return (SET_FAST(prs->flags) * SET_FMT_M(prs->flags) * 0 + 1);
-	else if (!ft_strcmp(ln, "viz"))
+		return (SET_FAST(prs->flags));
+	else if (!ft_strcmp(ln, "vis"))
 		return (SET_VIS(prs->flags) * 0 + 1);
 	else if (!ft_strcmp(ln, "format=full"))
 		return (SET_FMT_F(prs->flags) * 0 + 1);
@@ -143,6 +144,8 @@ t_pars	*ft_parse_flags(int ac, char **av)
 	if (!ft_check_file(prs->input_file))
 		return ((void*)(size_t)free_ret(prs, 0) +
 		0 * ft_printf("Bad file \"{Bold}{Red}%s{eof}\"\n", prs->input_file));
+	if (GET_FAST(prs->flags) && !(prs->ant_names = 0))
+		SET_FAST(prs->flags);
 	if (!ft_check_file(prs->ant_names))
 		return ((void*)(size_t)free_ret(prs, 0) +
 		0 * ft_printf("Bad file \"{Bold}{Red}%s{eof}\"\n", prs->ant_names));
