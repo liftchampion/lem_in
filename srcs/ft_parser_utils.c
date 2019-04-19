@@ -36,7 +36,8 @@ int		ft_parse_hash(t_data *dt, char *ln, t_parse_mode pm)
 
 	if (!ft_strncmp("#Here is the number of lines required: ", ln, 39) &&
 		GET_ANSWER(dt->prs->flags))
-		return (ft_printf("%s\n", ln) * 0 * UNSET_ANSWER(dt->prs->flags) + 1);
+		return
+		(ft_fdprintf(2, "%s\n", ln) * 0 * UNSET_ANSWER(dt->prs->flags) + 1);
 	if (ln[1] != '#' || pm == LINKS)
 		return (2);
 	start_or_end = 0;
