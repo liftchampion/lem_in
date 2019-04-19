@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggerardy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/19 08:39:49 by ggerardy          #+#    #+#             */
-/*   Updated: 2019/04/19 08:39:49 by ggerardy         ###   ########.fr       */
+/*   Created: 2019/04/19 08:46:32 by ggerardy          #+#    #+#             */
+/*   Updated: 2019/04/19 08:46:32 by ggerardy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,12 +109,6 @@ int		ft_find_shortest_path(t_data *dt);
 */
 void	ft_upd_pts(t_data *dt);
 void	ft_sort_paths_in_flow(t_data *dt, int flow);
-void	ft_sort_flows(t_data *dt);
-void	ft_printf_ants2(t_data *dt);
-void	ft_print_flows(t_data *dt, int mode);
-void	ft_print_parsed(t_data *dt);
-void	ft_print_path(t_data *dt, int mode);
-void	ft_print_heap(t_data *dt);
-void	ft_print_dijkstra(t_data *dt, int mode);
+int 	ft_check_generator_flags(char *ln);
 
 #endif
