@@ -17,7 +17,7 @@ HEADERS_DIR = srcs
 SRCDIR = srcs
 INCS = ./libft/includes
 LIBFT = ./libft
-ADD_FLAGS_LINK =
+ADD_FLAGS_LINK = -lmlx -framework OpenGl -framework AppKit
 ADD_FLAGS_COMPILE =
 OBJS_DIR = objs
 DPDS_DIR = dpds
@@ -78,7 +78,7 @@ endif
 
 #################################--COMPILING--##################################
 
-$(OBJS_DIR)/%.o: $(SRCDIR)/%.c
+$(OBJS_DIR)/%.o: $(SRCDIR)/%.c $(HEADERS)
 	@if [ '$(WAS_PRINTED_CMP)' == '0' ]; then \
 		printf "\e[?25l\x1B[38;5;31mCompiling $(NAME)...\nCompiling \x1B[0m" \
 		$(eval WAS_PRINTED_CMP := 1); \

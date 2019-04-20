@@ -73,6 +73,39 @@ typedef ANT		t_ant;
 typedef PRS		t_pars;
 typedef PMOD	t_parse_mode;
 
+
+typedef struct	s_mlx_init
+{
+	void	*to_free_data;
+	void	*add_data;
+	int		(*free_func)(void*);
+	int		(*key_func)(int, void*);
+	int		(*mouse_func)(int, int, int, void*);
+	int		(*expose_func)(void*);
+	int		(*loop_func)(void*);
+}				t_mlx_init;
+
+typedef struct	s_mlx
+{
+	void 	*add_data;
+	void	*mlx_ptr;
+	void	*win_ptr;
+	void	*img;
+	char	*img_data;
+	void	*to_free_data;
+	int		(*free_func)(void*);
+	int		(*key_func)(int, void*);
+	int		(*mouse_func)(int, int, int, void*);
+	int		(*expose_func)(void*);
+	int		(*loop_func)(void*);
+	int 	x;
+	int 	y;
+	int 	bits_per_pixel;
+	int 	size_line;
+	int 	endian;
+}				t_mlx;
+
+
 enum	e_parse_mode
 {
 	NODES,
@@ -93,6 +126,7 @@ struct	s_data
 	t_string	*output;
 	t_pars		*prs;
 	t_vector	*ant_names;
+	t_mlx		*mlx;
 	int 		buff_size;
 	int 		ant_count;
 	int 		start;
