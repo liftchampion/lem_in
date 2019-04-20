@@ -33,8 +33,8 @@ t_data 	*ft_parsing(int ac, char **av)
 
 int 	ft_processing(t_data *dt)
 {
-	int partitial_case;
-	t_vector *first_path;
+	int			partitial_case;
+	t_vector	*first_path;
 
 	if (!(partitial_case = ft_procede_partitial_case(dt)))
 		return (0);
@@ -54,16 +54,6 @@ int 	ft_processing(t_data *dt)
 	if (!ft_print_murashi(dt))
 		return (0);
 	return (1);
-}
-
-int 	ft_mlx_expose(void *p)
-{
-	t_mlx *mlx;
-
-	mlx = p;
-	ft_mlx_pixelput(mlx, 100, 100, 0x00ff0000);
-	ft_mlx_put_img(mlx);
-	return (0);
 }
 
 int		main(int ac, char **av)

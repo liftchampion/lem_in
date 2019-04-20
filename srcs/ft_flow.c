@@ -95,6 +95,8 @@ int		ft_find_all_flows(t_data *dt)
 	size = 0;
 	best_fl_tm = INF;
 	dijkstra(dt); // todo if VIZ copy result somewhere
+	if (GET_VIS(dt->prs->flags) && !ft_copy_nodes(dt))
+		return (0);
 	while (dt->dsts[dt->end] != INF)
 	{
 		ft_upd_pts(dt);

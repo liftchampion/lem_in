@@ -13,6 +13,24 @@
 #include <mlx.h>
 #include "libft.h"
 
+void	ft_mlx_rectput(t_mlx *mlx, t_point size, t_point pos, int color)
+{
+	int x;
+	int y;
+
+	y = pos.y;
+	while (y < pos.y + size.y)
+	{
+		x = pos.x;
+		while (x < pos.x + size.x)
+		{
+			ft_mlx_pixelput(mlx, x, y, color);
+			++x;
+		}
+		++y;
+	}
+}
+
 void 	ft_mlx_pixelput(t_mlx *mlx, int x, int y, int color)
 {
 	static int	max = -1;

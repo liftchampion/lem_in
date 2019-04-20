@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggerardy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/20 05:16:14 by ggerardy          #+#    #+#             */
-/*   Updated: 2019/04/20 05:16:14 by ggerardy         ###   ########.fr       */
+/*   Created: 2019/04/20 06:09:45 by ggerardy          #+#    #+#             */
+/*   Updated: 2019/04/20 06:09:45 by ggerardy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,5 +111,11 @@ int		ft_find_shortest_path(t_data *dt);
 void	ft_upd_pts(t_data *dt);
 void	ft_sort_paths_in_flow(t_data *dt, int flow);
 int 	ft_check_generator_flags(char *ln);
+/*
+**	ft_vis_save_nodes.c
+*/
+void 	ft_fill_sorted_nodes(t_data *dt);
+void 	ft_fill_names_to_pos(t_data *dt);
+int 	ft_copy_nodes(t_data *dt);
 
 #endif

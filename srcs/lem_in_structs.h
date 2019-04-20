@@ -17,6 +17,13 @@
 # include <fcntl.h>
 # include <zconf.h>
 
+
+
+int 	ft_mlx_expose(void *p);
+
+
+
+
 # define READ_BUFF_FILE 500000
 # define READ_BUFF_STDIN 1000
 # define INF 1000000000
@@ -59,19 +66,21 @@ extern char g_invalid_flag_txt[];
 extern char g_flags_usage_txt[];
 extern char g_program_usage_txt[];
 
-# define NODE struct s_node
-# define HEAP struct s_heap
-# define DATA struct s_data
-# define ANT struct s_ant
-# define PRS struct s_pars
-# define PMOD enum e_parse_mode
+# define NODE		struct s_node
+# define HEAP		struct s_heap
+# define DATA		struct s_data
+# define ANT		struct s_ant
+# define PRS		struct s_pars
+# define VIS_NODE	struct s_vis_node
+# define PMOD		enum e_parse_mode
 
-typedef NODE	t_node;
-typedef HEAP	t_heap;
-typedef DATA	t_data;
-typedef ANT		t_ant;
-typedef PRS		t_pars;
-typedef PMOD	t_parse_mode;
+typedef NODE		t_node;
+typedef HEAP		t_heap;
+typedef DATA		t_data;
+typedef ANT			t_ant;
+typedef PRS			t_pars;
+typedef PMOD		t_parse_mode;
+typedef VIS_NODE	t_vis_node;
 
 enum	e_parse_mode
 {
@@ -94,6 +103,10 @@ struct	s_data
 	t_pars		*prs;
 	t_vector	*ant_names;
 	t_mlx		*mlx;
+	t_vis_node	*sorted_nodes; //todo free
+	int 		*name_to_pos; // todo free
+	int 		real_nodes_count;
+	int 		max_dst;
 	int 		buff_size;
 	int 		ant_count;
 	int 		start;
@@ -123,6 +136,12 @@ struct	s_pars
 	char			*input_file;
 	char			*ant_names;
 	unsigned char	flags;
+};
+
+struct	s_vis_node
+{
+	int name;
+	int dst;
 };
 
 struct	s_heap

@@ -48,6 +48,12 @@ typedef struct	s_mlx
 	int 	endian;
 }				t_mlx;
 
+typedef struct	s_point
+{
+	int x;
+	int y;
+}				t_point;
+
 /*
 **	ft_mlx_destroy.c
 */
@@ -56,6 +62,7 @@ int		ft_mlx_close(void *p);
 /*
 **	ft_mlx_img.c
 */
+void	ft_mlx_rectput(t_mlx *mlx, t_point size, t_point pos, int color);
 void 	ft_mlx_pixelput(t_mlx *mlx, int x, int y, int color);
 void 	ft_mlx_put_img(t_mlx *mlx);
 void 	ft_mlx_clear(t_mlx *mlx);
