@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggerardy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/20 03:16:58 by ggerardy          #+#    #+#             */
-/*   Updated: 2019/04/20 03:16:58 by ggerardy         ###   ########.fr       */
+/*   Created: 2019/04/20 03:28:32 by ggerardy          #+#    #+#             */
+/*   Updated: 2019/04/20 03:28:32 by ggerardy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int		ft_send_flow(t_data *dt);
 **	ft_freeshers.c
 */
 int 	ft_free_node(t_node *nd, int ret);
+int 	ft_free_for_mlx(void *ptr);
 int 	ft_free_data(t_data *dt, int ret);
 int 	ft_free_heap(t_heap *hp, int ret);
 /*

@@ -22,6 +22,14 @@ int 	ft_free_node(t_node *nd, int ret)
 	return (ret);
 }
 
+int 	ft_free_for_mlx(void *ptr)
+{
+	t_data *dt;
+
+	dt = ptr;
+	return (ft_free_data(dt, 0));
+}
+
 int 	ft_free_data(t_data *dt, int ret)
 {
 	size_t i;

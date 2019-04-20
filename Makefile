@@ -64,7 +64,7 @@ $(NAME): $(OBJS_DIR) $(OBJS_SUBDIRS) $(DPDS_SUBDIRS) $(DPDS_DIR) $(OBJS) $(HEADE
 	@printf "\e[?25h\033[A\033[K\e[?25h\x1B[38;5;30mLinking   $(NAME)...\x1B[0m\n"
 # Set flags
 	$(eval FLAGS := $(WFLAGS))
-	$(eval FLAGS += $(ADD_FLAGS_LINKE))
+	$(eval FLAGS += $(ADD_FLAGS_LINK))
 # Link as lib/exe
 ifeq ($(IS_LIB),a)
 		@ar rcs $(NAME) $(OBJS) $(LIBFT)/libft.a;
