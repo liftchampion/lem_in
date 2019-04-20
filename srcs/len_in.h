@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggerardy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/20 06:09:45 by ggerardy          #+#    #+#             */
-/*   Updated: 2019/04/20 06:09:45 by ggerardy         ###   ########.fr       */
+/*   Created: 2019/04/20 07:10:15 by ggerardy          #+#    #+#             */
+/*   Updated: 2019/04/20 07:10:15 by ggerardy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,14 @@ int		ft_find_shortest_path(t_data *dt);
 */
 void	ft_upd_pts(t_data *dt);
 void	ft_sort_paths_in_flow(t_data *dt, int flow);
-int 	ft_check_generator_flags(char *ln);
+void	ft_print_flows(t_data *dt, int mode);
+void	ft_print_path(t_data *dt, int mode);
+/*
+**	ft_vis.c
+*/
+int 	ft_get_color_gradient(int dst, int max_dst);
+void 	ft_print_map(void *p);
+int 	ft_mlx_expose(void *p);
 /*
 **	ft_vis_save_nodes.c
 */

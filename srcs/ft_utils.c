@@ -62,17 +62,40 @@ void		ft_sort_paths_in_flow(t_data *dt, int flow)
 	}
 }
 
-int 		ft_check_generator_flags(char *ln)
+void		ft_print_flows(t_data *dt, int mode)
 {
-	if (!ft_strcmp(ln, "flow-one"))
-		return (1);
-	else if (!ft_strcmp(ln, "flow-ten"))
-		return (1);
-	else if (!ft_strcmp(ln, "flow-thousand"))
-		return (1);
-	else if (!ft_strcmp(ln, "big"))
-		return (1);
-	else if (!ft_strcmp(ln, "big-superposition"))
-		return (1);
-	return (0);
+	t_vector *flows;
+	t_vector *curr_flow;
+	t_vector *curr_path;
+
+	flows = dt->flows;
+
+	ft_printf("Flows count: %d\n", (int)flows->len);
+	for (size_t i = 0; i < flows->len; ++i)
+	{
+		ft_printf("~~~~~~~~~~~~~~~~~~~~~~ %2d ~~~~~~~~~~~~~~~~~~~~~~\n", i + 1);
+		curr_flow = flows->data[i];
+		for (size_t j = 0; j < curr_flow->len; ++j)
+		{
+			ft_printf("%2d: ", j + 1);
+			curr_path = curr_flow->data[j];
+			if (mode == 1)
+			{
+				for (size_t k = 0; k < curr_path->len; ++k)
+				{
+					int idx = (int)curr_path->data[k];
+					ft_printf("%s ", ((t_node *)dt->nodes->data[idx])->name);
+				}
+				ft_printf("\n");
+			}
+			if (mode == 2)
+			{
+				ft_printf("%d({Yellow}%d{eof})\n",
+						(int)curr_path->len,
+						curr_path->offset);
+			}
+		}
+		ft_printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+	}
 }
+
