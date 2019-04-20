@@ -56,6 +56,16 @@ int 	ft_processing(t_data *dt)
 	return (1);
 }
 
+int 	ft_mlx_expose(void *p)
+{
+	t_mlx *mlx;
+
+	mlx = p;
+	ft_mlx_pixelput(mlx, 100, 100, 0x00ff0000);
+	ft_mlx_put_img(mlx);
+	return (0);
+}
+
 int		main(int ac, char **av)
 {
 	t_data	*dt;
@@ -70,7 +80,7 @@ int		main(int ac, char **av)
 		ft_printf("%d\n", dt->turns);
 
 	if (!(dt->mlx = ft_mlx_init(1000, 1000, "HUI",
-			(t_mlx_init){dt, dt, ft_free_for_mlx, 0, 0, 0, 0})))
+			(t_mlx_init){dt, dt, ft_free_for_mlx, 0, 0, ft_mlx_expose, 0})))
 		return (0);
 
 	mlx_loop(dt->mlx->mlx_ptr);

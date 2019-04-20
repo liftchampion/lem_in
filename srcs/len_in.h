@@ -5,14 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggerardy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/20 03:28:32 by ggerardy          #+#    #+#             */
-/*   Updated: 2019/04/20 03:28:32 by ggerardy         ###   ########.fr       */
+/*   Created: 2019/04/20 05:16:14 by ggerardy          #+#    #+#             */
+/*   Updated: 2019/04/20 05:16:14 by ggerardy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEN_IN_H
 # define LEN_IN_H
-# include <mlx.h>
 # include "lem_in_structs.h"
 # include "libft.h"
 # include "len_in.h"
@@ -112,13 +111,5 @@ int		ft_find_shortest_path(t_data *dt);
 void	ft_upd_pts(t_data *dt);
 void	ft_sort_paths_in_flow(t_data *dt, int flow);
 int 	ft_check_generator_flags(char *ln);
-/*
-**	ft_vis.c
-*/
-void	*ft_destroy_mlx(t_mlx *mlx, int ret);
-int		ft_mlx_close(void *p);
-void	ft_assign_mlx_data(t_mlx *mlx, int x, int y, t_mlx_init *init_data);
-t_mlx 	*ft_mlx_init(int x, int y, char *name,
-		t_mlx_init to_free_and_free_func_and_key_mouse_expose_loop_data);
 
 #endif
