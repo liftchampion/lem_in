@@ -60,8 +60,6 @@ int		main(int ac, char **av)
 {
 	t_data	*dt;
 
-	read(0, 0, 1);
-
 	if (!(dt = ft_parsing(ac, av)))
 		return (ft_free_data(dt, 0));
 	if (!ft_processing(dt))
@@ -72,8 +70,9 @@ int		main(int ac, char **av)
 		ft_printf("%d\n", dt->turns);
 
 	if (!(dt->mlx = ft_mlx_init(1000, 1000, "HUI",
-			(t_mlx_init){dt, ft_free_for_mlx, 0, 0, 0, 0, 0})))
+			(t_mlx_init){dt, dt, ft_free_for_mlx, 0, 0, 0, 0})))
 		return (0);
+
 	mlx_loop(dt->mlx->mlx_ptr);
 
 	return (ft_free_data(dt, 0));
