@@ -19,7 +19,7 @@ s = sys.stdin.read().split('\n')
 kolichestvo_muraviev = int(s[0])
 s = s[1:]
 
-G = nx.Graph()
+G = nx.DiGraph()
 start = "lol"
 end = "kek"
 for i in range(len(s)):
@@ -43,7 +43,17 @@ for i in range(len(s)):
         G.add_node(words[0])
     else:
         link = s[i].split('-')
-        G.add_edge(link[0], link[1], capacity=1, weight=1)
+        if link[0] == end:
+            G.add_edge(link[1], link[0], capacity=1, weight=1)
+        elif link[1] == end:
+            G.add_edge(link[0], link[1], capacity=1, weight=1)
+        elif link[0] == start:
+            G.add_edge(link[0], link[1], capacity=1, weight=1)
+        elif link[1] == start:
+            G.add_edge(link[1], link[0], capacity=1, weight=1)
+        else:
+            G.add_edge(link[0], link[1], capacity=1, weight=1)
+            G.add_edge(link[1], link[0], capacity=1, weight=1)
 
 
 def count_links(graph):
@@ -65,6 +75,11 @@ print()
 print(nx.algorithms.flow.maximum_flow_value(G, start, end))
 max_flow = nx.algorithms.flow.maximum_flow(G, start, end)
 print(nx.algorithms.flow.cost_of_flow(G, max_flow[1]))
+print()
+min_cost_flow = nx.algorithms.flow.min_cost_flow(G, start, end)
+print(nx.algorithms.flow.cost_of_flow(G, min_cost_flow))
+
+
 
 # print(nx.algorithms.max_flow_min_cost(G, ns, ne))
 
