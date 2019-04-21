@@ -99,3 +99,56 @@ void		ft_print_flows(t_data *dt, int mode)
 	}
 }
 
+
+void 		ft_print_path_to_file(t_data *dt)
+{
+	void	**path;
+	int		len;
+	int		i;
+	int		fd;
+
+	fd = open("path.my.test", O_TRUNC | O_WRONLY);
+	path = dt->path->data;
+	len = dt->path->len;
+	i = len;
+
+	while (--i >= 0)
+	{
+		ft_fdprintf(fd, "%d\n", (int)path[i]);
+	}
+	close(fd);
+}
+
+void 		ft_printf_graph_to_file(t_data *dt)
+{
+	t_node **nodes;
+	int nodes_count;
+	int i;
+	int fd;
+
+	fd = open("graph.test", O_TRUNC | O_WRONLY);
+	nodes = (t_node**)dt->nodes->data;
+	nodes_count = dt->nodes->len;
+	i = -1;
+	ft_fdprintf(fd, "%d %d\n", dt->start, dt->end);
+	while (++i < nodes_count)
+	{
+		int j = -1;
+		void **chs = (void**)nodes[i]->chs->data;
+		int len = nodes[i]->chs->len;
+		while (++j < len)
+		{
+			ft_fdprintf(fd, "%d %d %d\n", i, GET_I(chs[j]),
+					GET_W(chs[j]) + nodes[i]->p - nodes[GET_I(chs[j])]->p);
+		}
+	}
+	close(fd);
+}
+
+void		ft_call_python_and_compare_paths()
+{
+	system("cat graph.test | ./main.py");
+	system("diff path.my.test path.ref.test | wc -l |"
+		"awk '{print \"\\x1B[38;5;202m\" $1 \"\\x1B[0m\"}'");
+	sleep(2);
+}

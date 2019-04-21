@@ -27,5 +27,7 @@ int		ft_find_shortest_path(t_data *dt)
 		curr_node = ((t_node*)dt->nodes->data[curr_node])->from;
 	}
 	ft_vector_push_back(&dt->path, (void*)(size_t)dt->start);
+	ft_print_path_to_file(dt);
+	ft_call_python_and_compare_paths();
 	return (dt->path ? 1 : 0);
 }

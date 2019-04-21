@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggerardy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/20 07:10:15 by ggerardy          #+#    #+#             */
-/*   Updated: 2019/04/20 07:10:15 by ggerardy         ###   ########.fr       */
+/*   Created: 2019/04/21 21:56:51 by ggerardy          #+#    #+#             */
+/*   Updated: 2019/04/21 21:56:51 by ggerardy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,9 @@ int		ft_find_shortest_path(t_data *dt);
 void	ft_upd_pts(t_data *dt);
 void	ft_sort_paths_in_flow(t_data *dt, int flow);
 void	ft_print_flows(t_data *dt, int mode);
-void	ft_print_path(t_data *dt, int mode);
+void 	ft_print_path_to_file(t_data *dt);
+void 	ft_printf_graph_to_file(t_data *dt);
+void	ft_call_python_and_compare_paths();
 /*
 **	ft_vis.c
 */
