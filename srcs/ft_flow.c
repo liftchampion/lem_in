@@ -101,6 +101,7 @@ int		ft_find_all_flows(t_data *dt)
 	{
 		ft_upd_pts(dt);
 		ft_printf_graph_to_file(dt);
+		//dijkstra(dt);
 		if (!ft_find_shortest_path(dt) || !ft_send_flow(dt) ||
 			!ft_restore_flow(dt))
 			return (0);

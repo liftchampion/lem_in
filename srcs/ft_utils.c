@@ -99,6 +99,51 @@ void		ft_print_flows(t_data *dt, int mode)
 	}
 }
 
+int 		ft_find_min_w(void **chs, int len, int next)
+{
+	int min_w = INF;
+	int i;
+
+	i = -1;
+	while (++i < len)
+	{
+		int w = GET_W(chs[i]);
+		int idx = GET_I(chs[i]);
+		if (idx == next)
+		{
+			if (w < min_w)
+				min_w = w;
+		}
+	}
+	return (min_w);
+}
+
+int 		ft_find_path_len(t_data *dt)
+{
+	void	**path;
+	int		len;
+	int		i;
+	int 	path_len;
+
+	path_len = 0;
+	path = dt->path->data;
+	len = dt->path->len;
+	i = len;
+
+	while (--i > 0)
+	{
+		int curr_node;
+		int next_node;
+		int w;
+		curr_node = (int)path[i];
+		next_node = (int)path[i - 1];
+		w = ft_find_min_w(((t_node*)dt->nodes->data[curr_node])->chs->data,
+				((t_node*)dt->nodes->data[curr_node])->chs->len, next_node);
+		path_len += w + ((t_node*)dt->nodes->data[curr_node])->p -
+				((t_node*)dt->nodes->data[next_node])->p;
+	}
+	return (path_len);
+}
 
 void 		ft_print_path_to_file(t_data *dt)
 {
@@ -112,6 +157,10 @@ void 		ft_print_path_to_file(t_data *dt)
 	len = dt->path->len;
 	i = len;
 
+	int path_len = ft_find_path_len(dt);
+
+	ft_fdprintf(fd, "Len: %d\n", path_len);
+	ft_printf("Len: %d\n", path_len);
 	while (--i >= 0)
 	{
 		ft_fdprintf(fd, "%d\n", (int)path[i]);
@@ -150,5 +199,5 @@ void		ft_call_python_and_compare_paths()
 	system("cat graph.test | ./main.py");
 	system("diff path.my.test path.ref.test | wc -l |"
 		"awk '{print \"\\x1B[38;5;202m\" $1 \"\\x1B[0m\"}'");
-	sleep(2);
+	//sleep(2);
 }

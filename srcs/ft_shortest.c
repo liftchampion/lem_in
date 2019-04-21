@@ -27,7 +27,28 @@ int		ft_find_shortest_path(t_data *dt)
 		curr_node = ((t_node*)dt->nodes->data[curr_node])->from;
 	}
 	ft_vector_push_back(&dt->path, (void*)(size_t)dt->start);
+
+
 	ft_print_path_to_file(dt);
 	ft_call_python_and_compare_paths();
+
+	char *ln;
+	int fd = open("path.ref.test", O_RDONLY);
+	int len = dt->path->len;
+	ft_get_next_line(fd, &ln, 1);
+	while (ft_get_next_line(fd, &ln, 1))
+	{
+		int nd = ft_atoi(ln);
+		dt->path->data[--len] = (void*)(size_t)nd;
+	}
+	close(fd);
+
+	ft_printf("begin new\n");
+	ft_print_path_to_file(dt);
+	ft_call_python_and_compare_paths();
+	ft_printf("end new\n");
+
+
+
 	return (dt->path ? 1 : 0);
 }

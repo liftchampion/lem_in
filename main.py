@@ -28,8 +28,11 @@ for i in range(len(s)):
         G.add_edge(int(link[0]), int(link[1]), capacity=1, weight=int(link[2]))
 
 path = nx.dijkstra_path(G, start, end)
+path_len = nx.dijkstra_path_length(G, start, end)
 
 out = open("path.ref.test", 'w')
+
+out.write("Len: " + str(path_len) + '\n')
 
 for nd in path:
     out.write(str(nd) + '\n')
