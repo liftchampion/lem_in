@@ -49,7 +49,7 @@ int 	ft_processing(t_data *dt)
 		dt->turns = first_path->offset + first_path->len - 1;
 		return (1);
 	}
-	ft_print_flows(dt, 2); //todo
+	//ft_print_flows(dt, 2); //todo
 	if (!ft_fill_ants(dt))
 		return (0);
 	if (!ft_print_murashi(dt))
@@ -72,7 +72,7 @@ int		main(int ac, char **av)
 
 	if (GET_VIS(dt->prs->flags))
 	{
-		if (!(dt->mlx = ft_mlx_init(1200, 1200, "HUI",
+		if (!(dt->mlx = ft_mlx_init(1920, 1080, "HUI",
 				(t_mlx_init){dt, dt, ft_free_for_mlx, 0, 0, ft_mlx_expose, 0})))
 			return (0);
 		mlx_loop(dt->mlx->mlx_ptr);

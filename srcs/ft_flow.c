@@ -94,7 +94,7 @@ int		ft_find_all_flows(t_data *dt)
 
 	size = 0;
 	best_fl_tm = INF;
-	dijkstra(dt); // todo if VIZ copy result somewhere
+	dijkstra(dt);
 	if (GET_VIS(dt->prs->flags) && !ft_copy_nodes(dt))
 		return (0);
 	while (dt->dsts[dt->end] != INF)
@@ -103,7 +103,7 @@ int		ft_find_all_flows(t_data *dt)
 		if (!ft_find_shortest_path(dt) || !ft_send_flow(dt) ||
 			!ft_restore_flow(dt))
 			return (0);
-		if ((curr_fl_tm = ft_send_lems_one_flow(dt, size)) > best_fl_tm * 10000) // todo
+		if ((curr_fl_tm = ft_send_lems_one_flow(dt, size)) > best_fl_tm)
 			break ;
 		if (curr_fl_tm < best_fl_tm && (best_fl_tm = curr_fl_tm))
 			dt->best_flow = size;
