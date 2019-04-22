@@ -167,6 +167,7 @@ struct	s_vis_dims
 	int height;
 	int use_text_nodes;
 	int use_text_ants;
+	int longest_ant_name;
 };
 
 struct	s_heap

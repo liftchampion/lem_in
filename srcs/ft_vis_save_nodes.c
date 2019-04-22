@@ -29,7 +29,7 @@ void 	ft_set_dims(t_data *dt)
 	ds->h = dt->ant_count * ds->side * ds->lines_count + ds->gap * (ds->lines_count - 1);
 }
 
-static inline int	ft_find_longest_word(t_data *dt)
+static inline int	ft_find_longest_word_node(t_data *dt)
 {
 	t_node	**nodes;
 	int		len;
@@ -50,16 +50,39 @@ static inline int	ft_find_longest_word(t_data *dt)
 	return (max_len);
 }
 
+static inline int	ft_find_longest_word_ant(t_data *dt)
+{
+	char	**names;
+	int		len;
+	int		i;
+	int		max_len;
+	int		curr_len;
+
+	if (!dt->prs->ant_names)
+		return (ft_intlen(dt->ant_count));
+	max_len = -1;
+	i = -1;
+	len = dt->ant_names->len;
+	names = (char**)dt->ant_names->data;
+	while (++i < len)
+	{
+		curr_len = ft_strlen(names[i]);
+		if (curr_len > max_len)
+			max_len = curr_len;
+	}
+	return (max_len);
+}
+
 int 	ft_check_text_nodes(t_data *dt)
 {
-	const int	max_word_len = ft_find_longest_word(dt);
+	const int	max_word_len = ft_find_longest_word_node(dt);
 	t_vis_dims	*ds;
 	t_vis_dims	*tmp;
 
 	if (!(ds = ft_memalloc(sizeof(t_vis_dims))))
 		return (0);
 	ft_memcpy(ds, dt->dims, sizeof(t_vis_dims));
-	while (ds->side && (ds->side < max_word_len * 1 ||
+	while (ds->side && (ds->side < max_word_len * 5 ||
 		ds->h > ds->height || (ds->gap <= 0 && ds->lines_count != 1)))
 	{
 		--ds->side;
@@ -69,6 +92,42 @@ int 	ft_check_text_nodes(t_data *dt)
 	if (!ds->side)
 		return (-1);
 	ds->use_text_nodes = 1;
+	tmp = dt->dims;
+	dt->dims = ds;
+	free(tmp);
+	return (1);
+}
+
+int 	ft_check_text_ants(t_data *dt)
+{
+	const int	max_word_len = ft_find_longest_word_ant(dt);
+	t_vis_dims	*ds;
+	t_vis_dims	*tmp;
+
+	if (!(ds = ft_memalloc(sizeof(t_vis_dims))))
+		return (0);
+	ft_memcpy(ds, dt->dims, sizeof(t_vis_dims));
+	while (ds->side && (ds->side < 20 ||
+			ds->h > ds->height || (ds->gap <= 0 && ds->lines_count != 1)))
+	{
+		--ds->side;
+		if (ds->side)
+			ft_set_dims(dt);
+	}
+	if (!ds->side)
+		return (-1);
+
+	ds->width -= max_word_len * 5;
+	ft_set_dims(dt);
+	while (ds->side && (ds->h > ds->height || (ds->gap <= 0 && ds->lines_count != 1)))
+	{
+		--ds->side;
+		if (ds->side)
+			ft_set_dims(dt);
+	}
+
+	ds->use_text_ants = 1;
+	ds->longest_ant_name = max_word_len;
 	tmp = dt->dims;
 	dt->dims = ds;
 	free(tmp);
@@ -103,9 +162,12 @@ int		ft_get_dims(t_data *dt)
 	}
 	if (dt->dims->side)
 		ft_check_text_nodes(dt);
+	if (dt->dims->side)
+		ft_check_text_ants(dt);
 	ds = dt->dims;
 	free_space[0] = ds->width - (dt->real_nodes_count < ds->line_len ?
-			dt->real_nodes_count : ds->line_len) * ds->side;
+			dt->real_nodes_count : ds->line_len) * ds->side -
+					ds->use_text_ants * ds->longest_ant_name * 5;
 	free_space[1] = ds->height - dt->ant_count * ds->side * ds->lines_count -
 			20 * ds->use_text_nodes;
 	free_space[1] = free_space[1] < 0 ? 0 : free_space[1];

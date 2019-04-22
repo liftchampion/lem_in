@@ -32,12 +32,8 @@ void 	ft_print_map(void *p)
 	t_point size;
 
 	size = (t_point){ds->side, ds->side * dt->ant_count};
-	int x_pad = DEFAULT_H_PAD + ds->h_pad;
+	int x_pad = DEFAULT_H_PAD + ds->h_pad + ds->use_text_ants * ds->longest_ant_name * 15;
 	int y_pad = DEFAULT_V_PAD + ds->gap;
-
-	//ft_mlx_pixelput(mlx, 9, 10, 0x00ff0000);
-	//ft_mlx_pixelput(mlx, 9, 28, 0x00ff0000);
-	//ft_mlx_pixelput(mlx, 20, 28, 0x00ff0000);
 
 	int j;
 	while (++i < dt->real_nodes_count)
@@ -61,13 +57,14 @@ void 	ft_print_texts(void *p)
 	t_data	*dt;
 	t_vis_dims *ds;
 	int 	i;
+	int 	j;
 
 	mlx = p;
 	i = -1;
 	dt = mlx->add_data;
 	ds = dt->dims;
 
-	int x_pad = DEFAULT_H_PAD + ds->h_pad;
+	int x_pad = DEFAULT_H_PAD + ds->h_pad + ds->use_text_ants * ds->longest_ant_name * 15;
 	int y_pad = DEFAULT_V_PAD + ds->gap;
 
 	char *name;
@@ -80,6 +77,14 @@ void 	ft_print_texts(void *p)
 		if (ds->use_text_nodes)
 			mlx_string_put(mlx->mlx_ptr, mlx->win_ptr,
 					x_pad + x_pos, y_pad + y_pos - 18, 0x00000000, name);
+		if (!i % ds->line_len && ds->use_text_ants && (j = -1))
+		{
+			while (++j < dt->ant_count)
+				mlx_string_put(mlx->mlx_ptr, mlx->win_ptr,
+					x_pad + x_pos -
+					ds->use_text_ants * ds->longest_ant_name * 15,
+					y_pad + y_pos + j * ds->side + (ds->side - 5) / 2, 0x00000000, dt->prs->ant_names ? dt->ant_names->data[j] : ft_itoa(j));
+		}
 	}
 }
 
