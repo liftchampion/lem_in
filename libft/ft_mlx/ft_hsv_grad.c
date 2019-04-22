@@ -17,18 +17,20 @@ unsigned int	ft_hsv_gradient(t_hsv from, t_hsv to, double points[3], char dir)
 {
 	t_hsv res;
 	double relate;
+	double dst;
 
-	static int prev = -1;
-
-	dir = 0;
 	relate = (points[1] - points[0]) / (points[2] - points[0]);
-	res.hue = (unsigned short)(from.hue + ((to.hue - from.hue) * relate));
+	if (dir == 1)
+		res.hue =
+			(unsigned short)(from.hue + ((to.hue - from.hue) * relate)) % 360;
+	if (dir == -1)
+	{
+		dst = from.hue + 360 - to.hue;
+		res.hue = (360 + (short)(from.hue - (dst * relate))) % 360;
+	}
+
 	res.vol = (unsigned char)(from.vol + ((to.vol - from.vol) * relate));
 	res.sat = (unsigned char)(from.sat + ((to.sat - from.sat) * relate));
-
-	if (res.hue != prev)
-		ft_printf("%hu %#.8X\n", res.hue, ft_hsv_to_rgb(res));
-	prev = res.hue;
 
 	return (ft_hsv_to_rgb(res));
 }
