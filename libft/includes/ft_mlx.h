@@ -54,6 +54,13 @@ typedef struct	s_point
 	int y;
 }				t_point;
 
+typedef struct	s_hsv
+{
+	unsigned short	hue;
+	unsigned char	sat;
+	unsigned char	vol;
+}				t_hsv;
+
 /*
 **	ft_mlx_destroy.c
 */
@@ -79,5 +86,7 @@ int 		ft_mlx_main_key_hook(int key, void *data);
 int			ft_mlx_main_mouse_hook(int button, int x, int y, void *param);
 int			ft_mlx_main_expose_hook(void *param);
 int			ft_mlx_main_loop_hook(void *param);
+
+t_hsv	ft_rgb_to_hsv(unsigned int argb);
 
 #endif
