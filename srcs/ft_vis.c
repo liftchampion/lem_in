@@ -17,8 +17,6 @@
 #define GRAD_END (t_hsv){180, 90, 60}
 #define GRAD_DIR -1
 
-
-
 void 	ft_print_map(void *p)
 {
 	t_mlx	*mlx;
@@ -37,11 +35,9 @@ void 	ft_print_map(void *p)
 	int x_pad = DEFAULT_H_PAD + ds->h_pad;
 	int y_pad = DEFAULT_V_PAD + ds->gap;
 
-	/*int		width = 1;
-	int 	height = 1;
-	int 	gap = 1;
-	int 	pad = 50;
-	int 	len = mlx->x - 2 * pad;*/
+	ft_mlx_pixelput(mlx, 9, 10, 0x00ff0000);
+	ft_mlx_pixelput(mlx, 9, 28, 0x00ff0000);
+	ft_mlx_pixelput(mlx, 20, 28, 0x00ff0000);
 
 	int j;
 	while (++i < dt->real_nodes_count)
@@ -59,6 +55,37 @@ void 	ft_print_map(void *p)
 	}
 }
 
+void 	ft_print_texts(void *p)
+{
+	t_mlx	*mlx;
+	t_data	*dt;
+	t_vis_dims *ds;
+	int 	i;
+
+	mlx = p;
+	i = -1;
+	dt = mlx->add_data;
+	ds = dt->dims;
+
+	t_point size;
+
+	size = (t_point){ds->side, ds->side * dt->ant_count};
+	int x_pad = DEFAULT_H_PAD + ds->h_pad;
+	int y_pad = DEFAULT_V_PAD + ds->gap;
+
+	char *name;
+
+	while (++i < dt->real_nodes_count)
+	{
+		name = ((t_node*)dt->nodes->data[dt->sorted_nodes[i].name])->name;
+		int x_pos = (i % ds->line_len) * ds->side + (ds->side - ft_strlen(name) * 10) / 2;
+		int y_pos = (i / ds->line_len) * (dt->ant_count * ds->side + ds->gap);
+		if (ds->use_text_nodes)
+			mlx_string_put(mlx->mlx_ptr, mlx->win_ptr,
+					x_pad + x_pos, y_pad + y_pos - 18, 0x00000000, name);
+	}
+}
+
 int 	ft_mlx_expose(void *p)
 {
 	t_mlx *mlx;
@@ -68,5 +95,7 @@ int 	ft_mlx_expose(void *p)
 
 	ft_print_map(p);
 	ft_mlx_put_img(mlx);
+	ft_print_texts(p);
+	//mlx_string_put(mlx->mlx_ptr, mlx->win_ptr, 10, 10, 0x000000ff, "WAA");
 	return (0);
 }

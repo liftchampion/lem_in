@@ -29,6 +29,51 @@ void 	ft_set_dims(t_data *dt)
 	ds->h = dt->ant_count * ds->side * ds->lines_count + ds->gap * (ds->lines_count - 1);
 }
 
+static inline int	ft_find_longest_word(t_data *dt)
+{
+	t_node **nodes;
+	int len;
+	int i;
+	int max_len;
+	int curr_len;
+
+	max_len = -1;
+	i = -1;
+	len = dt->nodes->len;
+	nodes = (t_node**)dt->nodes->data;
+	while (++i < len)
+	{
+		curr_len = ft_strlen(nodes[i]->name);
+		if (curr_len > max_len)
+			max_len = curr_len;
+	}
+	return (max_len);
+}
+
+int 	ft_check_text_nodes(t_data *dt)
+{
+	const int	max_word_len = ft_find_longest_word(dt);
+	t_vis_dims	*ds;
+	t_vis_dims	*tmp;
+
+	if (!(ds = ft_memalloc(sizeof(t_vis_dims))))
+		return (0);
+	ft_memcpy(ds, dt->dims, sizeof(t_vis_dims));
+	while (ds->side - 1 && ds->side <= max_word_len * 11 &&
+		(ds->h > ds->height || (ds->gap <= 0 && ds->lines_count != 1)))
+	{
+		--ds->side;
+		ft_set_dims(dt);
+	}
+	if (!ds->side)
+		return (-1);
+	ds->use_text_nodes = 1;
+	tmp = dt->dims;
+	dt->dims = ds;
+	free(tmp);
+	return (1);
+}
+
 int		ft_get_dims(t_data *dt)
 {
 	t_vis_dims	*ds;
@@ -42,9 +87,6 @@ int		ft_get_dims(t_data *dt)
 	ds->width = dt->screen_w - 2 * DEFAULT_H_PAD;
 	ds->height = dt->screen_h - 2 * DEFAULT_V_PAD;
 	ds->h = INF;
-
-
-
 	ds->side = (int)sqrt((1. * ds->width * ds->height) / (dt->ant_count * dt->real_nodes_count));
 	if (!ds->side)
 		return (-1);
@@ -54,11 +96,15 @@ int		ft_get_dims(t_data *dt)
 		--ds->side;
 		ft_set_dims(dt);
 	}
+	if (dt->dims->side)
+		ft_check_text_nodes(dt);
 	free_space[0] = ds->width - (dt->real_nodes_count < ds->line_len ?
 			dt->real_nodes_count : ds->line_len) * ds->side;
-	free_space[1] = ds->height - dt->ant_count * ds->side * ds->lines_count;
+	free_space[1] = ds->height - dt->ant_count * ds->side * ds->lines_count -
+			18 * ds->use_text_nodes;
 	ds->gap = free_space[1] / 3;
 	ds->h_pad = free_space[0] / 2;
+
 	return (dt->dims->side ? 1 : -1);
 }
 

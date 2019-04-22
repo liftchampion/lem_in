@@ -165,6 +165,8 @@ struct	s_vis_dims
 	int h;
 	int width;
 	int height;
+	int use_text_nodes;
+	int use_text_ants;
 };
 
 struct	s_heap
