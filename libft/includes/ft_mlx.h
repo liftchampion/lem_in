@@ -88,5 +88,6 @@ int			ft_mlx_main_expose_hook(void *param);
 int			ft_mlx_main_loop_hook(void *param);
 
 t_hsv	ft_rgb_to_hsv(unsigned int argb);
+unsigned int	ft_hsv_to_rgb(t_hsv hsv);
 
 #endif

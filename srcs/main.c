@@ -76,6 +76,8 @@ int		main(int ac, char **av)
 	//unsigned int argb = 0x00FF0000;
 	t_hsv hsv = ft_rgb_to_hsv(argb);
 	ft_printf("%hu %hhu %hhu\n", hsv.hue, hsv.sat, hsv.vol);
+	unsigned int rgb = ft_hsv_to_rgb(hsv);
+	ft_printf("%#X\n", rgb);
 
 
 	if (GET_VIS(dt->prs->flags))

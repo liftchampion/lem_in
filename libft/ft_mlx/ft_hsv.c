@@ -55,3 +55,74 @@ t_hsv	ft_rgb_to_hsv(unsigned int argb)
 		hsv.hue = (unsigned short)(60 * ((rgb[0] - rgb[1]) / delta + 4) + 0.5);
 	return (hsv);
 }
+
+static inline void	ft_rgb_filler(unsigned char	rgb[3], const double vdmi[4],
+		unsigned char hi)
+{
+	double v = vdmi[0];
+	double d = vdmi[1];
+	double m = vdmi[2];
+	double i = vdmi[3];
+
+	if (hi == 0)
+	{
+		rgb[0] = (unsigned char)(v * (255 / 100.) + 0.5);
+		rgb[1] = (unsigned char)(i * (255 / 100.) + 0.5);
+		rgb[2] = (unsigned char)(m * (255 / 100.) + 0.5);
+	}
+	if (hi == 1)
+	{
+		rgb[0] = (unsigned char)(d * (255 / 100.) + 0.5);
+		rgb[1] = (unsigned char)(v * (255 / 100.) + 0.5);
+		rgb[2] = (unsigned char)(m * (255 / 100.) + 0.5);
+	}
+	if (hi == 2)
+	{
+		rgb[0] = (unsigned char)(m * (255 / 100.) + 0.5);
+		rgb[1] = (unsigned char)(v * (255 / 100.) + 0.5);
+		rgb[2] = (unsigned char)(i * (255 / 100.) + 0.5);
+	}
+	if (hi == 3)
+	{
+		rgb[0] = (unsigned char)(m * (255 / 100.) + 0.5);
+		rgb[1] = (unsigned char)(d * (255 / 100.) + 0.5);
+		rgb[2] = (unsigned char)(v * (255 / 100.) + 0.5);
+	}
+	if (hi == 4)
+	{
+		rgb[0] = (unsigned char)(i * (255 / 100.) + 0.5);
+		rgb[1] = (unsigned char)(m * (255 / 100.) + 0.5);
+		rgb[2] = (unsigned char)(v * (255 / 100.) + 0.5);
+	}
+	if (hi == 5)
+	{
+		rgb[0] = (unsigned char)(v * (255 / 100.) + 0.5);
+		rgb[1] = (unsigned char)(m * (255 / 100.) + 0.5);
+		rgb[2] = (unsigned char)(d * (255 / 100.) + 0.5);
+	}
+}
+
+unsigned int	ft_hsv_to_rgb(t_hsv hsv)
+{
+	unsigned char	rgb[3];
+	unsigned int	res;
+	unsigned char hi;
+	double v_min;
+	double a;
+	double v_inc;
+	double v_dec;
+
+	hi = (int)(hsv.hue / 60. + 0.5) % 6;
+	v_min = ((100 - hsv.sat) * hsv.vol) / 100.;
+	a = (hsv.vol - v_min) * ((hsv.hue % 60) / 60.);
+	v_inc = v_min + a;
+	v_dec = hsv.vol - a;
+	ft_rgb_filler(rgb, (double[4]){(double)hsv.vol, v_dec, v_min, v_inc}, hi);
+
+
+	res = 0;
+	res |= (unsigned)((unsigned)rgb[0] << 16u);
+	res |= (unsigned)((unsigned)rgb[1] << 8u);
+	res |= (unsigned)rgb[2];
+	return (res);
+}
