@@ -72,7 +72,7 @@ int		main(int ac, char **av)
 		ft_printf("%d\n", dt->turns);
 
 
-	unsigned int argb = 0x00FFFFFF;
+	unsigned int argb = 0x00214E34;
 	//unsigned int argb = 0x00FF0000;
 	t_hsv hsv = ft_rgb_to_hsv(argb);
 	ft_printf("%hu %hhu %hhu\n", hsv.hue, hsv.sat, hsv.vol);

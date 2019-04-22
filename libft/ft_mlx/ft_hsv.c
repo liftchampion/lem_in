@@ -56,13 +56,13 @@ t_hsv	ft_rgb_to_hsv(unsigned int argb)
 	return (hsv);
 }
 
-static inline void	ft_rgb_filler(unsigned char	rgb[3], const double vdmi[4],
+static inline void	ft_rgb_filler_1(unsigned char rgb[3], const double vdmi[4],
 		unsigned char hi)
 {
-	double v = vdmi[0];
-	double d = vdmi[1];
-	double m = vdmi[2];
-	double i = vdmi[3];
+	const double v = vdmi[0];
+	const double d = vdmi[1];
+	const double m = vdmi[2];
+	const double i = vdmi[3];
 
 	if (hi == 0)
 	{
@@ -70,31 +70,41 @@ static inline void	ft_rgb_filler(unsigned char	rgb[3], const double vdmi[4],
 		rgb[1] = (unsigned char)(i * (255 / 100.) + 0.5);
 		rgb[2] = (unsigned char)(m * (255 / 100.) + 0.5);
 	}
-	if (hi == 1)
+	else if (hi == 1)
 	{
 		rgb[0] = (unsigned char)(d * (255 / 100.) + 0.5);
 		rgb[1] = (unsigned char)(v * (255 / 100.) + 0.5);
 		rgb[2] = (unsigned char)(m * (255 / 100.) + 0.5);
 	}
-	if (hi == 2)
+	else if (hi == 2)
 	{
 		rgb[0] = (unsigned char)(m * (255 / 100.) + 0.5);
 		rgb[1] = (unsigned char)(v * (255 / 100.) + 0.5);
 		rgb[2] = (unsigned char)(i * (255 / 100.) + 0.5);
 	}
+}
+
+static inline void	ft_rgb_filler_2(unsigned char rgb[3], const double vdmi[4],
+		unsigned char hi)
+{
+	const double v = vdmi[0];
+	const double d = vdmi[1];
+	const double m = vdmi[2];
+	const double i = vdmi[3];
+
 	if (hi == 3)
 	{
 		rgb[0] = (unsigned char)(m * (255 / 100.) + 0.5);
 		rgb[1] = (unsigned char)(d * (255 / 100.) + 0.5);
 		rgb[2] = (unsigned char)(v * (255 / 100.) + 0.5);
 	}
-	if (hi == 4)
+	else if (hi == 4)
 	{
 		rgb[0] = (unsigned char)(i * (255 / 100.) + 0.5);
 		rgb[1] = (unsigned char)(m * (255 / 100.) + 0.5);
 		rgb[2] = (unsigned char)(v * (255 / 100.) + 0.5);
 	}
-	if (hi == 5)
+	else if (hi == 5)
 	{
 		rgb[0] = (unsigned char)(v * (255 / 100.) + 0.5);
 		rgb[1] = (unsigned char)(m * (255 / 100.) + 0.5);
@@ -117,9 +127,12 @@ unsigned int	ft_hsv_to_rgb(t_hsv hsv)
 	a = (hsv.vol - v_min) * ((hsv.hue % 60) / 60.);
 	v_inc = v_min + a;
 	v_dec = hsv.vol - a;
-	ft_rgb_filler(rgb, (double[4]){(double)hsv.vol, v_dec, v_min, v_inc}, hi);
-
-
+	if (hi < 3)
+		ft_rgb_filler_1(rgb,
+				(double[4]){(double)hsv.vol, v_dec, v_min, v_inc}, hi);
+	else
+		ft_rgb_filler_2(rgb,
+				(double[4]){(double)hsv.vol, v_dec, v_min, v_inc}, hi);
 	res = 0;
 	res |= (unsigned)((unsigned)rgb[0] << 16u);
 	res |= (unsigned)((unsigned)rgb[1] << 8u);
