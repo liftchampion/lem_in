@@ -63,7 +63,8 @@ int 	ft_check_text_nodes(t_data *dt)
 		ds->h > ds->height || (ds->gap <= 0 && ds->lines_count != 1)))
 	{
 		--ds->side;
-		ft_set_dims(dt);
+		if (ds->side)
+			ft_set_dims(dt);
 	}
 	if (!ds->side)
 		return (-1);
@@ -97,7 +98,8 @@ int		ft_get_dims(t_data *dt)
 	while (ds->side && (ds->h > ds->height || (ds->gap <= 0 && ds->lines_count != 1)))
 	{
 		--ds->side;
-		ft_set_dims(dt);
+		if (ds->side)
+			ft_set_dims(dt);
 	}
 	if (dt->dims->side)
 		ft_check_text_nodes(dt);
@@ -107,7 +109,7 @@ int		ft_get_dims(t_data *dt)
 	free_space[1] = ds->height - dt->ant_count * ds->side * ds->lines_count -
 			20 * ds->use_text_nodes;
 	free_space[1] = free_space[1] < 0 ? 0 : free_space[1];
-	ds->gap = free_space[1] / 3;
+	ds->gap = free_space[1] / (ds->lines_count + 1);
 	ds->h_pad = free_space[0] / 2;
 
 	return (dt->dims->side ? 1 : -1);
