@@ -72,19 +72,21 @@ int		main(int ac, char **av)
 		ft_printf("%d\n", dt->turns);
 
 
-	unsigned int argb = 0x00214E34;
+	unsigned int argb = 0x00FFD000;
 	//unsigned int argb = 0x00FF0000;
 	t_hsv hsv = ft_rgb_to_hsv(argb);
 	ft_printf("%hu %hhu %hhu\n", hsv.hue, hsv.sat, hsv.vol);
 	unsigned int rgb = ft_hsv_to_rgb(hsv);
 	ft_printf("%#X\n", rgb);
+	hsv = ft_rgb_to_hsv(argb);
+	ft_printf("%hu %hhu %hhu\n", hsv.hue, hsv.sat, hsv.vol);
 
 
 	if (GET_VIS(dt->prs->flags))
 	{
 		if (!(dt->mlx = ft_mlx_init(1920, 1080, "HUI",
 				(t_mlx_init){dt, dt, ft_free_for_mlx, 0, 0, ft_mlx_expose, 0})))
-			return (0);
+			return (ft_printf("MLX Error\n") * 0);
 		mlx_loop(dt->mlx->mlx_ptr);
 	}
 

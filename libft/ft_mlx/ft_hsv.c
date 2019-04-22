@@ -122,7 +122,7 @@ unsigned int	ft_hsv_to_rgb(t_hsv hsv)
 	double v_inc;
 	double v_dec;
 
-	hi = (int)(hsv.hue / 60. + 0.5) % 6;
+	hi = (int)(hsv.hue / 60.) % 6;
 	v_min = ((100 - hsv.sat) * hsv.vol) / 100.;
 	a = (hsv.vol - v_min) * ((hsv.hue % 60) / 60.);
 	v_inc = v_min + a;

@@ -89,5 +89,6 @@ int			ft_mlx_main_loop_hook(void *param);
 
 t_hsv	ft_rgb_to_hsv(unsigned int argb);
 unsigned int	ft_hsv_to_rgb(t_hsv hsv);
+unsigned int	ft_hsv_gradient(t_hsv from, t_hsv to, double points[3], char dir);
 
 #endif

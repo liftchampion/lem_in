@@ -22,6 +22,8 @@ int 	ft_get_color_gradient(int dst, int max_dst)
 	unsigned int	blue;
 	unsigned int	res;
 
+	return (ft_hsv_gradient((t_hsv){0, 100, 100}, (t_hsv){360, 100, 100},
+			(double[3]){0, dst, max_dst}, 1));
 	res = 0;
 	div = (double)dst / max_dst;
 	red = (unsigned char)((1 - div) * GRADIENT_ABS);
