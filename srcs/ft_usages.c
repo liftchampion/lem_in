@@ -30,7 +30,9 @@ char g_flags_usage_txt[] =
 "            {Blue}full{eof} - default format with map data\n"
 "                   and ants movements.\n"
 "            {Blue}ants{eof} - only ants movements.\n"
-"            {Blue}minimal{eof} - only number of turns.\n";
+"            {Blue}minimal{eof} - only number of turns.\n"
+"{Bold}{Green}--flows{eof}     find {Bold}all{eof} flows and print it's info\n"
+"            {Magenta}not working in special cases\n";
 
 char g_program_usage_txt[] =
 "The program takes input data in format:\n"

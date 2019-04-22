@@ -48,12 +48,13 @@ int 	ft_mlx_expose(void *p);
 # define CURR_POS dt->ants[i].pos
 # define PATH_LEN (int)paths[CURR_PATH]->len
 
-# define SET_FAST(flags)     ((flags) = 0B00001001u | ((flags) & 0B00100000u))
+# define SET_FAST(flags)     ((flags) = 0B00001001u | ((flags) & 0B01100000u))
 # define SET_FMT_F(flags)    ((flags) = (((flags) & 0B11110001u) | (1u << 1u)))
 # define SET_FMT_A(flags)    ((flags) = (((flags) & 0B11110001u) | (1u << 2u)))
 # define SET_FMT_M(flags)    ((flags) = (((flags) & 0B11110001u) | (1u << 3u)))
 # define SET_VIS(flags)      ((flags) |= 1u << 4u)
 # define SET_ANSWER(flags)   ((flags) |= 1u << 5u)
+# define SET_FLOWS(flags)   ((flags) |= 1u << 6u)
 # define UNSET_ANSWER(flags) ((flags) &= 0B11011111u)
 # define GET_FAST(flags)    (((flags) & (1u << 0u)) != 0)
 # define GET_FMT_F(flags)   (((flags) & (1u << 1u)) != 0)
@@ -61,6 +62,7 @@ int 	ft_mlx_expose(void *p);
 # define GET_FMT_M(flags)   (((flags) & (1u << 3u)) != 0)
 # define GET_VIS(flags)     (((flags) & (1u << 4u)) != 0)
 # define GET_ANSWER(flags)  (((flags) & (1u << 5u)) != 0)
+# define GET_FLOWS(flags)  (((flags) & (1u << 6u)) != 0)
 
 extern char g_invalid_flag_txt[];
 extern char g_flags_usage_txt[];

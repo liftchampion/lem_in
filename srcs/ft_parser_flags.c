@@ -93,6 +93,8 @@ int		ft_set_flag(char *ln, t_pars *prs)
 		return ((size_t)(prs->ant_names = ln + 5) * 0 + 1);
 	else if (!ft_strcmp(ln, "answer"))
 		return (SET_ANSWER(prs->flags) * 0 + 1);
+	else if (!ft_strcmp(ln, "flows"))
+		return (SET_FLOWS(prs->flags) * 0 + 1);
 	return (0);
 }
 

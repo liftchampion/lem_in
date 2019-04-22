@@ -42,6 +42,8 @@ int 	ft_processing(t_data *dt)
 		return (1);
 	if (!ft_find_all_flows(dt))
 		return (0);
+	if (GET_FLOWS(dt->prs->flags))
+		ft_print_flows(dt);
 	if (GET_FAST(dt->prs->flags))
 	{
 		first_path =
@@ -49,7 +51,6 @@ int 	ft_processing(t_data *dt)
 		dt->turns = first_path->offset + first_path->len - 1;
 		return (1);
 	}
-	//ft_print_flows(dt, 2); //todo
 	if (!ft_fill_ants(dt))
 		return (0);
 	if (!ft_print_murashi(dt))

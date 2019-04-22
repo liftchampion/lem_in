@@ -103,7 +103,8 @@ int		ft_find_all_flows(t_data *dt)
 		if (!ft_find_shortest_path(dt) || !ft_send_flow(dt) ||
 			!ft_restore_flow(dt))
 			return (0);
-		if ((curr_fl_tm = ft_send_lems_one_flow(dt, size)) > best_fl_tm)
+		if ((curr_fl_tm = ft_send_lems_one_flow(dt, size)) > best_fl_tm &&
+					!GET_FLOWS(dt->prs->flags))
 			break ;
 		if (curr_fl_tm < best_fl_tm && (best_fl_tm = curr_fl_tm))
 			dt->best_flow = size;

@@ -62,38 +62,27 @@ void		ft_sort_paths_in_flow(t_data *dt, int flow)
 	}
 }
 
-void		ft_print_flows(t_data *dt, int mode)
+void		ft_print_flows(t_data *dt)
 {
 	t_vector *flows;
 	t_vector *curr_flow;
-	t_vector *curr_path;
+	t_vector *cp;
+	size_t i;
+	size_t j;
 
 	flows = dt->flows;
-
+	i = (size_t)-1;
 	ft_printf("Flows count: %d\n", (int)flows->len);
-	for (size_t i = 0; i < flows->len; ++i)
+	ft_printf("~~~~~~~~~~~~~~~~~~~ {Blue}FLOW SIZE{eof} ~~~~~~~~~~~~~~~~~~\n"
+		"{Blue}PATH NUM{eof}: {Blue}PATH LEN{eof}({Yellow}ANT COUNT{eof})\n");
+	while (++i < flows->len && (j = (size_t)-1))
 	{
 		ft_printf("~~~~~~~~~~~~~~~~~~~~~~ %2d ~~~~~~~~~~~~~~~~~~~~~~\n", i + 1);
 		curr_flow = flows->data[i];
-		for (size_t j = 0; j < curr_flow->len; ++j)
+		while (++j < curr_flow->len)
 		{
-			ft_printf("%2d: ", j + 1);
-			curr_path = curr_flow->data[j];
-			if (mode == 1)
-			{
-				for (size_t k = 0; k < curr_path->len; ++k)
-				{
-					int idx = (int)curr_path->data[k];
-					ft_printf("%s ", ((t_node *)dt->nodes->data[idx])->name);
-				}
-				ft_printf("\n");
-			}
-			if (mode == 2)
-			{
-				ft_printf("%d({Yellow}%d{eof})\n",
-						(int)curr_path->len,
-						curr_path->offset);
-			}
+			cp = curr_flow->data[j];
+			ft_printf("%2d: %d({Yellow}%d{eof})\n", j + 1, cp->len, cp->offset);
 		}
 		ft_printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
 	}
