@@ -13,25 +13,11 @@
 #include "len_in.h"
 
 #define GRAY 0x002e2e2e
-#define GRADIENT_ABS 255
+#define GRAD_START (t_hsv){0, 90, 60}
+#define GRAD_END (t_hsv){180, 90, 60}
+#define GRAD_DIR -1
 
-int 	ft_get_color_gradient(int dst, int max_dst)
-{
-	double			div;
-	unsigned int	red;
-	unsigned int	blue;
-	unsigned int	res;
 
-	return (ft_hsv_gradient((t_hsv){0, 100, 100}, (t_hsv){360, 100, 100},
-			(double[3]){0, dst, max_dst}, 1));
-	res = 0;
-	div = (double)dst / max_dst;
-	red = (unsigned char)((1 - div) * GRADIENT_ABS);
-	blue = (unsigned char)(div * GRADIENT_ABS);
-	res |= red << 16u;
-	res |= blue;
-	return (res);
-}
 
 void 	ft_print_map(void *p)
 {
@@ -55,7 +41,8 @@ void 	ft_print_map(void *p)
 				(t_point){width, height * dt->ant_count},
 				(t_point){pad + width * (i % len),
 			  	  	  pad + (height * dt->ant_count + gap) * (i / len)},
-				ft_get_color_gradient(dt->sorted_nodes[i].dst, dt->max_dst));
+				ft_hsv_gradient(GRAD_START, GRAD_END,
+			(double[3]){0, dt->sorted_nodes[i].dst, dt->max_dst}, GRAD_DIR));
 	}
 }
 

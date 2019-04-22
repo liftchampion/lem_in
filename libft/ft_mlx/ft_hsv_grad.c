@@ -13,11 +13,12 @@
 #include "libft.h"
 #include "ft_mlx.h"
 
-unsigned int	ft_hsv_gradient(t_hsv from, t_hsv to, double points[3], char dir)
+unsigned int	ft_hsv_gradient(t_hsv from, t_hsv to,
+		const double points[3], char dir)
 {
-	t_hsv res;
-	double relate;
-	double dst;
+	t_hsv	res;
+	double	relate;
+	double	dst;
 
 	relate = (points[1] - points[0]) / (points[2] - points[0]);
 	if (dir == 1)
@@ -31,6 +32,5 @@ unsigned int	ft_hsv_gradient(t_hsv from, t_hsv to, double points[3], char dir)
 
 	res.vol = (unsigned char)(from.vol + ((to.vol - from.vol) * relate));
 	res.sat = (unsigned char)(from.sat + ((to.sat - from.sat) * relate));
-
 	return (ft_hsv_to_rgb(res));
 }
