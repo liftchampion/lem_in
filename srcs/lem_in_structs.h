@@ -64,6 +64,9 @@ int 	ft_mlx_expose(void *p);
 # define GET_ANSWER(flags)  (((flags) & (1u << 5u)) != 0)
 # define GET_FLOWS(flags)  (((flags) & (1u << 6u)) != 0)
 
+#define DEFAULT_V_PAD 20
+#define DEFAULT_H_PAD 20
+
 extern char g_invalid_flag_txt[];
 extern char g_flags_usage_txt[];
 extern char g_program_usage_txt[];
@@ -74,6 +77,7 @@ extern char g_program_usage_txt[];
 # define ANT		struct s_ant
 # define PRS		struct s_pars
 # define VIS_NODE	struct s_vis_node
+# define VIS_DIMS	struct s_vis_dims
 # define PMOD		enum e_parse_mode
 
 typedef NODE		t_node;
@@ -83,6 +87,7 @@ typedef ANT			t_ant;
 typedef PRS			t_pars;
 typedef PMOD		t_parse_mode;
 typedef VIS_NODE	t_vis_node;
+typedef VIS_DIMS	t_vis_dims;
 
 enum	e_parse_mode
 {
@@ -107,6 +112,9 @@ struct	s_data
 	t_mlx		*mlx;
 	t_vis_node	*sorted_nodes; //todo free
 	int 		*name_to_pos; // todo free
+	t_vis_dims	*dims; //todo free
+	int 		screen_h;
+	int 		screen_w;
 	int 		real_nodes_count;
 	int 		max_dst;
 	int 		buff_size;
@@ -144,6 +152,15 @@ struct	s_vis_node
 {
 	int name;
 	int dst;
+};
+
+struct	s_vis_dims
+{
+	int	side;
+	int	lines_count;
+	int gap;
+	int v_pad;
+	int h_pad;
 };
 
 struct	s_heap

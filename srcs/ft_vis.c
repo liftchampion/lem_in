@@ -23,24 +23,27 @@ void 	ft_print_map(void *p)
 {
 	t_mlx	*mlx;
 	t_data	*dt;
+	t_vis_dims *ds;
 	int 	i;
 
 	mlx = p;
 	i = -1;
 	dt = mlx->add_data;
+	ds = dt->dims;
 
-	int		width = 1;
+	/*int		width = 1;
 	int 	height = 1;
 	int 	gap = 1;
 	int 	pad = 50;
-	int 	len = mlx->x - 2 * pad;
+	int 	len = mlx->x - 2 * pad;*/
 
 	while (++i < dt->real_nodes_count)
 	{
 		ft_mlx_rectput(mlx,
-				(t_point){width, height * dt->ant_count},
-				(t_point){pad + width * (i % len),
-			  	  	  pad + (height * dt->ant_count + gap) * (i / len)},
+				(t_point){ds->side, ds->side * dt->ant_count},
+				(t_point){DEFAULT_H_PAD + ds->h_pad + ds->side * ((i * ds->side) % (dt->screen_w - (2 * DEFAULT_H_PAD))),
+			  	  	  DEFAULT_V_PAD + ds->v_pad + ((i * ds->side) / (dt->screen_w - (2 * DEFAULT_H_PAD))) *
+							  (ds->gap + ds->side * dt->ant_count)},
 				ft_hsv_gradient(GRAD_START, GRAD_END,
 			(double[3]){0, dt->sorted_nodes[i].dst, dt->max_dst}, GRAD_DIR));
 	}

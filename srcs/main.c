@@ -72,6 +72,10 @@ int		main(int ac, char **av)
 		ft_printf("%d\n", dt->turns);
 	if (GET_VIS(dt->prs->flags))
 	{
+		dt->screen_h = 1080;
+		dt->screen_w = 1920;
+		ft_get_dims(dt);
+		ft_printf("%d %d %d\n", dt->dims->side, dt->dims->lines_count, dt->dims->gap);
 		if (!(dt->mlx = ft_mlx_init(1920, 1080, "HUI",
 				(t_mlx_init){dt, dt, ft_free_for_mlx, 0, 0, ft_mlx_expose, 0})))
 			return (ft_printf("MLX Error\n") * 0);

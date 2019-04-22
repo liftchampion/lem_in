@@ -5,13 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggerardy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/04/22 10:16:59 by ggerardy          #+#    #+#             */
-/*   Updated: 2019/04/22 10:16:59 by ggerardy         ###   ########.fr       */
+/*   Created: 2019/04/22 15:54:10 by ggerardy          #+#    #+#             */
+/*   Updated: 2019/04/22 15:54:10 by ggerardy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEN_IN_H
 # define LEN_IN_H
+# include "math.h"
 # include "lem_in_structs.h"
 # include "libft.h"
 # include "len_in.h"
@@ -114,12 +115,12 @@ void	ft_print_flows(t_data *dt);
 /*
 **	ft_vis.c
 */
-int 	ft_get_color_gradient(int dst, int max_dst);
 void 	ft_print_map(void *p);
 int 	ft_mlx_expose(void *p);
 /*
 **	ft_vis_save_nodes.c
 */
+int		ft_get_dims(t_data *dt);
 void 	ft_fill_sorted_nodes(t_data *dt);
 void 	ft_fill_names_to_pos(t_data *dt);
 int 	ft_copy_nodes(t_data *dt);
