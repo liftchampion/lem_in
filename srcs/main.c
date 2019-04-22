@@ -78,7 +78,7 @@ int		main(int ac, char **av)
 			return (ft_free_data(dt, 0) * ft_printf("Dimensions Error\n"));
 		ft_printf("%d %d %d %d %d %d\n", dt->dims->side, dt->dims->lines_count,
 				dt->dims->gap, dt->dims->h_pad, dt->dims->v_pad, dt->dims->line_len);
-		if (!(dt->mlx = ft_mlx_init(1920, 1080, "HUI",
+		if (!(dt->mlx = ft_mlx_init(1920, 1080, "Super Muravii",
 				(t_mlx_init){dt, dt, ft_free_for_mlx, 0, 0, ft_mlx_expose, 0})))
 			return (ft_printf("MLX Error\n") * 0);
 		mlx_loop(dt->mlx->mlx_ptr);

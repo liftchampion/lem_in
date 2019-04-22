@@ -19,7 +19,7 @@ void 	ft_set_dims(t_data *dt)
 
 	ds = dt->dims;
 	ds->lines_count =
-			(int)((1. * ds->side * dt->real_nodes_count) / ds->width  + 0.999999);
+		(int)((1. * ds->side * dt->real_nodes_count) / ds->width  + 0.999999);
 	ds->line_len = ds->width / ds->side;
 	if (ds->lines_count != 1)
 		ds->gap = (ds->height - ds->lines_count * dt->ant_count * ds->side) /
@@ -31,11 +31,11 @@ void 	ft_set_dims(t_data *dt)
 
 static inline int	ft_find_longest_word(t_data *dt)
 {
-	t_node **nodes;
-	int len;
-	int i;
-	int max_len;
-	int curr_len;
+	t_node	**nodes;
+	int		len;
+	int		i;
+	int		max_len;
+	int		curr_len;
 
 	max_len = -1;
 	i = -1;
@@ -59,8 +59,8 @@ int 	ft_check_text_nodes(t_data *dt)
 	if (!(ds = ft_memalloc(sizeof(t_vis_dims))))
 		return (0);
 	ft_memcpy(ds, dt->dims, sizeof(t_vis_dims));
-	while (ds->side - 1 && ds->side <= max_word_len * 11 &&
-		(ds->h > ds->height || (ds->gap <= 0 && ds->lines_count != 1)))
+	while (ds->side && (ds->side < max_word_len * 1 ||
+		ds->h > ds->height || (ds->gap <= 0 && ds->lines_count != 1)))
 	{
 		--ds->side;
 		ft_set_dims(dt);
@@ -80,7 +80,10 @@ int		ft_get_dims(t_data *dt)
 	int 		free_space[2];
 
 	if (!dt->real_nodes_count)
+	{
+		dijkstra(dt);
 		ft_copy_nodes(dt);
+	}
 	if (!(dt->dims = ft_memalloc(sizeof(t_vis_dims))))
 		return (0);
 	ds = dt->dims;
@@ -91,17 +94,19 @@ int		ft_get_dims(t_data *dt)
 	if (!ds->side)
 		return (-1);
 	ft_set_dims(dt);
-	while (ds->side - 1 && (ds->h > ds->height || (ds->gap <= 0 && ds->lines_count != 1)))
+	while (ds->side && (ds->h > ds->height || (ds->gap <= 0 && ds->lines_count != 1)))
 	{
 		--ds->side;
 		ft_set_dims(dt);
 	}
 	if (dt->dims->side)
 		ft_check_text_nodes(dt);
+	ds = dt->dims;
 	free_space[0] = ds->width - (dt->real_nodes_count < ds->line_len ?
 			dt->real_nodes_count : ds->line_len) * ds->side;
 	free_space[1] = ds->height - dt->ant_count * ds->side * ds->lines_count -
-			18 * ds->use_text_nodes;
+			20 * ds->use_text_nodes;
+	free_space[1] = free_space[1] < 0 ? 0 : free_space[1];
 	ds->gap = free_space[1] / 3;
 	ds->h_pad = free_space[0] / 2;
 

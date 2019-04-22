@@ -35,9 +35,9 @@ void 	ft_print_map(void *p)
 	int x_pad = DEFAULT_H_PAD + ds->h_pad;
 	int y_pad = DEFAULT_V_PAD + ds->gap;
 
-	ft_mlx_pixelput(mlx, 9, 10, 0x00ff0000);
-	ft_mlx_pixelput(mlx, 9, 28, 0x00ff0000);
-	ft_mlx_pixelput(mlx, 20, 28, 0x00ff0000);
+	//ft_mlx_pixelput(mlx, 9, 10, 0x00ff0000);
+	//ft_mlx_pixelput(mlx, 9, 28, 0x00ff0000);
+	//ft_mlx_pixelput(mlx, 20, 28, 0x00ff0000);
 
 	int j;
 	while (++i < dt->real_nodes_count)
@@ -67,9 +67,6 @@ void 	ft_print_texts(void *p)
 	dt = mlx->add_data;
 	ds = dt->dims;
 
-	t_point size;
-
-	size = (t_point){ds->side, ds->side * dt->ant_count};
 	int x_pad = DEFAULT_H_PAD + ds->h_pad;
 	int y_pad = DEFAULT_V_PAD + ds->gap;
 
