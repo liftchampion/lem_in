@@ -161,6 +161,10 @@ struct	s_vis_dims
 	int gap;
 	int v_pad;
 	int h_pad;
+	int line_len;
+	int h;
+	int width;
+	int height;
 };
 
 struct	s_heap

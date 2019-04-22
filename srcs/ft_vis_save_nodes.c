@@ -13,28 +13,52 @@
 #include "len_in.h"
 #include "math.h"
 
+void 	ft_set_dims(t_data *dt)
+{
+	t_vis_dims	*ds;
 
+	ds = dt->dims;
+	ds->lines_count =
+			(int)((1. * ds->side * dt->real_nodes_count) / ds->width  + 0.999999);
+	ds->line_len = ds->width / ds->side;
+	if (ds->lines_count != 1)
+		ds->gap = (ds->height - ds->lines_count * dt->ant_count * ds->side) /
+				(ds->lines_count - 1);
+	else
+		ds->gap = 0;
+	ds->h = dt->ant_count * ds->side * ds->lines_count + ds->gap * (ds->lines_count - 1);
+}
 
 int		ft_get_dims(t_data *dt)
 {
 	t_vis_dims	*ds;
-	int			x;
-	int			y;
+	int 		free_space[2];
 
+	if (!dt->real_nodes_count)
+		ft_copy_nodes(dt);
 	if (!(dt->dims = ft_memalloc(sizeof(t_vis_dims))))
 		return (0);
-	x = dt->screen_w - 2 * DEFAULT_H_PAD;
-	y = dt->screen_h - 2 * DEFAULT_V_PAD;
 	ds = dt->dims;
-	ds->side =(int)sqrt((1. * x * y) / (dt->ant_count * dt->real_nodes_count));
-	while (ds->gap <= 0 && ds->lines_count != 1 && ds->side)
+	ds->width = dt->screen_w - 2 * DEFAULT_H_PAD;
+	ds->height = dt->screen_h - 2 * DEFAULT_V_PAD;
+	ds->h = INF;
+
+
+
+	ds->side = (int)sqrt((1. * ds->width * ds->height) / (dt->ant_count * dt->real_nodes_count));
+	if (!ds->side)
+		return (-1);
+	ft_set_dims(dt);
+	while (ds->side - 1 && (ds->h > ds->height || (ds->gap <= 0 && ds->lines_count != 1)))
 	{
-		ds->lines_count =
-				(int)((1. * ds->side * dt->real_nodes_count) / x  + 0.5);
-		if (ds->lines_count != 1)
-			ds->gap = (y - ds->lines_count * dt->ant_count * ds->side) /
-					(ds->lines_count - 1);
+		--ds->side;
+		ft_set_dims(dt);
 	}
+	free_space[0] = ds->width - (dt->real_nodes_count < ds->line_len ?
+			dt->real_nodes_count : ds->line_len) * ds->side;
+	free_space[1] = ds->height - dt->ant_count * ds->side * ds->lines_count;
+	ds->gap = free_space[1] / 3;
+	ds->h_pad = free_space[0] / 2;
 	return (dt->dims->side ? 1 : -1);
 }
 

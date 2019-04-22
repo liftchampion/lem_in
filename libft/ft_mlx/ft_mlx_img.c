@@ -18,6 +18,8 @@ void	ft_mlx_rectput(t_mlx *mlx, t_point size, t_point pos, int color)
 	int x;
 	int y;
 
+	if (size.x <= 0 || size.y <= 0)
+		return ;
 	y = pos.y;
 	while (y < pos.y + size.y)
 	{
@@ -28,6 +30,27 @@ void	ft_mlx_rectput(t_mlx *mlx, t_point size, t_point pos, int color)
 			++x;
 		}
 		++y;
+	}
+}
+
+void	ft_mlx_frameput(t_mlx *mlx, t_point size, t_point pos, int color)
+{
+	int x;
+	int y;
+
+	if (size.x <= 0 || size.y <= 0)
+		return ;
+	y = pos.y - 1;
+	while (++y < pos.y + size.y)
+	{
+		ft_mlx_pixelput(mlx, pos.x, y, color);
+		ft_mlx_pixelput(mlx, pos.x + size.x - 1, y, color);
+	}
+	x = pos.x - 1;
+	while (++x < pos.x + size.x)
+	{
+		ft_mlx_pixelput(mlx, x, pos.y, color);
+		ft_mlx_pixelput(mlx, x, pos.y + size.y - 1, color);
 	}
 }
 
