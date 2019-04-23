@@ -29,7 +29,7 @@ t_arg_data		*ft_printf_parser_flags_proceeder(const char **frmt,
 	++(*args)->offset;
 	SET_DEFAULT_LENGTHS;
 	_128_COUNT = 0;
-	if (!(arg_data = (t_arg_data*)malloc(sizeof(t_arg_data))))
+	if (!(arg_data = (t_arg_data*)ft_memalloc(sizeof(t_arg_data))))
 		return (0);
 	*arg_data =
 			(t_arg_data){0, DEFAULT, 0, ' ', 0, 0, 0, 0, DEFAULT, 0, 0, 0};
