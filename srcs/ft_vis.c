@@ -15,9 +15,12 @@
 #define GRAY 0x002e2e2e
 #define UNREACHING_NODES_COLOR 0x00101010
 #define TEXT_COLOR 0x00E0E0E0
+#define BORDERS_COLOR 0x00191919
 #define GRAD_START (t_hsv){0, 90, 60}
 #define GRAD_END (t_hsv){180, 90, 60}
 #define GRAD_DIR -1
+
+#ifndef NO_VISUALIZATION
 
 unsigned int	ft_get_color(t_data *dt, int i)
 {
@@ -59,7 +62,7 @@ void 	ft_print_map(void *p)
 		if (ds->side >= 10 && (j = -1))
 			while (++j < dt->ant_count)
 			ft_mlx_frameput(mlx, (t_point){ds->side, ds->side},
-					(t_point){x_pad + x_pos, y_pad + y_pos + j * ds->side}, 0x00191919);
+					(t_point){x_pad + x_pos, y_pad + y_pos + j * ds->side}, BORDERS_COLOR);
 	}
 }
 
@@ -117,8 +120,27 @@ int 	ft_mlx_expose(void *p)
 	//mlx_string_put(mlx->mlx_ptr, mlx->win_ptr, 10, 10, 0x000000ff, "WAA");
 	return (0);
 }
-/*
-int 	ft_visualize(t_data *dt)
-{
 
-}*/
+int		ft_visualize(t_data *dt)
+{
+	dt->screen_h = 1080;
+	dt->screen_w = 2400;
+	if (ft_get_dims(dt) <= 0)
+		return (ft_free_data(dt, 0) * ft_printf("Dimensions Error\n"));
+	if (!(dt->mlx = ft_mlx_init(dt->screen_w, dt->screen_h, "Super Muravii",
+			(t_mlx_init){dt, dt, ft_free_for_mlx, 0, 0, ft_mlx_expose, 0})))
+		return (ft_printf("MLX Error\n") * 0);
+	mlx_loop(dt->mlx->mlx_ptr);
+	return (1);
+}
+
+#else
+
+int		ft_visualize(t_data *dt)
+{
+	dt = 0;
+	ft_printf("Visualisation is {Red}disabled{eof}!\n");
+	return (1);
+}
+
+#endif

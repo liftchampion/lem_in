@@ -70,20 +70,8 @@ int		main(int ac, char **av)
 		ft_print_string(dt->output);
 	if (GET_FMT_M(dt->prs->flags))
 		ft_printf("%d\n", dt->turns);
-
 	if (GET_VIS(dt->prs->flags))
-	{
-		dt->screen_h = 1080;
-		dt->screen_w = 2400;
-		if (ft_get_dims(dt) <= 0)
-			return (ft_free_data(dt, 0) * ft_printf("Dimensions Error\n"));
-		ft_printf("%d %d %d %d %d %d\n", dt->dims->side, dt->dims->lines_count,
-				dt->dims->gap, dt->dims->h_pad, dt->dims->v_pad, dt->dims->line_len);
-		if (!(dt->mlx = ft_mlx_init(dt->screen_w, dt->screen_h, "Super Muravii",
-				(t_mlx_init){dt, dt, ft_free_for_mlx, 0, 0, ft_mlx_expose, 0})))
-			return (ft_printf("MLX Error\n") * 0);
-		mlx_loop(dt->mlx->mlx_ptr);
-	}
-
+		if (!ft_visualize(dt))
+			return (0);
 	return (ft_free_data(dt, 0));
 }

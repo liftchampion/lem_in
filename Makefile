@@ -152,6 +152,10 @@ sanitize: print_sanitize_address make_lib re_this
 optimize: WFLAGS = $(OPTIMIZE_FLAGS)
 optimize: print_optimize make_lib re_this
 
+novis: ADD_FLAGS_LINK =
+novis: ADD_FLAGS_COMPILE = -D NO_VISUALIZATION
+novis: print_novis make_lib re_this
+
 #--tool=massif
 valgrind: print_valgrind debug
 	 @~/.brew/bin/valgrind --leak-check=full --show-leak-kinds=all \
@@ -227,6 +231,9 @@ print_valgrind:
 
 print_norm:
 	@echo "\x1B[38;5;202mNorminetting $(NAME)...\x1B[0m\n"
+
+print_novis:
+	@echo "\x1B[38;5;196mVISUALIZATION DISABLED!\x1B[0m\n"
 
 ###################################--ATTRS--####################################
 .PHONY: all clean fclean re debug sanitize valgrind

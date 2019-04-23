@@ -204,10 +204,10 @@ void 	ft_fill_sorted_nodes(t_data *dt)
 	int	j;
 
 	len = dt->nodes->len;
-	dist = 0;
+	dist = -2;
 	nodes_found_this_turn = -1;
 	j = 0;
-	while (nodes_found_this_turn && (i = -1))
+	while (nodes_found_this_turn && (i = -1) && ((dist += 2) || 1))
 	{
 		nodes_found_this_turn = 0;
 		while (++i < len)
@@ -218,9 +218,8 @@ void 	ft_fill_sorted_nodes(t_data *dt)
 				++nodes_found_this_turn;
 			}
 		}
-		dist += 2;
 	}
-	dt->max_dst = (dist - 2) / 2;
+	dt->max_dst = (dist) / 2;
 	dt->real_nodes_count = j;
 	ft_add_unreaching_nodes(dt);
 }
