@@ -44,7 +44,7 @@ void 	ft_print_map(void *p)
 				(t_point){x_pad + x_pos, y_pad + y_pos},
 				ft_hsv_gradient(GRAD_START, GRAD_END,
 			(double[3]){0, dt->sorted_nodes[i].dst, dt->max_dst}, GRAD_DIR));
-		if (ds->side >= 4 && (j = -1))
+		if (ds->side >= 10 && (j = -1))
 			while (++j < dt->ant_count)
 			ft_mlx_frameput(mlx, (t_point){ds->side, ds->side},
 					(t_point){x_pad + x_pos, y_pad + y_pos + j * ds->side}, 0x00191919);
@@ -104,4 +104,9 @@ int 	ft_mlx_expose(void *p)
 	ft_print_texts(p);
 	//mlx_string_put(mlx->mlx_ptr, mlx->win_ptr, 10, 10, 0x000000ff, "WAA");
 	return (0);
+}
+
+int 	ft_visualize(t_data *dt)
+{
+
 }

@@ -70,6 +70,7 @@ int		main(int ac, char **av)
 		ft_print_string(dt->output);
 	if (GET_FMT_M(dt->prs->flags))
 		ft_printf("%d\n", dt->turns);
+
 	if (GET_VIS(dt->prs->flags))
 	{
 		dt->screen_h = 1080;

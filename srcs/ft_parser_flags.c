@@ -111,8 +111,8 @@ t_pars	*ft_parse_flags(int ac, char **av)
 	i = 0;
 	while (++i < ac)
 	{
-		if (av[i][0] != '-' || av[i][1] != '-' ||
-				(flag_res = ft_set_flag(av[i] + 2, prs)) <= 0)
+		if (av[i][0] != '-' ||
+			av[i][1] != '-' || (flag_res = ft_set_flag(av[i] + 2, prs)) <= 0)
 			return ((void*)(size_t)free_ret(prs, 0) +
 					0 * ft_printf(!flag_res ? g_invalid_flag_txt : "", av[i]));
 	}
