@@ -176,6 +176,25 @@ int		ft_get_dims(t_data *dt)
 	return (dt->dims->side ? 1 : -1);
 }
 
+void 	ft_add_unreaching_nodes(t_data *dt)
+{
+	int i;
+	int j;
+	int len;
+
+	len = dt->nodes->len;
+	i = -1;
+	j = dt->real_nodes_count;
+	while (++i < len)
+	{
+		if ((i + 1) % 2 && dt->dsts[i] == INF)
+		{
+			dt->sorted_nodes[j++] = (t_vis_node){i, INF};
+		}
+	}
+	dt->real_nodes_count = j;
+}
+
 void 	ft_fill_sorted_nodes(t_data *dt)
 {
 	int i;
@@ -201,8 +220,9 @@ void 	ft_fill_sorted_nodes(t_data *dt)
 		}
 		dist += 2;
 	}
-	dt->real_nodes_count = j;
 	dt->max_dst = (dist - 2) / 2;
+	dt->real_nodes_count = j;
+	ft_add_unreaching_nodes(dt);
 }
 
 void 	ft_fill_names_to_pos(t_data *dt)
