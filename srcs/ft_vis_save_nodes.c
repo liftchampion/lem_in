@@ -162,9 +162,8 @@ int		ft_get_dims(t_data *dt)
 	}
 	if (dt->dims->side)
 		ft_check_text_nodes(dt);
-	if (dt->dims->side)
-		ft_check_text_ants(dt);
 	ds = dt->dims;
+	ds->longest_ant_name = ft_find_longest_word_ant(dt);
 	free_space[0] = ds->width - (dt->real_nodes_count < ds->line_len ?
 			dt->real_nodes_count : ds->line_len) * ds->side -
 					ds->use_text_ants * ds->longest_ant_name * 5;

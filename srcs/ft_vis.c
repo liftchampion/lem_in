@@ -64,7 +64,7 @@ void 	ft_print_texts(void *p)
 	dt = mlx->add_data;
 	ds = dt->dims;
 
-	int x_pad = DEFAULT_H_PAD + ds->h_pad + ds->use_text_ants * ds->longest_ant_name * 15;
+	int x_pad = DEFAULT_H_PAD + ds->h_pad;
 	int y_pad = DEFAULT_V_PAD + ds->gap;
 
 	char *name;
@@ -72,18 +72,22 @@ void 	ft_print_texts(void *p)
 	while (++i < dt->real_nodes_count)
 	{
 		name = ((t_node*)dt->nodes->data[dt->sorted_nodes[i].name])->name;
-		int x_pos = (i % ds->line_len) * ds->side + (ds->side - ft_strlen(name) * 10) / 2;
+		int x_pos = (i % ds->line_len) * ds->side;
 		int y_pos = (i / ds->line_len) * (dt->ant_count * ds->side + ds->gap);
 		if (ds->use_text_nodes)
 			mlx_string_put(mlx->mlx_ptr, mlx->win_ptr,
-					x_pad + x_pos, y_pad + y_pos - 18, 0x00000000, name);
-		if (!i % ds->line_len && ds->use_text_ants && (j = -1))
+					x_pad + x_pos + (ds->side - ft_strlen(name) * 10) / 2, y_pad + y_pos - 18, 0x00000000, name);
+		if (!i % ds->line_len && ds->longest_ant_name * 15 < ds->h_pad && (j = -1))
 		{
 			while (++j < dt->ant_count)
+			{
+				char *ant;
+				ant = dt->prs->ant_names ? dt->ant_names->data[j] : ft_itoa(j);
 				mlx_string_put(mlx->mlx_ptr, mlx->win_ptr,
-					x_pad + x_pos -
-					ds->use_text_ants * ds->longest_ant_name * 15,
-					y_pad + y_pos + j * ds->side + (ds->side - 5) / 2, 0x00000000, dt->prs->ant_names ? dt->ant_names->data[j] : ft_itoa(j));
+						x_pad + x_pos - ds->longest_ant_name * 11,
+						y_pad + y_pos + j * ds->side + ds->side / 2 - 11,
+						0x00000000, ant);
+			}
 		}
 	}
 }
