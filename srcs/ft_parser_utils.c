@@ -17,17 +17,24 @@ int			ft_parse_ants_count(int fd, t_data *dt)
 	char	*ln;
 	int		count;
 
-	if (ft_get_next_line(fd, &ln, dt->buff_size) <= 0)
-		return (0);
-	if (ln[0] == '-')
-		return (free_ret(ln, 0));
-	if ((count = ft_atoi(ln)) <= 0)
-		return (free_ret(ln, 0));
-	if (ln[ft_intlen(count)])
-		return (free_ret(ln, 0));
-	ft_string_push_back_s(&dt->output, ln);
-	ft_string_push_back(&dt->output, '\n');
-	return (free_ret(ln, dt->output || !GET_FMT_F(dt->prs->flags) ? count : 0));
+	while ((ln = (char*)1lu) && ft_get_next_line(fd, &ln, dt->buff_size))
+	{
+		if (!ln)
+			return (0);
+		if (ln[0] == '#' && free_ret(ln, 1))
+			continue;
+		if (ln[0] == '-')
+			return (free_ret(ln, 0));
+		if ((count = ft_atoi(ln)) <= 0)
+			return (free_ret(ln, 0));
+		if (ln[ft_intlen(count)])
+			return (free_ret(ln, 0));
+		ft_string_push_back_s(&dt->output, ln);
+		ft_string_push_back(&dt->output, '\n');
+		return (free_ret(ln, dt->output || !GET_FMT_F(dt->prs->flags) ?
+		count : 0));
+	}
+	return (0);
 }
 
 int			ft_parse_hash(t_data *dt, char *ln, t_parse_mode pm)
