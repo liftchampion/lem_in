@@ -12,12 +12,11 @@
 
 #include "len_in.h"
 
-
 static inline int	ft_find_next(t_data *dt, int from)
 {
-	void 	**starts;
-	int 	i;
-	int 	len;
+	void	**starts;
+	int		i;
+	int		len;
 
 	starts = ((t_node*)dt->nodes->data[from])->chs->data;
 	len = ((t_node*)dt->nodes->data[from])->chs->len;
@@ -30,7 +29,7 @@ static inline int	ft_find_next(t_data *dt, int from)
 	return (INF);
 }
 
-int 	ft_restore_path(t_data *dt, int from, t_vector **path)
+int					ft_restore_path(t_data *dt, int from, t_vector **path)
 {
 	int		curr_node;
 	int		finish;
@@ -49,7 +48,8 @@ int 	ft_restore_path(t_data *dt, int from, t_vector **path)
 	return (1);
 }
 
-int 	ft_flow_push_backs(t_data *dt, t_vector **flow, void **starts, int idx)
+int					ft_flow_push_backs(t_data *dt, t_vector **flow,
+					void **starts, int idx)
 {
 	t_vector	*path;
 
@@ -64,12 +64,12 @@ int 	ft_flow_push_backs(t_data *dt, t_vector **flow, void **starts, int idx)
 	return (1);
 }
 
-int		ft_restore_flow(t_data *dt)
+int					ft_restore_flow(t_data *dt)
 {
 	int			i;
 	void		**starts;
 	t_vector	*flow;
-	int 		len;
+	int			len;
 
 	if (!(flow = ft_make_vector_free(INIT_LINKS_FROM_NODE,
 			ft_free_vector_simple)))
@@ -86,7 +86,7 @@ int		ft_restore_flow(t_data *dt)
 	return (dt->flows ? 1 : 0);
 }
 
-int		ft_find_all_flows(t_data *dt)
+int					ft_find_all_flows(t_data *dt)
 {
 	int size;
 	int best_fl_tm;
@@ -94,14 +94,17 @@ int		ft_find_all_flows(t_data *dt)
 
 	size = 0;
 	best_fl_tm = INF;
-	dijkstra(dt); // todo if VIZ copy result somewhere
+	dijkstra(dt);
+	if (GET_VIS(dt->prs->flags) && !ft_copy_nodes(dt))
+		return (0);
 	while (dt->dsts[dt->end] != INF)
 	{
 		ft_upd_pts(dt);
 		if (!ft_find_shortest_path(dt) || !ft_send_flow(dt) ||
 			!ft_restore_flow(dt))
 			return (0);
-		if ((curr_fl_tm = ft_send_lems_one_flow(dt, size)) > best_fl_tm)
+		if ((curr_fl_tm = ft_send_lems_one_flow(dt, size)) > best_fl_tm &&
+					!GET_FLOWS(dt->prs->flags))
 			break ;
 		if (curr_fl_tm < best_fl_tm && (best_fl_tm = curr_fl_tm))
 			dt->best_flow = size;

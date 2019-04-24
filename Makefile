@@ -17,7 +17,7 @@ HEADERS_DIR = srcs
 SRCDIR = srcs
 INCS = ./libft/includes
 LIBFT = ./libft
-ADD_FLAGS_LINK =
+ADD_FLAGS_LINK = -lmlx -framework OpenGl -framework AppKit
 ADD_FLAGS_COMPILE =
 OBJS_DIR = objs
 DPDS_DIR = dpds
@@ -64,7 +64,7 @@ $(NAME): $(OBJS_DIR) $(OBJS_SUBDIRS) $(DPDS_SUBDIRS) $(DPDS_DIR) $(OBJS) $(HEADE
 	@printf "\e[?25h\033[A\033[K\e[?25h\x1B[38;5;30mLinking   $(NAME)...\x1B[0m\n"
 # Set flags
 	$(eval FLAGS := $(WFLAGS))
-	$(eval FLAGS += $(ADD_FLAGS_LINKE))
+	$(eval FLAGS += $(ADD_FLAGS_LINK))
 # Link as lib/exe
 ifeq ($(IS_LIB),a)
 		@ar rcs $(NAME) $(OBJS) $(LIBFT)/libft.a;
@@ -78,7 +78,7 @@ endif
 
 #################################--COMPILING--##################################
 
-$(OBJS_DIR)/%.o: $(SRCDIR)/%.c
+$(OBJS_DIR)/%.o: $(SRCDIR)/%.c $(HEADERS)
 	@if [ '$(WAS_PRINTED_CMP)' == '0' ]; then \
 		printf "\e[?25l\x1B[38;5;31mCompiling $(NAME)...\nCompiling \x1B[0m" \
 		$(eval WAS_PRINTED_CMP := 1); \
@@ -151,6 +151,10 @@ sanitize: print_sanitize_address make_lib re_this
 
 optimize: WFLAGS = $(OPTIMIZE_FLAGS)
 optimize: print_optimize make_lib re_this
+
+novis: ADD_FLAGS_LINK =
+novis: ADD_FLAGS_COMPILE = -D NO_VISUALIZATION
+novis: print_novis make_lib re_this
 
 #--tool=massif
 valgrind: print_valgrind debug
@@ -227,6 +231,9 @@ print_valgrind:
 
 print_norm:
 	@echo "\x1B[38;5;202mNorminetting $(NAME)...\x1B[0m\n"
+
+print_novis:
+	@echo "\x1B[38;5;196mVISUALIZATION DISABLED!\x1B[0m\n"
 
 ###################################--ATTRS--####################################
 .PHONY: all clean fclean re debug sanitize valgrind

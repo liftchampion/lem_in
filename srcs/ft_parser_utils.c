@@ -14,32 +14,39 @@
 
 int			ft_parse_ants_count(int fd, t_data *dt)
 {
-	char *ln;
-	int count;
+	char	*ln;
+	int		count;
 
-	if (ft_get_next_line(fd, &ln, dt->buff_size) <= 0)
-		return (0);
-	if (ln[0] == '-')
-		return (free_ret(ln, 0));
-	if ((count = ft_atoi(ln)) <= 0)
-		return (free_ret(ln, 0));
-	if (ln[ft_intlen(count)])
-		return (free_ret(ln, 0));
-	ft_string_push_back_s(&dt->output, ln);
-	ft_string_push_back(&dt->output, '\n');
-	return (free_ret(ln, dt->output || !GET_FMT_F(dt->prs->flags) ? count : 0));
+	while ((ln = (char*)1lu) && ft_get_next_line(fd, &ln, dt->buff_size))
+	{
+		if (!ln)
+			return (0);
+		if (ln[0] == '#' && free_ret(ln, 1))
+			continue;
+		if (ln[0] == '-')
+			return (free_ret(ln, 0));
+		if ((count = ft_atoi(ln)) <= 0)
+			return (free_ret(ln, 0));
+		if (ln[ft_intlen(count)])
+			return (free_ret(ln, 0));
+		ft_string_push_back_s(&dt->output, ln);
+		ft_string_push_back(&dt->output, '\n');
+		return (free_ret(ln, dt->output || !GET_FMT_F(dt->prs->flags) ?
+		count : 0));
+	}
+	return (0);
 }
 
-int		ft_parse_hash(t_data *dt, char *ln, t_parse_mode pm)
+int			ft_parse_hash(t_data *dt, char *ln, t_parse_mode pm)
 {
 	int start_or_end;
 
 	if (!ft_strncmp("#Here is the number of lines required: ", ln, 39) &&
-		GET_ANSWER(dt->prs->flags))
-		return (ft_printf("%s\n", ln) * 0 * UNSET_ANSWER(dt->prs->flags) + 1);
-	if (ln[1] != '#' || pm == LINKS)
+		((dt->req_turns = ft_atoi(ln + 39)) || 1) && GET_ANSWER(dt->prs->flags))
+		return
+		(ft_fdprintf(2, "%s\n", ln) * 0 * UNSET_ANSWER(dt->prs->flags) + 1);
+	if (!(start_or_end = 0) && (ln[1] != '#' || pm == LINKS))
 		return (2);
-	start_or_end = 0;
 	if (!ft_strcmp("start", ln + 2) && (start_or_end = 1))
 	{
 		if (dt->start != -1)
@@ -58,7 +65,7 @@ int		ft_parse_hash(t_data *dt, char *ln, t_parse_mode pm)
 	return (2);
 }
 
-int 	ft_check_links_begin(char *end, t_node *nd, t_data *dt)
+int			ft_check_links_begin(char *end, t_node *nd, t_data *dt)
 {
 	char	*ln;
 	int		parse_link_res;
@@ -76,7 +83,7 @@ int 	ft_check_links_begin(char *end, t_node *nd, t_data *dt)
 	return (-1 * (dt->start == dt->end));
 }
 
-int 	ft_find_in_map(char *ln, t_data *dt)
+int			ft_find_in_map(char *ln, t_data *dt)
 {
 	void	**map_value;
 
@@ -86,7 +93,7 @@ int 	ft_find_in_map(char *ln, t_data *dt)
 	return ((int)(*map_value));
 }
 
-int 	ft_check_start_end(t_data *dt)
+int			ft_check_start_end(t_data *dt)
 {
 	if (dt->start == -1 || dt->end == -1 ||
 			dt->start >= (int)dt->nodes->len || dt->end >= (int)dt->nodes->len)

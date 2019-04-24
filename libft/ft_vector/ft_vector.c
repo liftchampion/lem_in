@@ -35,6 +35,7 @@ t_vector		*ft_make_vector(size_t init_size)
 t_vector		*ft_make_vector_free(size_t init_size, void (*free_data)(void*))
 {
 	t_vector *v;
+
 	if (!(v = ft_make_vector(init_size)))
 		return (0);
 	v->free_data = free_data;
@@ -63,4 +64,3 @@ t_int8			ft_vector_push_back(t_vector **v_ptr, void *c)
 	v->data[v->len] = 0;
 	return (1);
 }
-

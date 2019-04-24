@@ -12,7 +12,7 @@
 
 #include "len_in.h"
 
-t_data 	*ft_parsing(int ac, char **av)
+t_data		*ft_parsing(int ac, char **av)
 {
 	t_data	*dt;
 	t_pars	*prs;
@@ -31,17 +31,18 @@ t_data 	*ft_parsing(int ac, char **av)
 	return (dt);
 }
 
-int 	ft_processing(t_data *dt)
+int			ft_processing(t_data *dt)
 {
-	int partitial_case;
-	t_vector *first_path;
+	t_vector	*first_path;
 
-	if (!(partitial_case = ft_procede_partitial_case(dt)))
+	if (!(dt->special_case = ft_procede_partitial_case(dt)))
 		return (0);
-	if (partitial_case == 1 || partitial_case == 2)
+	if (dt->special_case == 1 || dt->special_case == 2)
 		return (1);
 	if (!ft_find_all_flows(dt))
 		return (0);
+	if (GET_FLOWS(dt->prs->flags))
+		ft_print_flows(dt);
 	if (GET_FAST(dt->prs->flags))
 	{
 		first_path =
@@ -56,18 +57,21 @@ int 	ft_processing(t_data *dt)
 	return (1);
 }
 
-int		main(int ac, char **av)
+int			main(int ac, char **av)
 {
 	t_data	*dt;
 
-	if (!(dt = ft_parsing(ac, av)))
+	if (!(dt = ft_parsing(ac, av)) ||
+		(GET_FMT_F(dt->prs->flags) && !ft_string_push_back(&dt->output, '\n')))
 		return (ft_free_data(dt, 0));
 	if (!ft_processing(dt))
 		return (ft_free_data(dt, 0) * ft_printf("Error\n"));
-	if (dt->output)
+	if (dt->output && !GET_VIS(dt->prs->flags))
 		ft_print_string(dt->output);
 	if (GET_FMT_M(dt->prs->flags))
 		ft_printf("%d\n", dt->turns);
-
+	if (GET_VIS(dt->prs->flags))
+		if (!ft_visualize(dt))
+			return (0);
 	return (ft_free_data(dt, 0));
 }

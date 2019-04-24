@@ -22,7 +22,7 @@ static inline void	ft_inl_swap(void **x, void **y)
 	*y = h;
 }
 
-void		ft_upd_pts(t_data *dt)
+void				ft_upd_pts(t_data *dt)
 {
 	int i;
 	int len;
@@ -42,11 +42,29 @@ void		ft_upd_pts(t_data *dt)
 	}
 }
 
-void		ft_sort_paths_in_flow(t_data *dt, int flow)
+int					ft_check_file(char *name)
 {
-	size_t j;
-	size_t k;
-	t_vector *curr_flow;
+	int fd;
+
+	if (!name)
+		return (-1);
+	fd = open(name, O_RDONLY);
+	if (fd == -1)
+		return (0);
+	if (read(fd, 0, 0) == -1)
+	{
+		close(fd);
+		return (0);
+	}
+	close(fd);
+	return (1);
+}
+
+void				ft_sort_paths_in_flow(t_data *dt, int flow)
+{
+	size_t		j;
+	size_t		k;
+	t_vector	*curr_flow;
 
 	curr_flow = dt->flows->data[flow];
 	j = (size_t)-1;
@@ -62,17 +80,28 @@ void		ft_sort_paths_in_flow(t_data *dt, int flow)
 	}
 }
 
-int 		ft_check_generator_flags(char *ln)
+void				ft_print_flows(t_data *dt)
 {
-	if (!ft_strcmp(ln, "flow-one"))
-		return (1);
-	else if (!ft_strcmp(ln, "flow-ten"))
-		return (1);
-	else if (!ft_strcmp(ln, "flow-thousand"))
-		return (1);
-	else if (!ft_strcmp(ln, "big"))
-		return (1);
-	else if (!ft_strcmp(ln, "big-superposition"))
-		return (1);
-	return (0);
+	t_vector	*flows;
+	t_vector	*curr_flow;
+	t_vector	*cp;
+	size_t		i;
+	size_t		j;
+
+	flows = dt->flows;
+	i = (size_t)-1;
+	ft_printf("Flows count: %d\n", (int)flows->len);
+	ft_printf("~~~~~~~~~~~~~~~~~~~ {Blue}FLOW SIZE{eof} ~~~~~~~~~~~~~~~~~~\n"
+		"{Blue}PATH NUM{eof}: {Blue}PATH LEN{eof}({Yellow}ANT COUNT{eof})\n");
+	while (++i < flows->len && (j = (size_t)-1))
+	{
+		ft_printf("~~~~~~~~~~~~~~~~~~~~~~ %2d ~~~~~~~~~~~~~~~~~~~~~~\n", i + 1);
+		curr_flow = flows->data[i];
+		while (++j < curr_flow->len)
+		{
+			cp = curr_flow->data[j];
+			ft_printf("%2d: %d({Yellow}%d{eof})\n", j + 1, cp->len, cp->offset);
+		}
+		ft_printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
+	}
 }

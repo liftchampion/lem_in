@@ -12,11 +12,11 @@
 
 #include "len_in.h"
 
-int 	ft_print_murashi_simple(t_data *dt)
+int		ft_print_murashi_simple(t_data *dt)
 {
-	int i;
-	char *tmp_line;
-	char *end_name;
+	int		i;
+	char	*tmp_line;
+	char	*end_name;
 
 	i = -1;
 	end_name = ((t_node*)dt->nodes->data[dt->end - 1])->name;
@@ -38,12 +38,12 @@ int 	ft_print_murashi_simple(t_data *dt)
 	return (1);
 }
 
-int 	ft_procede_partitial_case(t_data *dt)
+int		ft_procede_partitial_case(t_data *dt)
 {
 	int		i;
 	void	**start_children;
 	int		end;
-	int 	len;
+	int		len;
 
 	if (dt->start == dt->end - 1)
 		return (1);

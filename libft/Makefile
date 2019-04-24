@@ -18,6 +18,8 @@ OBJS_DIR = objs
 DPDS_DIR = dpds
 
 CC = clang
+ADD_FLAGS_LINK = -lmlx -framework OpenGl -framework AppKit
+ADD_FLAGS_COMPILE =
 WFLAGS = -Wall -Wextra -Werror
 DFLAGS = -g
 SANITIZE_FLAGS = -fsanitize=address -g
@@ -53,7 +55,7 @@ all: $(NAME)
 $(NAME): $(OBJS_DIR) $(OBJS_SUBDIRS) $(DPDS_SUBDIRS) $(DPDS_DIR) $(OBJS) $(HEADERS)
 	@printf "\e[?25h\033[A\033[K\e[?25h\x1B[38;5;30mLinking   $(NAME)...\x1B[0m\n"
 # Set flags
-	$(eval FLAGS := $(ADD_FLAGS))
+	$(eval FLAGS := $(ADD_FLAGS_LINK))
 	$(eval FLAGS += $(WFLAGS))
 # Link as lib/exe
 ifeq ($(IS_LIB),a)
@@ -76,7 +78,7 @@ $(OBJS_DIR)/%.o: $(SRCDIR)/%.c
 	fi
 	@echo "\x1B[38;5;105m$(notdir $*.c)\x1B[0m"
 # Set flags
-	@$(eval FLAGS := $(ADD_FLAGS))
+	@$(eval FLAGS := $(ADD_FLAGS_COMPILE))
 	@$(eval FLAGS += $(WFLAGS))
 # Compile
 	@$(CC) -c $(FLAGS) -I $(INCS) $(SRCDIR)/$*.c -o $(OBJS_DIR)/$*.o

@@ -18,6 +18,7 @@
 # include "ft_map.h"
 # include "ft_string.h"
 # include "ft_printf.h"
+# include "ft_mlx.h"
 
 # define FT_ABS(x) (((x) >= 0) ? (x) : -(x))
 
@@ -119,8 +120,8 @@ void				ft_free_matrix(void **ptr, size_t n);
 void				*ft_realloc(void *old_data, size_t prev_size,
 														size_t new_size);
 
-void		*ft_realloc_free(void *old_data, size_t prev_size, size_t new_size,
-		void (*free_data)(void*));
+void				*ft_realloc_free(void *old_data, size_t prev_size,
+					size_t new_size, void (*free_data)(void*));
 
 void				*ft_memalloc(size_t size);
 

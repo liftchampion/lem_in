@@ -12,7 +12,7 @@
 
 #include "len_in.h"
 
-int 	ft_add_link(int i1, int i2, t_data *dt)
+int		ft_add_link(int i1, int i2, t_data *dt)
 {
 	t_node *n1;
 	t_node *n2;
@@ -25,7 +25,7 @@ int 	ft_add_link(int i1, int i2, t_data *dt)
 	return (1);
 }
 
-int 	ft_parse_link(char *ln, t_data *dt)
+int		ft_parse_link(char *ln, t_data *dt)
 {
 	char	*f_name;
 	char	*s_name;
@@ -50,10 +50,10 @@ int 	ft_parse_link(char *ln, t_data *dt)
 	return (1);
 }
 
-int 	ft_parse_links(t_data *dt, int fd)
+int		ft_parse_links(t_data *dt, int fd)
 {
-	char *ln;
-	int parse_res;
+	char	*ln;
+	int		parse_res;
 
 	while ((ln = (char*)1lu) && ft_get_next_line(fd, &ln, dt->buff_size))
 	{

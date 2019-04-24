@@ -44,7 +44,7 @@ t_data		*ft_make_data(t_pars *prs)
 	return (dt);
 }
 
-t_heap				*make_heap(int len)
+t_heap		*make_heap(int len)
 {
 	t_heap	*heap;
 

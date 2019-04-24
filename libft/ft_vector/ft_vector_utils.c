@@ -28,7 +28,7 @@ static inline void	ft_free_array(void **arr, size_t size,
 	}
 }
 
-void			ft_free_vector_simple(void *v_ptr)
+void				ft_free_vector_simple(void *v_ptr)
 {
 	t_vector *v;
 
@@ -40,7 +40,7 @@ void			ft_free_vector_simple(void *v_ptr)
 	free(v);
 }
 
-void			ft_free_vector(t_vector **v)
+void				ft_free_vector(t_vector **v)
 {
 	if (!v)
 		return ;
@@ -48,13 +48,13 @@ void			ft_free_vector(t_vector **v)
 	*v = 0;
 }
 
-int				ft_free_ret_vector(t_vector **v, int ret)
+int					ft_free_ret_vector(t_vector **v, int ret)
 {
 	ft_free_vector(v);
 	return (ret);
 }
 
-t_int8			ft_vector_fit(t_vector **v_ptr)
+t_int8				ft_vector_fit(t_vector **v_ptr)
 {
 	t_vector *v;
 

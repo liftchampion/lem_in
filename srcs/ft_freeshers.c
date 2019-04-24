@@ -12,7 +12,7 @@
 
 #include "len_in.h"
 
-int 	ft_free_node(t_node *nd, int ret)
+int		ft_free_node(t_node *nd, int ret)
 {
 	if (!nd)
 		return (ret);
@@ -22,14 +22,21 @@ int 	ft_free_node(t_node *nd, int ret)
 	return (ret);
 }
 
-int 	ft_free_data(t_data *dt, int ret)
+int		ft_free_for_mlx(void *ptr)
+{
+	t_data *dt;
+
+	dt = ptr;
+	return (ft_free_data(dt, 0));
+}
+
+int		ft_free_data(t_data *dt, int ret)
 {
 	size_t i;
 
 	ft_get_next_line(0, 0, 0);
-	if (!dt)
+	if (!(i = (size_t)-1) || !dt)
 		return (ret);
-	i = (size_t)-1;
 	while (dt->nodes && ++i < dt->nodes->len)
 		ft_free_node(dt->nodes->data[i], 0);
 	free(dt->nodes->data);
@@ -45,11 +52,14 @@ int 	ft_free_data(t_data *dt, int ret)
 	free(dt->gone_ants);
 	free(dt->wave_sizes);
 	free(dt->prs);
+	free(dt->sorted_nodes);
+	free(dt->name_to_pos);
+	free(dt->dims);
 	free(dt);
 	return (ret);
 }
 
-int 	ft_free_heap(t_heap *hp, int ret)
+int		ft_free_heap(t_heap *hp, int ret)
 {
 	if (!hp)
 		return (ret);
