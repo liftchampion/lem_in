@@ -12,8 +12,6 @@
 
 #include "len_in.h"
 
-#ifndef NO_VISUALIZATION
-
 void				ft_fill_ants_poses(t_data *dt, const int *waves,
 					int wave_count)
 {
@@ -53,6 +51,8 @@ int					ft_vis_init_ants(t_data *dt)
 	ft_fill_ants_poses(dt, dt->wave_sizes, wave_count);
 	return (1);
 }
+
+#ifndef NO_VISUALIZATION
 
 static inline int	ft_get_ant_node(t_data *dt, int i)
 {

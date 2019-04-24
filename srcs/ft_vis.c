@@ -83,7 +83,13 @@ int					ft_visualize(t_data *dt)
 {
 	if (dt->output)
 		ft_print_string(dt->output);
+	dt->screen_h = 1080;
+	dt->screen_w = 2400;
 	ft_printf("Visualisation is {Red}disabled{eof}!\n");
+	if (ft_get_dims(dt) <= 0)
+		return (ft_free_data(dt, 0) * ft_printf("Vis: Map is too big!\n"));
+	if (!ft_vis_init_ants(dt))
+		return (ft_free_data(dt, 0) * ft_printf("Vis: Ants managing Error\n"));
 	return (1);
 }
 
