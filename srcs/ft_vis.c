@@ -19,6 +19,7 @@
 #define UNREACHING_NODES_COLOR 0x00101010
 #define TEXT_COLOR 0x00E0E0E0
 #define BORDERS_COLOR 0x00191919
+#define TURNS_COLOR 0x00FFFFFF
 #define GRAD_START (t_hsv){0, 90, 60}
 #define GRAD_END (t_hsv){180, 90, 60}
 #define GRAD_DIR -1
@@ -97,7 +98,7 @@ void 	ft_print_texts(void *p)
 		ft_destroy_mlx(mlx, 0);
 	mlx_string_put(mlx->mlx_ptr, mlx->win_ptr,
 			mlx->x - 10 - ft_strlen(turn_str) * 11,
-			mlx->y - 10 - 18, 0x00FFFFFF, turn_str);
+			mlx->y - 10 - 18, TURNS_COLOR, turn_str);
 
 	while (++i < dt->real_nodes_count)
 	{
@@ -142,54 +143,45 @@ void 	ft_fill_ants_poses(t_data *dt, const int *waves, int wave_count)
 	}
 }
 
-void 	ft_turn_special_case(t_data *dt, int turn)
-{
-	int i;
-
-	i = -1;
-	if (dt->special_case == 1)
-		return ;
-	if (turn > 0 && dt->ants[0].pos >= 1)
-		return ;
-	if (turn < 0 && dt->ants[0].pos == 0)
-		return ;
-	while (++i < dt->ant_count)
-	{
-		dt->ants[i].pos += turn;
-	}
-}
-
-void 	ft_turn_counter(t_data *dt, int turn)
+int 	ft_turn_counter(t_data *dt, int turn)
 {
 	if (turn > 0 && dt->curr_turn >= dt->turns)
-		return ;
+		return (0);
 	if (turn < 0 && dt->curr_turn <= 0)
-		return ;
+		return (0);
 	dt->curr_turn += turn;
+	return (1);
 }
 
 void 	ft_turn(t_data *dt, int turn)
 {
 	int			i;
-	t_vector	*path;
-	int			need_change;
+	t_vector	**paths;
 
-	ft_turn_counter(dt, turn);
-	if (dt->special_case > 0)
-		return (ft_turn_special_case(dt, turn));
-	need_change = 0;
+	paths = (t_vector**)((t_vector*)dt->flows->data[dt->best_flow])->data;
+	if (!ft_turn_counter(dt, turn))
+		return ;
+	if (turn == -1)
+		ft_printf("\033[A\033[K");
 	i = -1;
 	while (++i < dt->ant_count)
 	{
-		path = ((t_vector *)dt->flows->data[dt->best_flow])->data[CURR_PATH];
-		if (CURR_POS > 0 && turn < 0)
-			need_change = 1;
-		if (CURR_POS < (int)path->len && turn > 0)
-			need_change = 1;
-	}
-	i = -1;
-	while (need_change && ++i < dt->ant_count)
 		dt->ants[i].pos += turn;
+		if (turn == 1)
+		{
+			if (CURR_POS - 1 >= 0 && CURR_POS - 1 < PATH_LEN)
+			{
+				if (dt->ant_names)
+					ft_printf("L%s-%s ",
+					dt->ant_names->data[i], ((t_node*)dt->nodes->data[
+					(int)paths[CURR_PATH]->data[PATH_LEN - CURR_POS]])->name);
+				else
+					ft_printf("L%d-%s ", i + 1, ((t_node *)dt->nodes->data[
+					(int)paths[CURR_PATH]->data[PATH_LEN - CURR_POS]])->name);
+			}
+		}
+	}
+	ft_printf("\n");
 }
 
 int 	ft_vis_init_ants(t_data *dt)
@@ -291,6 +283,10 @@ int		ft_visualize(t_data *dt)
 		return (ft_free_data(dt, 0) * ft_printf("Vis: Map is too big!\n"));
 	if (!ft_vis_init_ants(dt))
 		return (ft_free_data(dt, 0) * ft_printf("Vis: Ants managing Error\n"));
+	ft_rm_lines_from_output(dt);
+	if (dt->output)
+		ft_print_string(dt->output);
+	ft_printf("\n");
 	if (!(dt->mlx = ft_mlx_init(dt->screen_w, dt->screen_h, "Super Muravii",
 			(t_mlx_init)
 			{dt, dt, ft_free_for_mlx, ft_lemin_keyhook, 0, ft_mlx_expose, 0})))
@@ -303,7 +299,7 @@ int		ft_visualize(t_data *dt)
 
 int		ft_visualize(t_data *dt)
 {
-	dt = 0;
+	ft_print_string(dt->output);
 	ft_printf("Visualisation is {Red}disabled{eof}!\n");
 	return (1);
 }

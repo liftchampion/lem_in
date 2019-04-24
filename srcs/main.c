@@ -65,7 +65,7 @@ int		main(int ac, char **av)
 		return (ft_free_data(dt, 0));
 	if (!ft_processing(dt))
 		return (ft_free_data(dt, 0) * ft_printf("Error\n"));
-	if (dt->output)
+	if (dt->output && !GET_VIS(dt->prs->flags))
 		ft_print_string(dt->output);
 	if (GET_FMT_M(dt->prs->flags))
 		ft_printf("%d\n", dt->turns);

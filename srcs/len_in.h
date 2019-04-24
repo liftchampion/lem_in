@@ -17,6 +17,8 @@
 # include "libft.h"
 # include "len_in.h"
 
+void 	ft_rm_lines_from_output(t_data *dt);
+
 int		ft_visualize(t_data *dt);
 /*
 **	dijkstra.c

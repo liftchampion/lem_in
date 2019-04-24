@@ -161,7 +161,6 @@ int		ft_get_dims(t_data *dt)
 	if (dt->dims->side)
 		ft_check_text_ants(dt);
 	ds = dt->dims;
-	//ds->longest_ant_name = ft_find_longest_word_ant(dt);
 	free_space[0] = ds->width - (dt->real_nodes_count < ds->line_len ?
 			dt->real_nodes_count : ds->line_len) * ds->side;
 	free_space[1] = ds->height - dt->ant_count * ds->side * ds->lines_count -
@@ -222,6 +221,25 @@ void 	ft_fill_sorted_nodes(t_data *dt)
 	dt->real_nodes_count = j;
 	ft_add_unreaching_nodes(dt);
 }
+
+void 	ft_rm_lines_from_output(t_data *dt)
+{
+	int			turns;
+	t_string	*out;
+	int 		i;
+
+	turns = dt->turns;
+	if (!(out = dt->output))
+		return ;
+	i = 0;
+	while (i <= turns && out->len > 0)
+	{
+		if (out->data[out->len - 1] == '\n')
+			++i;
+		--out->len;
+	}
+}
+
 
 void 	ft_fill_names_to_pos(t_data *dt)
 {
