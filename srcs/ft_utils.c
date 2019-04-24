@@ -22,7 +22,7 @@ static inline void	ft_inl_swap(void **x, void **y)
 	*y = h;
 }
 
-void		ft_upd_pts(t_data *dt)
+void				ft_upd_pts(t_data *dt)
 {
 	int i;
 	int len;
@@ -42,11 +42,29 @@ void		ft_upd_pts(t_data *dt)
 	}
 }
 
-void		ft_sort_paths_in_flow(t_data *dt, int flow)
+int					ft_check_file(char *name)
 {
-	size_t j;
-	size_t k;
-	t_vector *curr_flow;
+	int fd;
+
+	if (!name)
+		return (-1);
+	fd = open(name, O_RDONLY);
+	if (fd == -1)
+		return (0);
+	if (read(fd, 0, 0) == -1)
+	{
+		close(fd);
+		return (0);
+	}
+	close(fd);
+	return (1);
+}
+
+void				ft_sort_paths_in_flow(t_data *dt, int flow)
+{
+	size_t		j;
+	size_t		k;
+	t_vector	*curr_flow;
 
 	curr_flow = dt->flows->data[flow];
 	j = (size_t)-1;
@@ -62,13 +80,13 @@ void		ft_sort_paths_in_flow(t_data *dt, int flow)
 	}
 }
 
-void		ft_print_flows(t_data *dt)
+void				ft_print_flows(t_data *dt)
 {
-	t_vector *flows;
-	t_vector *curr_flow;
-	t_vector *cp;
-	size_t i;
-	size_t j;
+	t_vector	*flows;
+	t_vector	*curr_flow;
+	t_vector	*cp;
+	size_t		i;
+	size_t		j;
 
 	flows = dt->flows;
 	i = (size_t)-1;
@@ -87,4 +105,3 @@ void		ft_print_flows(t_data *dt)
 		ft_printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
 	}
 }
-

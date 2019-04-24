@@ -15,7 +15,7 @@
 t_data	*ft_parser(int fd, t_pars *prs)
 {
 	t_data		*dt;
-	int 		parse_res;
+	int			parse_res;
 
 	if (!(dt = ft_make_data(prs)))
 		return (0);

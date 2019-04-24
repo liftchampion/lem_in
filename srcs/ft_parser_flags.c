@@ -12,11 +12,11 @@
 
 #include "len_in.h"
 
-int 	ft_append_ants_names(t_data *dt)
+int			ft_append_ants_names(t_data *dt)
 {
-	int 	i;
-	char 	*tmp_ln;
-	int 	names_count;
+	int		i;
+	char	*tmp_ln;
+	int		names_count;
 
 	names_count = dt->ant_names->len;
 	i = 0;
@@ -31,7 +31,7 @@ int 	ft_append_ants_names(t_data *dt)
 	return (1);
 }
 
-int 	ft_parse_ants_names(t_data *dt)
+int			ft_parse_ants_names(t_data *dt)
 {
 	char	*ln;
 	int		fd;
@@ -45,7 +45,7 @@ int 	ft_parse_ants_names(t_data *dt)
 		if (!ln)
 			return (close(fd) * 0 * ft_get_next_line(fd, 0, READ_BUFF_FILE));
 		if (!ft_vector_push_back(&dt->ant_names, ln))
-			return (close(fd) * 0  * ft_get_next_line(fd, 0, READ_BUFF_FILE));
+			return (close(fd) * 0 * ft_get_next_line(fd, 0, READ_BUFF_FILE));
 	}
 	ft_get_next_line(fd, 0, READ_BUFF_FILE);
 	if (!ft_append_ants_names(dt))
@@ -53,25 +53,7 @@ int 	ft_parse_ants_names(t_data *dt)
 	return (close(fd) * 0 + 1);
 }
 
-int 	ft_check_file(char *name)
-{
-	int fd;
-
-	if (!name)
-		return (-1);
-	fd = open(name, O_RDONLY);
-	if (fd == -1)
-		return (0);
-	if (read(fd, 0, 0) == -1)
-	{
-		close(fd);
-		return (0);
-	}
-	close(fd);
-	return (1);
-}
-
-int		ft_set_flag(char *ln, t_pars *prs)
+int			ft_set_flag(char *ln, t_pars *prs)
 {
 	if (!ft_strcmp(ln, "help"))
 		return (ft_printf(g_flags_usage_txt) * 0 - 1);
@@ -98,31 +80,40 @@ int		ft_set_flag(char *ln, t_pars *prs)
 	return (0);
 }
 
-t_pars	*ft_parse_flags(int ac, char **av)
+void		*ft_parse_flags_end(t_pars *prs)
+{
+	if (!ft_check_file(prs->input_file))
+	{
+		return ((void *)(size_t)free_ret(prs, 0) +
+		0 * ft_printf("Bad file \"{Bold}{Red}%s{eof}\"\n", prs->input_file));
+	}
+	if (GET_FAST(prs->flags) && !(prs->ant_names = 0))
+		SET_FAST(prs->flags);
+	if (!ft_check_file(prs->ant_names))
+	{
+		return ((void *)(size_t)free_ret(prs, 0) +
+		0 * ft_printf("Bad file \"{Bold}{Red}%s{eof}\"\n", prs->ant_names));
+	}
+	return (prs);
+}
+
+t_pars		*ft_parse_flags(int ac, char **av)
 {
 	t_pars	*prs;
 	int		i;
-	int 	flag_res;
+	int		flag_res;
 
-	if (!(prs = ft_memalloc(sizeof(t_pars))) || (flag_res = 0))
+	if (!(prs = ft_memalloc(sizeof(t_pars))) || !(SET_FMT_F(prs->flags)))
 		return
 		((void*)(size_t)(ft_printf("Malloc error during parsing flags\n") * 0));
-	SET_FMT_F(prs->flags);
+	flag_res = 0;
 	i = 0;
 	while (++i < ac)
 	{
 		if (av[i][0] != '-' ||
 			av[i][1] != '-' || (flag_res = ft_set_flag(av[i] + 2, prs)) <= 0)
-			return ((void*)(size_t)free_ret(prs, 0) +
+			return ((void *)(size_t)free_ret(prs, 0) +
 					0 * ft_printf(!flag_res ? g_invalid_flag_txt : "", av[i]));
 	}
-	if (!ft_check_file(prs->input_file))
-		return ((void*)(size_t)free_ret(prs, 0) +
-		0 * ft_printf("Bad file \"{Bold}{Red}%s{eof}\"\n", prs->input_file));
-	if (GET_FAST(prs->flags) && !(prs->ant_names = 0))
-		SET_FAST(prs->flags);
-	if (!ft_check_file(prs->ant_names))
-		return ((void*)(size_t)free_ret(prs, 0) +
-		0 * ft_printf("Bad file \"{Bold}{Red}%s{eof}\"\n", prs->ant_names));
-	return (prs);
+	return (ft_parse_flags_end(prs));
 }

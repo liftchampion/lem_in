@@ -17,7 +17,7 @@ int		ft_split_room(t_data *dt)
 	t_node	*node;
 	void	**map_value;
 	t_node	*old_node;
-	int 	node_idx;
+	int		node_idx;
 
 	node_idx = dt->nodes->len;
 	old_node = dt->nodes->data[node_idx - 1];
@@ -40,8 +40,8 @@ int		ft_split_room(t_data *dt)
 
 int		ft_parse_room(char *ln, t_data *dt)
 {
-	t_node *node;
-	void **map_value;
+	t_node	*node;
+	void	**map_value;
 
 	if (*ln == '#' || *ln == 'L')
 		return (*ln == '#' ? ft_parse_hash(dt, ln, NODES) : -1);
@@ -68,8 +68,8 @@ int		ft_parse_room(char *ln, t_data *dt)
 
 int		ft_parse_rooms(t_data *dt, int fd)
 {
-	char *ln;
-	int parse_res;
+	char	*ln;
+	int		parse_res;
 
 	while ((ln = (char*)1lu) && ft_get_next_line(fd, &ln, dt->buff_size))
 	{

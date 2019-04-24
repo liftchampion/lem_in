@@ -12,7 +12,6 @@
 
 #include "len_in.h"
 
-
 static inline void	ft_inl_swap(void **x, void **y)
 {
 	void *h;
@@ -43,7 +42,7 @@ static inline int	ft_find_min_w_and_rm_lnk(void **v, int len, int to_find)
 	return (res_w);
 }
 
-int		ft_reverse_link(int i1, int i2, t_data *dt)
+int					ft_reverse_link(int i1, int i2, t_data *dt)
 {
 	t_node		*n1;
 	t_node		*n2;
@@ -57,12 +56,12 @@ int		ft_reverse_link(int i1, int i2, t_data *dt)
 	return (1);
 }
 
-int		ft_send_flow(t_data *dt)
+int					ft_send_flow(t_data *dt)
 {
-	int i;
-	int curr;
-	int next;
-	size_t *path;
+	int		i;
+	int		curr;
+	int		next;
+	size_t	*path;
 
 	path = (size_t*)dt->path->data;
 	i = dt->path->len;

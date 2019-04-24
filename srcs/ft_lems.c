@@ -18,8 +18,8 @@ void		ft_send_lems_last_way(t_data *dt, int flow, int last_way,
 	int			i;
 	t_vector	*paths;
 	int			len;
-	int 		wave_count;
-	int 		delta;
+	int			wave_count;
+	int			delta;
 
 	paths = dt->flows->data[flow];
 	len = ((t_vector*)paths->data[last_way])->len;
@@ -41,7 +41,7 @@ void		ft_send_lems_last_way(t_data *dt, int flow, int last_way,
 		((t_vector*)paths->data[i])->offset += 1;
 }
 
-int 	ft_send_lems_one_flow(t_data *dt, int flow)
+int			ft_send_lems_one_flow(t_data *dt, int flow)
 {
 	int			lem_count;
 	t_vector	*paths;

@@ -12,7 +12,7 @@
 
 #include "len_in.h"
 
-t_data 	*ft_parsing(int ac, char **av)
+t_data		*ft_parsing(int ac, char **av)
 {
 	t_data	*dt;
 	t_pars	*prs;
@@ -31,7 +31,7 @@ t_data 	*ft_parsing(int ac, char **av)
 	return (dt);
 }
 
-int 	ft_processing(t_data *dt)
+int			ft_processing(t_data *dt)
 {
 	t_vector	*first_path;
 
@@ -57,7 +57,7 @@ int 	ft_processing(t_data *dt)
 	return (1);
 }
 
-int		main(int ac, char **av)
+int			main(int ac, char **av)
 {
 	t_data	*dt;
 

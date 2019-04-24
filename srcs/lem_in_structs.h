@@ -65,9 +65,20 @@ int 	ft_lemin_keyhook(int key, void *p);
 # define GET_ANSWER(flags)  (((flags) & (1u << 5u)) != 0)
 # define GET_FLOWS(flags)  (((flags) & (1u << 6u)) != 0)
 
-#define DEFAULT_V_PAD 20
-#define DEFAULT_H_PAD 20
-#define TEXT_H 18
+# define DEFAULT_V_PAD 20
+# define DEFAULT_H_PAD 20
+# define TEXT_H 18
+# define GRAY 0x002e2e2e
+# define ANT_COLOR 0x00FFFFFF
+# define START_COLOR 0x00F95602
+# define END_COLOR 0x0000FF00
+# define UNREACHING_NODES_COLOR 0x00101010
+# define TEXT_COLOR 0x00E0E0E0
+# define BORDERS_COLOR 0x00191919
+# define TURNS_COLOR 0x00FFFFFF
+# define GRAD_START (t_hsv){0, 90, 60}
+# define GRAD_END (t_hsv){180, 90, 60}
+# define GRAD_DIR -1
 
 extern char g_invalid_flag_txt[];
 extern char g_flags_usage_txt[];
@@ -112,9 +123,9 @@ struct	s_data
 	t_pars		*prs;
 	t_vector	*ant_names;
 	t_mlx		*mlx;
-	t_vis_node	*sorted_nodes; //todo free
-	int 		*name_to_pos; // todo free
-	t_vis_dims	*dims; //todo free
+	t_vis_node	*sorted_nodes;
+	int 		*name_to_pos;
+	t_vis_dims	*dims;
 	int 		screen_h;
 	int 		screen_w;
 	int 		real_nodes_count;

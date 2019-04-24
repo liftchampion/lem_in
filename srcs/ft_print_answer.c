@@ -12,7 +12,7 @@
 
 #include "len_in.h"
 
-int 	ft_fill_ants(t_data *dt)
+int		ft_fill_ants(t_data *dt)
 {
 	int			i;
 	int			j;
@@ -41,7 +41,7 @@ int 	ft_fill_ants(t_data *dt)
 	return (1);
 }
 
-int 	ft_push_ant_move(t_data *dt, int i, t_vector **paths)
+int		ft_push_ant_move(t_data *dt, int i, t_vector **paths)
 {
 	char	*str_tmp;
 

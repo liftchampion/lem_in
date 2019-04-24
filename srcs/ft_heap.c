@@ -34,7 +34,6 @@ void				sift_down(t_heap *heap, int ind)
 		next = (len < ind * 2 + 3 || LEFT < RIGHT ? ind * 2 + 1 : ind * 2 + 2);
 		if (next < heap->len && weight[ind] > weight[next])
 		{
-			//ft_printf("{Green}+{eof}\n");
 			heap->num[name[ind]] = next;
 			heap->num[name[next]] = ind;
 			ft_inl_swap(weight + ind, weight + next, 0);
@@ -57,7 +56,6 @@ void				sift_up(t_heap *heap, int ind)
 	next = (ind - 1) / 2;
 	while (weight[ind] < weight[next])
 	{
-		//ft_printf("{Green}-{eof}\n");
 		heap->num[name[ind]] = next;
 		heap->num[name[next]] = ind;
 		ft_inl_swap(weight + ind, weight + next, 0);
@@ -79,18 +77,8 @@ int					take_min(t_heap *heap)
 	len = --(heap->len);
 	r = *weight;
 	heap->num[name[len]] = 0;
-	//heap->num[*heap->name] = -1;
 	ft_inl_swap(name + len, name, 0);
 	ft_inl_swap(weight + len, weight, 0);
-
-	//ft_printf("{Magenta}Before sift{eof}\n");
-	//ft_printf("Heap: ");
-	//for (int i = 0; i < heap->len; ++i)
-	//ft_printf(" %2d", heap->weight[i]);
-	//ft_printf("\nHeap place to name:");
-	//for (int i = 0; i < heap->len; ++i)
-	//ft_printf(" %2d", heap->name[i]);
-	//ft_printf("\n");
 	if (len > 1)
 		sift_down(heap, 0);
 	return (r);
