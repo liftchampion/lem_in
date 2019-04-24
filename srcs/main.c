@@ -61,7 +61,8 @@ int			main(int ac, char **av)
 {
 	t_data	*dt;
 
-	if (!(dt = ft_parsing(ac, av)))
+	if (!(dt = ft_parsing(ac, av)) ||
+		(GET_FMT_F(dt->prs->flags) && !ft_string_push_back(&dt->output, '\n')))
 		return (ft_free_data(dt, 0));
 	if (!ft_processing(dt))
 		return (ft_free_data(dt, 0) * ft_printf("Error\n"));

@@ -12,7 +12,7 @@
 
 #include "len_in.h"
 
-static inline int ft_parser_mallocs(t_data *dt)
+static inline int	ft_parser_mallocs(t_data *dt)
 {
 	if (!(dt->heap = make_heap(dt->nodes->len)) ||
 		!(dt->dsts = ft_memalloc(sizeof(int) * dt->nodes->len)) ||
@@ -22,7 +22,7 @@ static inline int ft_parser_mallocs(t_data *dt)
 	return (1);
 }
 
-t_data	*ft_parser(int fd, t_pars *prs)
+t_data				*ft_parser(int fd, t_pars *prs)
 {
 	t_data		*dt;
 	int			parse_res;

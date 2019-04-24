@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-./generator --big | time ./lem-in --answer --format=ants \
+./generator --big-superposition | time ./lem-in --answer --format=ants \
     1> .run.stdout.tmp.test 2> .run.stderr.tmp.test
 cat .run.stdout.tmp.test | wc -l >> .run.stderr.tmp.test
 cat .run.stderr.tmp.test | awk '\
