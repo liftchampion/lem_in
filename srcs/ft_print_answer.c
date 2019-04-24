@@ -14,11 +14,11 @@
 
 int 	ft_fill_ants(t_data *dt)
 {
-	int i;
-	int j;
-	int k;
-	int last_path;
-	t_vector **paths;
+	int			i;
+	int			j;
+	int			k;
+	int			last_path;
+	t_vector	**paths;
 
 	last_path = dt->best_flow + 1;
 	paths = (t_vector**)((t_vector*)dt->flows->data[last_path - 1])->data;
@@ -63,11 +63,11 @@ int 	ft_push_ant_move(t_data *dt, int i, t_vector **paths)
 
 int		ft_print_murashi(t_data *dt)
 {
-	int i;
-	int start;
-	int	pool;
-	int k;
-	t_vector **paths;
+	int			i;
+	int			start;
+	int			pool;
+	int			k;
+	t_vector	**paths;
 
 	k = 0;
 	start = 0;

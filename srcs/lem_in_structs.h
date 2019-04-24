@@ -123,6 +123,7 @@ struct	s_data
 	int 		end;
 	int 		best_flow;
 	int 		turns;
+	int 		special_case;
 };
 
 struct	s_ant

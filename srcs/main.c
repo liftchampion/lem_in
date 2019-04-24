@@ -33,12 +33,11 @@ t_data 	*ft_parsing(int ac, char **av)
 
 int 	ft_processing(t_data *dt)
 {
-	int			partitial_case;
 	t_vector	*first_path;
 
-	if (!(partitial_case = ft_procede_partitial_case(dt)))
+	if (!(dt->special_case = ft_procede_partitial_case(dt)))
 		return (0);
-	if (partitial_case == 1 || partitial_case == 2)
+	if (dt->special_case == 1 || dt->special_case == 2)
 		return (1);
 	if (!ft_find_all_flows(dt))
 		return (0);

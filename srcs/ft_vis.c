@@ -49,7 +49,8 @@ void 	ft_print_map(void *p)
 	t_point size;
 
 	size = (t_point){ds->side, ds->side * dt->ant_count};
-	int x_pad = DEFAULT_H_PAD + ds->h_pad + ds->use_text_ants * ds->longest_ant_name * 15;
+	//int x_pad = DEFAULT_H_PAD + ds->h_pad + ds->use_text_ants * ds->longest_ant_name * 15;
+	int x_pad = DEFAULT_H_PAD + ds->h_pad;
 	int y_pad = DEFAULT_V_PAD + ds->gap;
 
 	int j;
@@ -107,14 +108,110 @@ void 	ft_print_texts(void *p)
 	}
 }
 
+void 	ft_fill_ants_poses(t_data *dt, const int *waves, int wave_count)
+{
+	int			i;
+	int 		j;
+	int 		start;
+
+	i = 0;
+	start = waves[0];
+	while (++i < wave_count)
+	{
+		j = start - 1;
+		while (++j < dt->ant_count)
+		{
+			--dt->ants[j].pos;
+		}
+		start += waves[i];
+	}
+}
+
+void 	ft_turn(t_data *dt, int turn)
+{
+	int i;
+
+	i = -1;
+	while (++i < dt->ant_count)
+	{
+		dt->ants[i].pos += turn;
+	}
+}
+
+int 	ft_vis_init_ants(t_data *dt)
+{
+	int			wave_count;
+	t_vector	**paths;
+
+	paths = (t_vector**)((t_vector*)dt->flows->data[dt->best_flow])->data;
+	ft_send_lems_last_way(dt, dt->best_flow,
+		((t_vector*)dt->flows->data[dt->best_flow])->len - 1, dt->ant_count);
+	free(dt->wave_sizes);
+	ft_bzero(dt->ants, sizeof(t_ant) * dt->ant_count);
+	ft_bzero(dt->gone_ants, dt->ant_count);
+	wave_count = paths[0]->offset + paths[0]->len;
+	if (!ft_fill_ants(dt))
+		return (0);
+	ft_fill_ants_poses(dt, dt->wave_sizes, wave_count);
+	ft_turn(dt, 1);
+	ft_turn(dt, 1);
+	ft_turn(dt, 1);
+	ft_turn(dt, 1);
+	ft_turn(dt, 1);
+	ft_turn(dt, 1);
+	ft_turn(dt, 1);
+	ft_turn(dt, 1);
+	ft_turn(dt, 1);
+	ft_turn(dt, 1);
+	return (1);
+}
+
+void 	ft_draw_ants(t_data *dt)
+{
+	int			i;
+	int			node;
+	t_vector	*path;
+	int 		x_pos;
+	int 		y_pos;
+
+	i = -1;
+	while (++i < dt->ant_count)
+	{
+		path = ((t_vector*)dt->flows->data[dt->best_flow])->data[CURR_PATH];
+		ft_printf("%d/%d\n", CURR_POS, path->len);
+		if (CURR_POS <= 0)
+			node = 0;
+		else if (CURR_POS > (int)path->len)
+			node = dt->name_to_pos[dt->end - 1];
+		else
+			node = dt->name_to_pos[(int)path->data[path->len - CURR_POS]];
+		x_pos = DEFAULT_H_PAD + dt->dims->h_pad +
+				(node % dt->dims->line_len) * dt->dims->side;
+		y_pos = DEFAULT_V_PAD + dt->dims->gap +
+				(node / dt->dims->line_len) *
+				(dt->ant_count * dt->dims->side + dt->dims->gap) +
+				i * dt->dims->side;
+		ft_mlx_rectput(dt->mlx, (t_point){dt->dims->side, dt->dims->side},
+				(t_point){x_pos, y_pos}, 0x00FFFFFF);
+		if (dt->dims->side >= 10)
+			ft_mlx_frameput(dt->mlx, (t_point){dt->dims->side, dt->dims->side},
+					(t_point){x_pos, y_pos}, BORDERS_COLOR);
+
+	}
+}
+
 int 	ft_mlx_expose(void *p)
 {
 	t_mlx *mlx;
 
 	mlx = p;
+	if (!ft_vis_init_ants(mlx->add_data))
+		return (0); // todo do it before ! todo free exit trah babah
+
 	ft_mlx_rectput(mlx, (t_point){mlx->x, mlx->y}, (t_point){0, 0}, GRAY);
 
 	ft_print_map(p);
+	ft_draw_ants(mlx->add_data);
 	ft_mlx_put_img(mlx);
 	ft_print_texts(p);
 	//mlx_string_put(mlx->mlx_ptr, mlx->win_ptr, 10, 10, 0x000000ff, "WAA");
