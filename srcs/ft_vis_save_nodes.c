@@ -83,14 +83,15 @@ int 	ft_check_text_nodes(t_data *dt)
 	ft_memcpy(ds, dt->dims, sizeof(t_vis_dims));
 	while (ds->side)
 	{
-		if (dt->ant_count * ds->lines_count * (ds->side + TEXT_H) < ds->height
+		if (dt->ant_count * ds->lines_count * ds->side +
+		TEXT_H * ds->lines_count < ds->height
 		&& (ds->gap > 0 || ds->lines_count == 1))
 			break ;
 		--ds->side;
 		if (ds->side)
 			ft_set_dims(dt, ds);
 	}
-	if (!ds->side)
+	if (ds->side < max_word_len * 5)
 		return (-1);
 	ds->use_text_nodes = 1;
 	tmp = dt->dims;
