@@ -13,6 +13,9 @@
 #include "len_in.h"
 
 #define GRAY 0x002e2e2e
+#define ANT_COLOR 0x00FFFFFF
+#define START_COLOR 0x00F95602
+#define END_COLOR 0x0000FF00
 #define UNREACHING_NODES_COLOR 0x00101010
 #define TEXT_COLOR 0x00E0E0E0
 #define BORDERS_COLOR 0x00191919
@@ -26,7 +29,11 @@ unsigned int	ft_get_color(t_data *dt, int i)
 {
 	unsigned int res;
 
-	if (dt->sorted_nodes[i].dst != INF)
+	if (dt->sorted_nodes[i].name == dt->start)
+		return (START_COLOR);
+	else if (dt->sorted_nodes[i].name == dt->end - 1)
+		return (END_COLOR);
+	else if (dt->sorted_nodes[i].dst != INF)
 		res = ft_hsv_gradient(GRAD_START, GRAD_END,
 			(double[3]){0, dt->sorted_nodes[i].dst, dt->max_dst}, GRAD_DIR);
 	else
@@ -129,8 +136,22 @@ void 	ft_fill_ants_poses(t_data *dt, const int *waves, int wave_count)
 
 void 	ft_turn(t_data *dt, int turn)
 {
-	int i;
+	int			i;
+	t_vector	*path;
+	int			need_change;
 
+	need_change = 0;
+	i = -1;
+	while (++i < dt->ant_count)
+	{
+		path = ((t_vector *)dt->flows->data[dt->best_flow])->data[CURR_PATH];
+		if (CURR_POS > 0 && turn < 0)
+			need_change = 1;
+		if (CURR_POS < (int)path->len && turn > 0)
+			need_change = 1;
+	}
+	if (!need_change)
+		return;
 	i = -1;
 	while (++i < dt->ant_count)
 	{
