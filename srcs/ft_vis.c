@@ -100,7 +100,7 @@ void 	ft_print_texts(void *p)
 		if (ds->use_text_nodes)
 			mlx_string_put(mlx->mlx_ptr, mlx->win_ptr,
 					x_pad + x_pos + (ds->side - ft_strlen(name) * 10) / 2, y_pad + y_pos - 18, TEXT_COLOR, name);
-		if (!i % ds->line_len && ds->longest_ant_name * 15 < ds->h_pad && (j = -1))
+		if (!i % ds->line_len && ds->use_text_ants && (j = -1))
 		{
 			while (++j < dt->ant_count)
 			{
