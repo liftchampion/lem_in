@@ -18,7 +18,7 @@ ssize_t		ft_read(int fd, void *buf, size_t buf_size)
 {
 	size_t	read_size;
 	ssize_t	read_size_increment;
-	int 	hp;
+	int		hp;
 
 	if (buf_size <= 512)
 		return (read(fd, buf, buf_size));
@@ -33,6 +33,5 @@ ssize_t		ft_read(int fd, void *buf, size_t buf_size)
 		hp = (read_size_increment > 0) ? 1 : hp;
 		read_size += read_size_increment;
 	}
-	//ft_printf("{Red}<%s>{eof}[{Green}%d{eof}]\n", buf, read_size);
 	return (read_size);
 }

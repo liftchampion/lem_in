@@ -14,7 +14,7 @@
 #include "libft.h"
 #include "ft_mlx.h"
 
-int 		ft_mlx_main_key_hook(int key, void *data)
+int			ft_mlx_main_key_hook(int key, void *data)
 {
 	t_mlx	*mlx;
 	int		ret;
@@ -31,7 +31,7 @@ int 		ft_mlx_main_key_hook(int key, void *data)
 int			ft_mlx_main_mouse_hook(int button, int x, int y, void *param)
 {
 	t_mlx	*mlx;
-	int 	ret;
+	int		ret;
 
 	ret = 0;
 	mlx = param;
@@ -43,7 +43,7 @@ int			ft_mlx_main_mouse_hook(int button, int x, int y, void *param)
 int			ft_mlx_main_expose_hook(void *param)
 {
 	t_mlx	*mlx;
-	int 	ret;
+	int		ret;
 
 	ret = 0;
 	mlx = param;
@@ -55,7 +55,7 @@ int			ft_mlx_main_expose_hook(void *param)
 int			ft_mlx_main_loop_hook(void *param)
 {
 	t_mlx	*mlx;
-	int 	ret;
+	int		ret;
 
 	ret = 0;
 	mlx = param;

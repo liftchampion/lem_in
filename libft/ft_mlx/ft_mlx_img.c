@@ -54,7 +54,7 @@ void	ft_mlx_frameput(t_mlx *mlx, t_point size, t_point pos, int color)
 	}
 }
 
-void 	ft_mlx_pixelput(t_mlx *mlx, int x, int y, int color)
+void	ft_mlx_pixelput(t_mlx *mlx, int x, int y, int color)
 {
 	static int	max = -1;
 	int			pos;
@@ -67,13 +67,13 @@ void 	ft_mlx_pixelput(t_mlx *mlx, int x, int y, int color)
 	mlx->img_data[pos] = color;
 }
 
-void 	ft_mlx_put_img(t_mlx *mlx)
+void	ft_mlx_put_img(t_mlx *mlx)
 {
 	if (!mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->img, 0, 0))
 		ft_mlx_close(mlx);
 }
 
-void 	ft_mlx_clear(t_mlx *mlx)
+void	ft_mlx_clear(t_mlx *mlx)
 {
 	ft_bzero(mlx->img_data, mlx->x * mlx->y);
 	ft_mlx_put_img(mlx);

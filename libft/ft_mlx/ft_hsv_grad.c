@@ -29,7 +29,6 @@ unsigned int	ft_hsv_gradient(t_hsv from, t_hsv to,
 		dst = from.hue + 360 - to.hue;
 		res.hue = (360 + (short)(from.hue - (dst * relate))) % 360;
 	}
-
 	res.vol = (unsigned char)(from.vol + ((to.vol - from.vol) * relate));
 	res.sat = (unsigned char)(from.sat + ((to.sat - from.sat) * relate));
 	return (ft_hsv_to_rgb(res));

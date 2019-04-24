@@ -13,7 +13,7 @@
 #include <mlx.h>
 #include "libft.h"
 
-void	*ft_destroy_mlx(t_mlx *mlx, int ret)
+void		*ft_destroy_mlx(t_mlx *mlx, int ret)
 {
 	if (!mlx)
 		return ((void*)(size_t)ret);

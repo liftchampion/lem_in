@@ -17,14 +17,6 @@
 # include <fcntl.h>
 # include <zconf.h>
 
-
-
-int 	ft_mlx_expose(void *p);
-int 	ft_lemin_keyhook(int key, void *p);
-
-
-
-
 # define READ_BUFF_FILE 500000
 # define READ_BUFF_STDIN 1000
 # define INF 1000000000
@@ -113,32 +105,32 @@ struct	s_data
 	t_heap		*heap;
 	t_vector	*nodes;
 	t_map		*name_to_idx;
-	int 		*dsts;
+	int			*dsts;
 	t_vector	*path;
 	t_vector	*flows;
 	t_ant		*ants;
-	char 		*gone_ants;
-	int 		*wave_sizes;
+	char		*gone_ants;
+	int			*wave_sizes;
 	t_string	*output;
 	t_pars		*prs;
 	t_vector	*ant_names;
 	t_mlx		*mlx;
 	t_vis_node	*sorted_nodes;
-	int 		*name_to_pos;
+	int			*name_to_pos;
 	t_vis_dims	*dims;
-	int 		screen_h;
-	int 		screen_w;
-	int 		real_nodes_count;
-	int 		max_dst;
-	int 		buff_size;
-	int 		ant_count;
-	int 		start;
-	int 		end;
-	int 		best_flow;
-	int 		curr_turn;
-	int 		turns;
-	int 		req_turns;
-	int 		special_case;
+	int			screen_h;
+	int			screen_w;
+	int			real_nodes_count;
+	int			max_dst;
+	int			buff_size;
+	int			ant_count;
+	int			start;
+	int			end;
+	int			best_flow;
+	int			curr_turn;
+	int			turns;
+	int			req_turns;
+	int			special_case;
 };
 
 struct	s_ant
@@ -152,9 +144,9 @@ struct	s_node
 	char		*name;
 	t_vector	*chs;
 	int			p;
-	int 		x;
-	int 		y;
-	int 		from;
+	int			x;
+	int			y;
+	int			from;
 };
 
 struct	s_pars

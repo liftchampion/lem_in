@@ -13,7 +13,8 @@
 #include <stdlib.h>
 #include "libft.h"
 
-void		*ft_realloc(void *old_data, size_t prev_size, size_t new_size)
+void				*ft_realloc(void *old_data, size_t prev_size,
+					size_t new_size)
 {
 	void	*new_data;
 	size_t	i;
@@ -50,8 +51,8 @@ static inline void	ft_free_array(void **arr, size_t size,
 	}
 }
 
-void		*ft_realloc_free(void *old_data, size_t prev_size, size_t new_size,
-		void (*free_data)(void*))
+void				*ft_realloc_free(void *old_data, size_t prev_size,
+					size_t new_size, void (*free_data)(void*))
 {
 	void	*new_data;
 	size_t	i;

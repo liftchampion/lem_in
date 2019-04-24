@@ -30,7 +30,7 @@ void	ft_assign_mlx_data(t_mlx *mlx, int x, int y,
 	mlx->add_data = init_data->add_data;
 }
 
-t_mlx 	*ft_mlx_init(int x, int y, char *name,
+t_mlx	*ft_mlx_init(int x, int y, char *name,
 		t_mlx_init tofree_data_freefunc_key_mouse_expose_loop)
 {
 	t_mlx *mlx;

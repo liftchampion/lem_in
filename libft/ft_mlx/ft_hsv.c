@@ -22,7 +22,6 @@ static inline void	ft_find_maxmin(const unsigned char rgb[3],
 	max = rgb[0];
 	max = rgb[1] > max ? rgb[1] : max;
 	max = rgb[2] > max ? rgb[2] : max;
-
 	min = rgb[0];
 	min = rgb[1] < min ? rgb[1] : min;
 	min = rgb[2] < min ? rgb[2] : min;
@@ -30,7 +29,7 @@ static inline void	ft_find_maxmin(const unsigned char rgb[3],
 	maxmin[1] = min;
 }
 
-t_hsv	ft_rgb_to_hsv(unsigned int argb)
+t_hsv				ft_rgb_to_hsv(unsigned int argb)
 {
 	unsigned char	rgb[3];
 	unsigned char	maxmin[2];
@@ -112,27 +111,24 @@ static inline void	ft_rgb_filler_2(unsigned char rgb[3], const double vdmi[4],
 	}
 }
 
-unsigned int	ft_hsv_to_rgb(t_hsv hsv)
+unsigned int		ft_hsv_to_rgb(t_hsv hsv)
 {
 	unsigned char	rgb[3];
 	unsigned int	res;
-	unsigned char hi;
-	double v_min;
-	double a;
-	double v_inc;
-	double v_dec;
+	unsigned char	hi;
+	double			maid[4];
 
 	hi = (int)(hsv.hue / 60.) % 6;
-	v_min = ((100 - hsv.sat) * hsv.vol) / 100.;
-	a = (hsv.vol - v_min) * ((hsv.hue % 60) / 60.);
-	v_inc = v_min + a;
-	v_dec = hsv.vol - a;
+	maid[0] = ((100 - hsv.sat) * hsv.vol) / 100.;
+	maid[1] = (hsv.vol - maid[0]) * ((hsv.hue % 60) / 60.);
+	maid[2] = maid[0] + maid[1];
+	maid[3] = hsv.vol - maid[1];
 	if (hi < 3)
 		ft_rgb_filler_1(rgb,
-				(double[4]){(double)hsv.vol, v_dec, v_min, v_inc}, hi);
+				(double[4]){(double)hsv.vol, maid[3], maid[0], maid[2]}, hi);
 	else
 		ft_rgb_filler_2(rgb,
-				(double[4]){(double)hsv.vol, v_dec, v_min, v_inc}, hi);
+				(double[4]){(double)hsv.vol, maid[3], maid[0], maid[2]}, hi);
 	res = 0;
 	res |= (unsigned)((unsigned)rgb[0] << 16u);
 	res |= (unsigned)((unsigned)rgb[1] << 8u);
