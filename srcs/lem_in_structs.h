@@ -124,7 +124,9 @@ struct	s_data
 	int 		start;
 	int 		end;
 	int 		best_flow;
+	int 		curr_turn;
 	int 		turns;
+	int 		req_turns;
 	int 		special_case;
 };
 

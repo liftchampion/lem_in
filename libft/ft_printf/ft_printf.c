@@ -31,7 +31,9 @@ static int	ft_loop(const char *frmt, t_string **str, t_arg_data **vars,
 		else
 		{
 			vars[i++] = ft_printf_parser(&frmt, &args_seq);
+			vars[i] = 0;
 			str[i] = ft_make_string(4);
+			str[i + 1] = NULL;
 		}
 	}
 	return (*str ? 1 : -1);
@@ -39,27 +41,25 @@ static int	ft_loop(const char *frmt, t_string **str, t_arg_data **vars,
 
 t_string	*ft_vprintf(const char *frmt, va_list vl)
 {
-	t_string	*str[1000];
+	t_string	*str[100];
 	t_string	*args_seq;
-	t_arg_data	*vars[1000];
+	t_arg_data	*vars[99];
 	int			i;
 
-	ft_bzero(str, sizeof(t_string*) * 100);
-	ft_bzero(vars, sizeof(t_arg_data*) * 99);
 	args_seq = ft_make_string(32);
 	str[0] = ft_make_string(64);
+	str[1] = 0;
+	vars[0] = 0;
 	if (ft_loop(frmt, str, vars, args_seq) == -1)
 		return (0);
 	ft_stringify(&(str[0]), vars, vl, args_seq);
 	ft_free_string(&args_seq);
-	i = -1;
+	i = 0;
 	while (str[++i])
-		if (i && str[i])
-			ft_free_string(&str[i]);
+		ft_free_string(&(str[i]));
 	i = -1;
 	while (vars[++i])
-		if (vars[i])
-			free(vars[i]);
+		free(vars[i]);
 	return ((*str));
 }
 

@@ -56,7 +56,6 @@ void 	ft_print_map(void *p)
 	t_point size;
 
 	size = (t_point){ds->side, ds->side * dt->ant_count};
-	//int x_pad = DEFAULT_H_PAD + ds->h_pad + ds->use_text_ants * ds->longest_ant_name * 15;
 	int x_pad = DEFAULT_H_PAD + ds->h_pad;
 	int y_pad = DEFAULT_V_PAD + ds->gap;
 
@@ -92,6 +91,14 @@ void 	ft_print_texts(void *p)
 
 	char *name;
 
+	char *turn_str;
+	ft_sprintf(&turn_str, "Turn %d/%d", dt->curr_turn, dt->req_turns ? dt->req_turns : dt->turns);
+	if (!turn_str)
+		ft_destroy_mlx(mlx, 0);
+	mlx_string_put(mlx->mlx_ptr, mlx->win_ptr,
+			mlx->x - 10 - ft_strlen(turn_str) * 11,
+			mlx->y - 10 - 18, 0x00FFFFFF, turn_str);
+
 	while (++i < dt->real_nodes_count)
 	{
 		name = ((t_node*)dt->nodes->data[dt->sorted_nodes[i].name])->name;
@@ -99,7 +106,8 @@ void 	ft_print_texts(void *p)
 		int y_pos = (i / ds->line_len) * (dt->ant_count * ds->side + ds->gap);
 		if (ds->use_text_nodes)
 			mlx_string_put(mlx->mlx_ptr, mlx->win_ptr,
-					x_pad + x_pos + (ds->side - ft_strlen(name) * 10) / 2, y_pad + y_pos - TEXT_H, TEXT_COLOR, name);
+					x_pad + x_pos + (ds->side - ft_strlen(name) * 10) / 2,
+					y_pad + y_pos - TEXT_H, TEXT_COLOR, name);
 		if (!i % ds->line_len && ds->use_text_ants && (j = -1))
 		{
 			while (++j < dt->ant_count)
@@ -151,12 +159,22 @@ void 	ft_turn_special_case(t_data *dt, int turn)
 	}
 }
 
+void 	ft_turn_counter(t_data *dt, int turn)
+{
+	if (turn > 0 && dt->curr_turn >= dt->turns)
+		return ;
+	if (turn < 0 && dt->curr_turn <= 0)
+		return ;
+	dt->curr_turn += turn;
+}
+
 void 	ft_turn(t_data *dt, int turn)
 {
 	int			i;
 	t_vector	*path;
 	int			need_change;
 
+	ft_turn_counter(dt, turn);
 	if (dt->special_case > 0)
 		return (ft_turn_special_case(dt, turn));
 	need_change = 0;

@@ -35,12 +35,11 @@ int		ft_parse_hash(t_data *dt, char *ln, t_parse_mode pm)
 	int start_or_end;
 
 	if (!ft_strncmp("#Here is the number of lines required: ", ln, 39) &&
-		GET_ANSWER(dt->prs->flags))
+		((dt->req_turns = ft_atoi(ln + 39)) || 1) && GET_ANSWER(dt->prs->flags))
 		return
 		(ft_fdprintf(2, "%s\n", ln) * 0 * UNSET_ANSWER(dt->prs->flags) + 1);
-	if (ln[1] != '#' || pm == LINKS)
+	if (!(start_or_end = 0) && (ln[1] != '#' || pm == LINKS))
 		return (2);
-	start_or_end = 0;
 	if (!ft_strcmp("start", ln + 2) && (start_or_end = 1))
 	{
 		if (dt->start != -1)
