@@ -7,7 +7,7 @@ find_library(OPEN_GL OpenGl)
 find_library(APP_KIT AppKit)
 link_libraries(mlx)
 
-add_compile_options(-Wall -Wextra)
+add_compile_options(-Wall -Wextra -D NO_VISUALIZATION)
 include_directories(./libft/includes)
 FILE(GLOB LIBFT_SRCS ./libft/*.c ./libft/*/*.c)
 
