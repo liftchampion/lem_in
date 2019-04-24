@@ -134,12 +134,31 @@ void 	ft_fill_ants_poses(t_data *dt, const int *waves, int wave_count)
 	}
 }
 
+void 	ft_turn_special_case(t_data *dt, int turn)
+{
+	int i;
+
+	i = -1;
+	if (dt->special_case == 1)
+		return ;
+	if (turn > 0 && dt->ants[0].pos >= 1)
+		return ;
+	if (turn < 0 && dt->ants[0].pos == 0)
+		return ;
+	while (++i < dt->ant_count)
+	{
+		dt->ants[i].pos += turn;
+	}
+}
+
 void 	ft_turn(t_data *dt, int turn)
 {
 	int			i;
 	t_vector	*path;
 	int			need_change;
 
+	if (dt->special_case > 0)
+		return (ft_turn_special_case(dt, turn));
 	need_change = 0;
 	i = -1;
 	while (++i < dt->ant_count)
@@ -150,13 +169,9 @@ void 	ft_turn(t_data *dt, int turn)
 		if (CURR_POS < (int)path->len && turn > 0)
 			need_change = 1;
 	}
-	if (!need_change)
-		return;
 	i = -1;
-	while (++i < dt->ant_count)
-	{
+	while (need_change && ++i < dt->ant_count)
 		dt->ants[i].pos += turn;
-	}
 }
 
 int 	ft_vis_init_ants(t_data *dt)
@@ -164,12 +179,14 @@ int 	ft_vis_init_ants(t_data *dt)
 	int			wave_count;
 	t_vector	**paths;
 
+	ft_bzero(dt->ants, sizeof(t_ant) * dt->ant_count);
+	ft_bzero(dt->gone_ants, dt->ant_count);
+	if (dt->special_case > 0)
+		return (1);
 	paths = (t_vector**)((t_vector*)dt->flows->data[dt->best_flow])->data;
 	ft_send_lems_last_way(dt, dt->best_flow,
 		((t_vector*)dt->flows->data[dt->best_flow])->len - 1, dt->ant_count);
 	free(dt->wave_sizes);
-	ft_bzero(dt->ants, sizeof(t_ant) * dt->ant_count);
-	ft_bzero(dt->gone_ants, dt->ant_count);
 	wave_count = paths[0]->offset + paths[0]->len;
 	if (!ft_fill_ants(dt))
 		return (0);
@@ -177,24 +194,36 @@ int 	ft_vis_init_ants(t_data *dt)
 	return (1);
 }
 
+static inline int ft_get_ant_node(t_data *dt, int i)
+{
+	t_vector	*path;
+	int			node;
+
+	if (dt->special_case == 1)
+		return (0);
+	if (dt->special_case == 2)
+		return (!CURR_POS ? 0 : dt->name_to_pos[dt->end - 1]);
+	path = ((t_vector*)dt->flows->data[dt->best_flow])->data[CURR_PATH];
+	if (CURR_POS <= 0)
+		node = 0;
+	else if (CURR_POS > (int)path->len)
+		node = dt->name_to_pos[dt->end - 1];
+	else
+		node = dt->name_to_pos[(int)path->data[path->len - CURR_POS]];
+	return (node);
+}
+
 void 	ft_draw_ants(t_data *dt)
 {
-	int			i;
-	int			node;
-	t_vector	*path;
-	int 		x_pos;
-	int 		y_pos;
+	int i;
+	int node;
+	int x_pos;
+	int y_pos;
 
 	i = -1;
 	while (++i < dt->ant_count)
 	{
-		path = ((t_vector*)dt->flows->data[dt->best_flow])->data[CURR_PATH];
-		if (CURR_POS <= 0)
-			node = 0;
-		else if (CURR_POS > (int)path->len)
-			node = dt->name_to_pos[dt->end - 1];
-		else
-			node = dt->name_to_pos[(int)path->data[path->len - CURR_POS]];
+		node = ft_get_ant_node(dt, i);
 		x_pos = DEFAULT_H_PAD + dt->dims->h_pad +
 				(node % dt->dims->line_len) * dt->dims->side;
 		y_pos = DEFAULT_V_PAD + dt->dims->gap +
@@ -202,11 +231,10 @@ void 	ft_draw_ants(t_data *dt)
 				(dt->ant_count * dt->dims->side + dt->dims->gap) +
 				i * dt->dims->side;
 		ft_mlx_rectput(dt->mlx, (t_point){dt->dims->side, dt->dims->side},
-				(t_point){x_pos, y_pos}, 0x00FFFFFF);
+				(t_point){x_pos, y_pos}, ANT_COLOR);
 		if (dt->dims->side >= 10)
 			ft_mlx_frameput(dt->mlx, (t_point){dt->dims->side, dt->dims->side},
 					(t_point){x_pos, y_pos}, BORDERS_COLOR);
-
 	}
 }
 
@@ -229,15 +257,11 @@ int 	ft_mlx_expose(void *p)
 	t_mlx *mlx;
 
 	mlx = p;
-	if (!ft_vis_init_ants(mlx->add_data))
-		return (0); // todo do it before ! todo free exit trah babah
-
 	ft_mlx_rectput(mlx, (t_point){mlx->x, mlx->y}, (t_point){0, 0}, GRAY);
 	ft_print_map(p);
 	ft_draw_ants(mlx->add_data);
 	ft_mlx_put_img(mlx);
 	ft_print_texts(p);
-	//mlx_string_put(mlx->mlx_ptr, mlx->win_ptr, 10, 10, 0x000000ff, "WAA");
 	return (0);
 }
 
@@ -246,10 +270,13 @@ int		ft_visualize(t_data *dt)
 	dt->screen_h = 1080;
 	dt->screen_w = 2400;
 	if (ft_get_dims(dt) <= 0)
-		return (ft_free_data(dt, 0) * ft_printf("Dimensions Error\n"));
+		return (ft_free_data(dt, 0) * ft_printf("Vis: Map is too big!\n"));
+	if (!ft_vis_init_ants(dt))
+		return (ft_free_data(dt, 0) * ft_printf("Vis: Ants managing Error\n"));
 	if (!(dt->mlx = ft_mlx_init(dt->screen_w, dt->screen_h, "Super Muravii",
-			(t_mlx_init){dt, dt, ft_free_for_mlx, ft_lemin_keyhook, 0, ft_mlx_expose, 0})))
-		return (ft_printf("MLX Error\n") * 0);
+			(t_mlx_init)
+			{dt, dt, ft_free_for_mlx, ft_lemin_keyhook, 0, ft_mlx_expose, 0})))
+		return (ft_printf("Vis: MLX Error\n") * 0);
 	mlx_loop(dt->mlx->mlx_ptr);
 	return (1);
 }

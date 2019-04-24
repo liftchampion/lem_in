@@ -110,7 +110,7 @@ int 	ft_check_text_ants(t_data *dt)
 		return (0);
 	ft_memcpy(ds, dt->dims, sizeof(t_vis_dims));
 	while (ds->side)
-	{
+	{ // todo fail with line_len
 		if (ds->width - ds->line_len * ds->side > ds->longest_ant_name * 10 * 2
 			&& (ds->gap > 0 || ds->lines_count == 1))
 			break ;
