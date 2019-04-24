@@ -17,6 +17,15 @@
 # include "libft.h"
 # include "ft_mlx.h"
 
+typedef enum	e_mlx_keys
+{
+	KEY_ESC = 53,
+	KEY_LEFT = 123,
+	KEY_UP = 126,
+	KEY_RIGHT = 124,
+	KEY_DOWN = 125
+}				t_mlx_keys;
+
 typedef struct	s_mlx_init
 {
 	void	*to_free_data;

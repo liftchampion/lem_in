@@ -17,11 +17,9 @@
 int 		ft_mlx_main_key_hook(int key, void *data)
 {
 	t_mlx	*mlx;
-	int		esc;
 	int		ret;
 
-	esc = 53;
-	if (key == esc)
+	if (key == KEY_ESC)
 		ft_mlx_close(data);
 	mlx = data;
 	ret = 0;

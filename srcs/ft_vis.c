@@ -153,16 +153,6 @@ int 	ft_vis_init_ants(t_data *dt)
 	if (!ft_fill_ants(dt))
 		return (0);
 	ft_fill_ants_poses(dt, dt->wave_sizes, wave_count);
-	ft_turn(dt, 1);
-	ft_turn(dt, 1);
-	ft_turn(dt, 1);
-	ft_turn(dt, 1);
-	ft_turn(dt, 1);
-	ft_turn(dt, 1);
-	ft_turn(dt, 1);
-	ft_turn(dt, 1);
-	ft_turn(dt, 1);
-	ft_turn(dt, 1);
 	return (1);
 }
 
@@ -178,7 +168,6 @@ void 	ft_draw_ants(t_data *dt)
 	while (++i < dt->ant_count)
 	{
 		path = ((t_vector*)dt->flows->data[dt->best_flow])->data[CURR_PATH];
-		ft_printf("%d/%d\n", CURR_POS, path->len);
 		if (CURR_POS <= 0)
 			node = 0;
 		else if (CURR_POS > (int)path->len)
@@ -200,6 +189,20 @@ void 	ft_draw_ants(t_data *dt)
 	}
 }
 
+int 	ft_lemin_keyhook(int key, void *p)
+{
+	t_mlx *mlx;
+
+	mlx = p;
+	if (key == KEY_RIGHT || key == KEY_LEFT)
+		ft_turn(mlx->add_data, key == KEY_RIGHT ? 1 : -1);
+	ft_print_map(p);
+	ft_draw_ants(mlx->add_data);
+	ft_mlx_put_img(mlx);
+	ft_print_texts(p);
+	return (0);
+}
+
 int 	ft_mlx_expose(void *p)
 {
 	t_mlx *mlx;
@@ -209,7 +212,6 @@ int 	ft_mlx_expose(void *p)
 		return (0); // todo do it before ! todo free exit trah babah
 
 	ft_mlx_rectput(mlx, (t_point){mlx->x, mlx->y}, (t_point){0, 0}, GRAY);
-
 	ft_print_map(p);
 	ft_draw_ants(mlx->add_data);
 	ft_mlx_put_img(mlx);
@@ -225,8 +227,9 @@ int		ft_visualize(t_data *dt)
 	if (ft_get_dims(dt) <= 0)
 		return (ft_free_data(dt, 0) * ft_printf("Dimensions Error\n"));
 	if (!(dt->mlx = ft_mlx_init(dt->screen_w, dt->screen_h, "Super Muravii",
-			(t_mlx_init){dt, dt, ft_free_for_mlx, 0, 0, ft_mlx_expose, 0})))
+			(t_mlx_init){dt, dt, ft_free_for_mlx, ft_lemin_keyhook, 0, ft_mlx_expose, 0})))
 		return (ft_printf("MLX Error\n") * 0);
+	mlx_do_key_autorepeaton(dt->mlx->mlx_ptr);
 	mlx_loop(dt->mlx->mlx_ptr);
 	return (1);
 }

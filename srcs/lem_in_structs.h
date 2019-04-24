@@ -20,6 +20,7 @@
 
 
 int 	ft_mlx_expose(void *p);
+int 	ft_lemin_keyhook(int key, void *p);
 
 
 
