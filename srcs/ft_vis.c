@@ -126,9 +126,9 @@ void 	ft_print_texts(void *p)
 
 void 	ft_fill_ants_poses(t_data *dt, const int *waves, int wave_count)
 {
-	int			i;
-	int 		j;
-	int 		start;
+	int	i;
+	int j;
+	int start;
 
 	i = 0;
 	start = waves[0];
@@ -153,35 +153,51 @@ int 	ft_turn_counter(t_data *dt, int turn)
 	return (1);
 }
 
+void 	ft_print_turns(t_vector **paths, int i, t_data *dt)
+{
+	int		j;
+	char	*end_name;
+
+	if (dt->special_case == -1)
+	{
+		if (dt->ant_names)
+			ft_printf("L%s-%s ", dt->ant_names->data[i],
+					((t_node *)dt->nodes->data[
+					(int)paths[CURR_PATH]->data[PATH_LEN - CURR_POS]])->name);
+		else
+			ft_printf("L%d-%s ", i + 1,
+					((t_node *)dt->nodes->data[
+					(int)paths[CURR_PATH]->data[PATH_LEN - CURR_POS]])->name);
+	}
+	else if (dt->special_case == 2 && (j = -1))
+	{
+		end_name = ((t_node*)dt->nodes->data[dt->end - 1])->name;
+		while (++j < dt->ant_count)
+			if (dt->prs->ant_names)
+				ft_printf("L%s-%s ", dt->ant_names->data[j], end_name);
+			else
+				ft_printf("L%d-%s ", j + 1, end_name);
+	}
+}
+
 void 	ft_turn(t_data *dt, int turn)
 {
-	int			i;
-	t_vector	**paths;
+	int				i;
+	t_vector		**paths;
 
-	paths = (t_vector**)((t_vector*)dt->flows->data[dt->best_flow])->data;
-	if (!ft_turn_counter(dt, turn))
+	paths = 0;
+	if (dt->special_case == -1)
+		paths = (t_vector**)((t_vector*)dt->flows->data[dt->best_flow])->data;
+	if ((i = -1) && !ft_turn_counter(dt, turn))
 		return ;
-	if (turn == -1)
-		ft_printf("\033[A\033[K");
-	i = -1;
 	while (++i < dt->ant_count)
 	{
 		dt->ants[i].pos += turn;
-		if (turn == 1)
-		{
-			if (CURR_POS - 1 >= 0 && CURR_POS - 1 < PATH_LEN)
-			{
-				if (dt->ant_names)
-					ft_printf("L%s-%s ",
-					dt->ant_names->data[i], ((t_node*)dt->nodes->data[
-					(int)paths[CURR_PATH]->data[PATH_LEN - CURR_POS]])->name);
-				else
-					ft_printf("L%d-%s ", i + 1, ((t_node *)dt->nodes->data[
-					(int)paths[CURR_PATH]->data[PATH_LEN - CURR_POS]])->name);
-			}
-		}
+		if (turn == 1 && !GET_FMT_M(dt->prs->flags) && (dt->special_case > 0 ||
+		(CURR_POS - 1 >= 0 && CURR_POS - 1 < PATH_LEN)))
+			ft_print_turns(paths, i, dt);
 	}
-	ft_printf("\n");
+	ft_printf((turn == 1 && !GET_FMT_M(dt->prs->flags)) ? "\n\n" : "");
 }
 
 int 	ft_vis_init_ants(t_data *dt)
@@ -286,7 +302,7 @@ int		ft_visualize(t_data *dt)
 	ft_rm_lines_from_output(dt);
 	if (dt->output)
 		ft_print_string(dt->output);
-	ft_printf("\n");
+	ft_printf(!GET_FMT_M(dt->prs->flags) ? "\n" : "");
 	if (!(dt->mlx = ft_mlx_init(dt->screen_w, dt->screen_h, "Super Muravii",
 			(t_mlx_init)
 			{dt, dt, ft_free_for_mlx, ft_lemin_keyhook, 0, ft_mlx_expose, 0})))
