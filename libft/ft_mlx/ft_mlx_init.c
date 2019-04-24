@@ -49,8 +49,9 @@ t_mlx 	*ft_mlx_init(int x, int y, char *name,
 			&mlx->bits_per_pixel, &mlx->size_line, &mlx->endian)))
 		return (ft_destroy_mlx(mlx, 0));
 	ft_bzero(mlx->img_data, sizeof(char) * x * y * (mlx->bits_per_pixel / 8));
+	mlx_do_key_autorepeaton(mlx->mlx_ptr);
 	mlx_hook(mlx->win_ptr, 17, 0, ft_mlx_close, mlx);
-	mlx_key_hook(mlx->win_ptr, ft_mlx_main_key_hook, mlx);
+	mlx_hook(mlx->win_ptr, 2, (1lu << 0u), ft_mlx_main_key_hook, mlx);
 	mlx_mouse_hook(mlx->win_ptr, ft_mlx_main_mouse_hook, mlx);
 	mlx_expose_hook(mlx->win_ptr, ft_mlx_main_expose_hook, mlx);
 	mlx_loop_hook(mlx->mlx_ptr, ft_mlx_main_loop_hook, mlx);

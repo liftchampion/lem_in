@@ -229,7 +229,6 @@ int		ft_visualize(t_data *dt)
 	if (!(dt->mlx = ft_mlx_init(dt->screen_w, dt->screen_h, "Super Muravii",
 			(t_mlx_init){dt, dt, ft_free_for_mlx, ft_lemin_keyhook, 0, ft_mlx_expose, 0})))
 		return (ft_printf("MLX Error\n") * 0);
-	mlx_do_key_autorepeaton(dt->mlx->mlx_ptr);
 	mlx_loop(dt->mlx->mlx_ptr);
 	return (1);
 }
