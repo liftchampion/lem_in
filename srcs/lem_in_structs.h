@@ -67,6 +67,7 @@ int 	ft_lemin_keyhook(int key, void *p);
 
 #define DEFAULT_V_PAD 20
 #define DEFAULT_H_PAD 20
+#define TEXT_H 18
 
 extern char g_invalid_flag_txt[];
 extern char g_flags_usage_txt[];
