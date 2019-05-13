@@ -22,6 +22,12 @@
 ## Флаги
 ![flags](https://raw.githubusercontent.com/liftchampion/lem_in/master/imgs/help.png)
 ## Визуализация
+Задача представлена в виде таблицы: столбцы - ноды графа, строки - муравьи.  
+Старт и финиш выделены цветом. В зависимости от размера графа выбирается размер ячейки, минимальный размер 1x1px.  
+Таблица может переноситься.  
+Использован HSV градиент для обозначения удаленности от старта.  
+Равноудаленные ноды имеют одинаковый цвет.  
+Визуализация выполнена на библиотеке minilibx.  
 ![big_superposition](https://raw.githubusercontent.com/liftchampion/lem_in/master/imgs/big_superposition.png)
 ![thousand](https://raw.githubusercontent.com/liftchampion/lem_in/master/imgs/thousand.png)
 ![ten](https://raw.githubusercontent.com/liftchampion/lem_in/master/imgs/ten.png)
