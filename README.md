@@ -31,6 +31,8 @@
 ![big_superposition](https://raw.githubusercontent.com/liftchampion/lem_in/master/imgs/big_superposition.png)
 ![thousand](https://raw.githubusercontent.com/liftchampion/lem_in/master/imgs/thousand.png)
 ![ten](https://raw.githubusercontent.com/liftchampion/lem_in/master/imgs/ten.png)
-
+## Потоки
+с флагом *--flows* можно получить информацию о найденных потоках и количестве муравьёв на их путях.  
+![flows](https://raw.githubusercontent.com/liftchampion/lem_in/master/imgs/flows.png)
 
 *C код написан в Norminette code style*
