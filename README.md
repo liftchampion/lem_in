@@ -20,5 +20,6 @@
 `make`  
 `./generetor --big-superposition | ./lem-in` (Для других опций генератора используйте `./generator --help`)  
 ## Флаги
+![flags]()
 
 *C код написан в Norminette code style*
