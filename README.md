@@ -20,6 +20,11 @@
 `make`  
 `./generetor --big-superposition | ./lem-in` (Для других опций генератора используйте `./generator --help`)  
 ## Флаги
-![flags]()
+![flags](https://raw.githubusercontent.com/liftchampion/lem_in/master/imgs/help.png)
+## Визуализация
+![big_superposition](https://raw.githubusercontent.com/liftchampion/lem_in/master/imgs/big_superposition.png)
+![thousand](https://raw.githubusercontent.com/liftchampion/lem_in/master/imgs/thousand.png)
+![ten](https://raw.githubusercontent.com/liftchampion/lem_in/master/imgs/ten.png)
+
 
 *C код написан в Norminette code style*
