@@ -6,7 +6,7 @@
 /*   By: ggerardy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/20 05:08:44 by ggerardy          #+#    #+#             */
-/*   Updated: 2019/04/20 05:08:44 by ggerardy         ###   ########.fr       */
+/*   Updated: 2019/05/19 21:18:47 by ggerardy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void		*ft_destroy_mlx(t_mlx *mlx, int ret)
 	if (mlx->img)
 		mlx_destroy_image(mlx->mlx_ptr, mlx->img);
 	if (mlx->win_ptr)
-		mlx_destroy_image(mlx->mlx_ptr, mlx->win_ptr);
+		mlx_destroy_window(mlx->mlx_ptr, mlx->win_ptr);
 	free(mlx);
 	return ((void*)(size_t)ret);
 }
