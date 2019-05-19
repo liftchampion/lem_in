@@ -6,7 +6,7 @@
 /*   By: ggerardy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/19 08:33:00 by ggerardy          #+#    #+#             */
-/*   Updated: 2019/04/19 08:33:00 by ggerardy         ###   ########.fr       */
+/*   Updated: 2019/05/19 22:06:53 by ggerardy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char g_flags_usage_txt[] =
 "            {Blue}ants{eof} - only ants movements.\n"
 "            {Blue}minimal{eof} - only number of turns.\n"
 "{Bold}{Green}--flows{eof}     find {Bold}all{eof} flows and print it's info\n"
-"            {Magenta}not working in special cases\n";
+"            {Magenta}not working in special cases{eof}\n";
 
 char g_program_usage_txt[] =
 "The program takes input data in format:\n"
