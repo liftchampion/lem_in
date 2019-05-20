@@ -53,4 +53,4 @@
 с флагом *--flows* можно получить информацию о найденных потоках и количестве муравьёв на их путях.  
 ![flows](https://raw.githubusercontent.com/liftchampion/lem_in/master/imgs/flows.png)
 
-*C код написан в Norminette code style*
+*C код написан в [Norminette code style](https://github.com/liftchampion/Norminette)*
