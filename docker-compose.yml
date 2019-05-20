@@ -1,0 +1,13 @@
+version: '3.7'
+services:
+    lem_in:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - "6901:6901"
+        environment:
+            VNC_RESOLUTION: 2400x1200
+            VNC_COL_DEPTH: 32
+            VNC_PW: gg
+        container_name: lem_in
