@@ -30,7 +30,8 @@
 Время запуска 1 минута 20 секунд  
 ## Запуск
 `make`  
-`./generetor --big-superposition | ./lem-in` (Для других опций генератора используйте `./generator --help`)  
+`./generetor --big-superposition | ./lem-in`  
+(Для других опций генератора используйте `./generator --help`)  
 ## Флаги
 ![flags](https://raw.githubusercontent.com/liftchampion/lem_in/master/imgs/help.png)
 ## Визуализация
