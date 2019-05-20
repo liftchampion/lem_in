@@ -26,6 +26,8 @@
 ## Быстрый запуск (Docker)
 `docker run --rm -d -p 6901:6901 -e VNC_RESOLUTION=2400x1200 -e VNC_COL_DEPTH=32 -e VNC_PW=gg ggerardy/school42-lem_in:demo xterm -geometry 173x59+660+145`  
 Затем в браузере откройте `http://192.168.99.100:6901/?password=gg` с ip вашей виртуальной машины  
+Размер образа 1.2гб  
+Время запуска 1 минута 20 секунд  
 ## Запуск
 `make`  
 `./generetor --big-superposition | ./lem-in` (Для других опций генератора используйте `./generator --help`)  
