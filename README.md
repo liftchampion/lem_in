@@ -20,12 +20,18 @@
 **Итог:** Выбранный алгоритм идеально подошёл к задаче: среди критериев оценивания были время и точность  
 (генератор также выдаёт ответ, оптимальный по его мнению).  
 Требовалось уложиться в 3 секунды и не показывать количество ходов большее, чем предсказал генератор.
-В итоге задача решается примерно за  0.1 секунды с учётом затрат на чтение/запись при том, что зачастую  
-даёт ответ лучше предсказанного генератором.
+В итоге задача решается примерно за  0.1 секунды (с учётом затрат на чтение/запись), и при этом часто  
+ответ получается лучше предсказанного генератором.
 
+## Быстрый запуск (Docker)
+`docker run --rm -d -p 6901:6901 -e VNC_RESOLUTION=2400x1200 -e VNC_COL_DEPTH=32 -e VNC_PW=gg ggerardy/school42-lem_in:demo xterm -geometry 173x59+660+145`  
+Затем в браузере откройте `http://192.168.99.100:6901/?password=gg` с ip вашей виртуальной машины  
+Размер образа 1.2гб  
+Время запуска 1 минута 20 секунд  
 ## Запуск
 `make`  
-`./generetor --big-superposition | ./lem-in` (Для других опций генератора используйте `./generator --help`)  
+`./generetor --big-superposition | ./lem-in`  
+(Для других опций генератора используйте `./generator --help`)  
 ## Флаги
 ![flags](https://raw.githubusercontent.com/liftchampion/lem_in/master/imgs/help.png)
 ## Визуализация
@@ -34,7 +40,12 @@
 Таблица может переноситься.  
 Использован HSV градиент для обозначения удаленности от старта.  
 Равноудаленные ноды имеют одинаковый цвет.  
-Визуализация выполнена на библиотеке minilibx.  
+При простоте и *концептуальности* визуализации она отражает основные паттерны поведениы муравьев:  
++ они идут по одним и тем же путям  
++ за раз из старта выходит *величина оптимального потока* муравьёв  
++ последние муравьи, идущие по кратчайшему, пути доходят до финиша одновременно с муравьями, идущими по более длинным путям  
+
+Визуализация выполнена на библиотеке [minilibx](https://github.com/liftchampion/minilibx).  
 ![big_superposition](https://raw.githubusercontent.com/liftchampion/lem_in/master/imgs/big_superposition.png)
 ![thousand](https://raw.githubusercontent.com/liftchampion/lem_in/master/imgs/thousand.png)
 ![ten](https://raw.githubusercontent.com/liftchampion/lem_in/master/imgs/ten.png)
@@ -42,4 +53,4 @@
 с флагом *--flows* можно получить информацию о найденных потоках и количестве муравьёв на их путях.  
 ![flows](https://raw.githubusercontent.com/liftchampion/lem_in/master/imgs/flows.png)
 
-*C код написан в Norminette code style*
+*C код написан в [Norminette code style](https://github.com/liftchampion/Norminette)*
