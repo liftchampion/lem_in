@@ -34,6 +34,7 @@ GITIGNORE = .gitignore
 
 #################################--UTILS--######################################
 
+LIBFT_MAKE = 'libft/Makefile'
 SRCS = $(shell find $(SRCDIR) -name '*.c' -not -path '$(LIBFT)*' -not -path '*cmake*')
 OBJS = $(patsubst $(SRCDIR)/%,$(OBJS_DIR)/%, $(SRCS:%.c=%.o))
 HEADERS = $(wildcard $(HEADERS_DIR)/*.h)
@@ -105,8 +106,11 @@ $(OBJS_DIR)/%.o: $(SRCDIR)/%.c $(HEADERS)
 $(LIBFT):
 	@make -C libft/ all
 
-make_lib:
+make_lib: $(LIBFT_MAKE)
 	@make -C libft/ all
+
+$(LIBFT_MAKE):
+	git submodule update --init
 
 #################################--CLEAN/RE--###################################
 
