@@ -31,7 +31,7 @@
 *!На данной версии графической библиотеки другие параметры шрифтов, из-за чего те немного съезжают*  
 ## Запуск
 `make`  
-`./generetor --big-superposition | ./lem-in`  
+`./generator --big-superposition | ./lem-in`  
 (Для других опций генератора используйте `./generator --help`)  
 ## Флаги
 ![flags](https://raw.githubusercontent.com/liftchampion/lem_in/master/imgs/help.png)
