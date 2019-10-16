@@ -26,7 +26,7 @@ char g_flags_usage_txt[] =
 "{Bold}{Green}--vis{eof}       enable visualizer.\n"
 "{Bold}{Green}--file={eof}{Blue}file{eof} specify input file.\n"
 "{Bold}{Green}--ants={eof}{Blue}file{eof} specify file for ants' names.\n"
-"{Bold}{Green}--format{eof}    specify output format:\n"
+"{Bold}{Green}--format={eof}   specify output format:\n"
 "            {Blue}full{eof} - default format with map data\n"
 "                   and ants movements.\n"
 "            {Blue}ants{eof} - only ants movements.\n"
